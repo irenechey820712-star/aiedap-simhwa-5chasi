@@ -25,6 +25,7 @@ AIEDAP 전문성 강화연수(영어교과 심화) 5차시용 자료. 교재 제
 |---|---|
 | English Teacher Harness Engineering + Distractor Lab | https://irenechey820712-star.github.io/english-teacher-harness-lab/ |
 | EFL 리딩 그래프 | https://irenechey820712-star.github.io/efl-reading-graph/ |
+| AI × 영어교육 전문용어 덱 (약 140 용어 · 14 범주) | https://irenechey820712-star.github.io/english-terminology-deck/ |
 
 ## 사용
 
