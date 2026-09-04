@@ -30,6 +30,12 @@
   html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);
     font-family:"Noto Sans KR",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   #viewport{position:fixed;inset:0;overflow:hidden}
+  body.zoomed #viewport{cursor:grab}
+  body.dragging #viewport{cursor:grabbing}
+  body.zoomed #universe{transition:transform .12s linear}
+  #zbadge{position:fixed;top:12px;right:14px;z-index:25;font:700 13px/1 "IBM Plex Mono",monospace;
+    color:var(--paper);background:var(--ink);padding:7px 11px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+  #zbadge:empty{display:none}
 
   #universe{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;
     transition:transform var(--dur) cubic-bezier(.62,.03,.21,1)}
@@ -199,8 +205,9 @@
   <button id="pdfbtn" class="hbtn" type="button" title="PDF로 저장 (P)">PDF</button>
   <div id="dots"></div>
   <div id="now"><b>0</b><span>—</span></div>
-  <div id="keys">← → 이동 · M 지도 · 1–5·C 차시 · P 인쇄</div>
+  <div id="keys">← → 이동 · M 지도 · 1–5·C 차시 · Ctrl+↑↓ 확대 · P 인쇄</div>
 </div>
+<div id="zbadge"></div>
 <div id="toast">인쇄 대화상자에서 <b>대상 → PDF로 저장</b> · 각 슬라이드가 한 페이지에 맞춰집니다 (배경 그래픽 켜기 권장)</div>
 <div id="lightbox" aria-hidden="true"><span class="x">✕ 닫기 (Esc)</span><img alt=""></div>
 
@@ -678,6 +685,7 @@ ISLANDS.forEach(isl=>{
 
 /* ---------- render ---------- */
 const universe=document.getElementById("universe");
+const zBadge=document.getElementById("zbadge");
 function chev(arr){
   return '<div class="flow">'+arr.map((x,i)=>'<span class="n">'+x+'</span>'+(i<arr.length-1?'<span class="ar">&rarr;</span>':'')).join('')+'</div>';
 }
@@ -747,10 +755,27 @@ PATH.forEach((f,i)=>{
 });
 const dotEls=[...dotsEl.children];
 
+/* 수동 확대/이동 상태 (Ctrl+↑ / Ctrl+↓ / Ctrl+휠 / 드래그) */
+let uz=1, upx=0, upy=0, _cam=null;
 function applyCam(x,y,footW,footH,rot,fill){
+  _cam={x,y,footW,footH,rot,fill};
   const vw=innerWidth, vh=innerHeight-50;
-  const cam=fill*Math.min(vw/footW, vh/footH);
-  universe.style.transform="translate("+(vw/2)+"px,"+((vh/2)+25)+"px) scale("+cam+") rotate("+(-rot)+"deg) translate("+(-x)+"px,"+(-y)+"px)";
+  const cam=fill*Math.min(vw/footW, vh/footH)*uz;
+  document.body.classList.toggle("zoomed", uz!==1||upx!==0||upy!==0);
+  if(zBadge) zBadge.textContent = uz===1 ? "" : Math.round(uz*100)+"%";
+  universe.style.transform="translate("+(vw/2+upx)+"px,"+((vh/2)+25+upy)+"px) scale("+cam+") rotate("+(-rot)+"deg) translate("+(-x)+"px,"+(-y)+"px)";
+}
+function recam(){ if(_cam) applyCam(_cam.x,_cam.y,_cam.footW,_cam.footH,_cam.rot,_cam.fill); }
+function resetZoom(){ uz=1; upx=0; upy=0; recam(); }
+function zoomStep(factor, cx, cy){
+  const nz=Math.min(8, Math.max(0.35, uz*factor));
+  const vw=innerWidth, vh=innerHeight-50;
+  const ax=(cx==null?0:cx-vw/2), ay=(cy==null?0:cy-vh/2-25);
+  const r=nz/uz;
+  upx = ax - (ax - upx)*r;
+  upy = ay - (ay - upy)*r;
+  uz = nz;
+  recam();
 }
 const MAP_S={cover:4.6, over:5.4};
 function setTransforms(straighten){
@@ -764,6 +789,7 @@ function setTransforms(straighten){
 function go(i){
   cur=Math.max(0,Math.min(PATH.length-1,i)); mapMode=false;
   mapBtn.classList.remove("on"); document.body.classList.remove("mapmode");
+  uz=1; upx=0; upy=0;
   setTransforms(false);
   const f=PATH[cur];
   applyCam(f.x,f.y,BASE_W*f.scale,BASE_H*f.scale,f.rot, f.kind==="cover"?0.9:f.kind==="over"?0.8:0.86);
@@ -780,6 +806,7 @@ function go(i){
 }
 function showMap(){
   mapMode=true; mapBtn.classList.add("on"); document.body.classList.add("mapmode");
+  uz=1; upx=0; upy=0;
   setTransforms(true);
   let a=1e9,b=1e9,c=-1e9,d=-1e9;
   PATH.filter(f=>f.kind!=="point").forEach(f=>{ const s=MAP_S[f.kind]||f.scale, hw=BASE_W*s/2, hh=BASE_H*s/2;
@@ -835,22 +862,59 @@ addEventListener("keydown",e=>{
   const k=e.key.toLowerCase();
   if(lbOpen){ if(e.key==="Escape"||k==="p"||e.key===" "){ e.preventDefault(); lbHide(); } return; }
   if(document.activeElement&&document.activeElement.tagName==="VIDEO"){ if(e.key!=="Escape") return; }
+  /* ── 수동 확대: Ctrl(⌘)+↑ 확대 · Ctrl+↓ 축소 · Ctrl+0 원래대로 · Ctrl+←→ 이동 ── */
+  if(e.ctrlKey||e.metaKey){
+    if(e.key==="ArrowUp"){ e.preventDefault(); zoomStep(1.25); return; }
+    if(e.key==="ArrowDown"){ e.preventDefault(); zoomStep(1/1.25); return; }
+    if(e.key==="0"){ e.preventDefault(); resetZoom(); return; }
+    if(e.key==="ArrowLeft"){ e.preventDefault(); upx+=90; recam(); return; }
+    if(e.key==="ArrowRight"){ e.preventDefault(); upx-=90; recam(); return; }
+    return;
+  }
+  if(uz!==1 && (e.key==="ArrowUp"||e.key==="ArrowDown")){
+    e.preventDefault(); upy += (e.key==="ArrowUp"?90:-90); recam(); return;
+  }
+  if(e.key==="+"||e.key==="="){ e.preventDefault(); zoomStep(1.25); return; }
+  if(e.key==="-"||e.key==="_"){ e.preventDefault(); zoomStep(1/1.25); return; }
   if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){ e.preventDefault(); next(); }
   else if(e.key==="ArrowLeft"||e.key==="PageUp"){ e.preventDefault(); prev(); }
   else if(e.key==="Home"){ go(0); }
   else if(e.key==="End"){ go(PATH.length-1); }
-  else if(k==="m"||e.key==="Escape"){ mapMode?go(cur):showMap(); }
+  else if(k==="m"||e.key==="Escape"){ if(uz!==1){ resetZoom(); return; } mapMode?go(cur):showMap(); }
   else if(e.key==="0"){ showMap(); }
   else if(k==="p"){ e.preventDefault(); savePdf(); }
   else if(/^[1-5]$/.test(e.key)){ const idx=PATH.findIndex(f=>f.kind==="over"&&String(f.sec)===e.key); if(idx>=0) go(idx); }
   else if(k==="c"){ const idx=PATH.findIndex(f=>f.kind==="over"&&f.sec==="C"); if(idx>=0) go(idx); }
 });
+
+/* Ctrl + 휠 = 커서 기준 확대 / 드래그 = 이동 */
+addEventListener("wheel",e=>{
+  if(!(e.ctrlKey||e.metaKey)) return;
+  e.preventDefault();
+  zoomStep(e.deltaY<0 ? 1.16 : 1/1.16, e.clientX, e.clientY);
+},{passive:false});
+let dragging=false, dsx=0, dsy=0, dux=0, duy=0;
+const vpEl=document.getElementById("viewport");
+vpEl.addEventListener("pointerdown",e=>{
+  if(uz===1) return;
+  if(e.target.closest("#hud,.vid,video,.shot,#lightbox,a,button")) return;
+  dragging=true; dsx=e.clientX; dsy=e.clientY; dux=upx; duy=upy;
+  vpEl.setPointerCapture(e.pointerId); document.body.classList.add("dragging");
+});
+vpEl.addEventListener("pointermove",e=>{
+  if(!dragging) return;
+  upx=dux+(e.clientX-dsx); upy=duy+(e.clientY-dsy); recam();
+});
+function endDrag(){ dragging=false; document.body.classList.remove("dragging"); }
+vpEl.addEventListener("pointerup",endDrag);
+vpEl.addEventListener("pointercancel",endDrag);
 let sx=null,sy=null;
 addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
 addEventListener("touchend",e=>{ if(sx==null)return;
   const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
   if(Math.abs(dx)>46&&Math.abs(dx)>Math.abs(dy)) dx<0?next():prev(); sx=sy=null; },{passive:true});
 document.getElementById("viewport").addEventListener("click",e=>{
+  if(uz!==1)return;
   if(e.target.closest("#hud,.vid,video,.shot,#lightbox"))return;
   if((getSelection()+"").length)return;
   const z=e.clientX/innerWidth;
