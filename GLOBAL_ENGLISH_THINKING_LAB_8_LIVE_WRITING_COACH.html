@@ -1,0 +1,2112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Global English Thinking Lab</title>
+<style>
+:root{
+  --bg:#f7f8fc;--ink:#172033;--muted:#687086;--line:#dfe3ee;--card:#fff;
+  --navy:#14213d;--blue:#4361ee;--cyan:#22b8cf;--pink:#ec4899;--lime:#b8f34a;
+  --yellow:#ffd166;--red:#ef476f;--green:#06d6a0;--violet:#7c3aed;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.top{background:linear-gradient(135deg,#111827,#1d3557 55%,#274c77);color:#fff;padding:26px 28px}
+.top h1{margin:0;font-size:clamp(25px,4vw,44px);letter-spacing:-.04em}
+.top p{margin:8px 0 0;color:#dbeafe}
+.loop{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}
+.loop span{font-size:12px;padding:7px 10px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff25}
+.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:14px 18px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.labbtn{border:1px solid var(--line);background:#fff;padding:17px 18px 15px;border-radius:15px;text-align:left;min-height:88px;transition:.18s ease}
+.labbtn b{
+  display:block;
+  font-size:17px;
+  line-height:1.18;
+  font-weight:900;
+  letter-spacing:-.025em;
+  color:#101828;
+  margin-bottom:7px
+}
+.labbtn small{
+  display:block;
+  color:#586174;
+  font-size:12.5px;
+  line-height:1.3;
+  font-weight:700;
+  letter-spacing:-.01em
+}
+.labbtn.active{
+  border-color:var(--blue);
+  box-shadow:0 0 0 2px #4361ee22;
+  background:#f4f6ff
+}
+.labbtn.active b{
+  color:#1d39d8;
+  font-size:18px
+}
+.labbtn:hover{
+  transform:translateY(-1px);
+  border-color:#aeb9ff
+}
+.wrap{max-width:1440px;margin:auto;padding:18px}
+.lab{display:none}.lab.active{display:block}
+.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin:8px 0 18px}
+.hero h2{margin:0;font-size:26px}.hero p{margin:6px 0;color:var(--muted);max-width:900px}
+.badge{white-space:nowrap;background:#e9f8ef;color:#15603e;border:1px solid #bde7cc;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:1.05fr 1fr;gap:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.panel h3{margin:0 0 4px;font-size:16px}.panel .sub{color:var(--muted);font-size:13px;margin-bottom:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:11px;font-weight:700}
+button.primary{background:var(--navy);color:white;border-color:var(--navy)}
+button.accent{background:var(--blue);color:#fff;border-color:var(--blue)}
+button.soft{background:#f5f7fb}
+button.danger{color:#a11;background:#fff5f5;border-color:#ffd2d2}
+input,textarea,select{width:100%;border:1px solid #d8ddea;border-radius:11px;background:#fff;padding:10px 11px;color:var(--ink)}
+textarea{min-height:96px;resize:vertical;line-height:1.55}
+label{display:block;font-size:12px;font-weight:800;margin:11px 0 5px}
+.note{background:#f7f9ff;border-left:4px solid var(--blue);padding:10px 12px;border-radius:8px;font-size:13px}
+.warn{background:#fff7ed;border-left-color:#f59e0b}
+.good{background:#effaf6;border-left-color:#10b981}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.asset{border:2px solid transparent;border-radius:13px;overflow:hidden;background:#f3f4f6;position:relative;min-height:120px}
+.asset img{width:100%;height:150px;object-fit:cover;display:block}
+.asset .cap{padding:8px;font-size:11px;color:#4b5563}
+.asset.selected{border-color:var(--blue);box-shadow:0 0 0 2px #4361ee20}
+.preview{background:#f3f5f9;border-radius:14px;min-height:300px;display:grid;place-items:center;overflow:hidden}
+.preview img{max-width:100%;max-height:430px;object-fit:contain}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.step{padding:10px;border-radius:12px;background:#f6f7fb;border:1px solid var(--line);font-size:12px}
+.step b{display:block;margin-bottom:4px}
+.step.done{background:#ecfdf5;border-color:#a7f3d0}
+.feedback{border:1px dashed #bcc5d9;border-radius:12px;padding:11px;margin-top:10px;font-size:13px;min-height:48px}
+.matrix{width:100%;border-collapse:collapse;font-size:13px}
+.matrix th,.matrix td{border:1px solid var(--line);padding:8px;vertical-align:top}
+.matrix th{background:#f6f7fb;text-align:left}
+.articlecols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.articlebox{border:1px solid var(--line);border-radius:13px;padding:10px;background:#fbfcff}
+.articlebox textarea{min-height:180px}
+.kchips{display:flex;gap:6px;flex-wrap:wrap}
+.kchip{padding:6px 8px;border-radius:8px;font-size:11px;font-weight:800;border:0}
+.actor{background:#fef3c7}.action{background:#dbeafe}.eval{background:#fee2e2}.cause{background:#ede9fe}.omit{background:#e5e7eb}
+.perspectives{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.persona{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.persona strong{display:block;margin-bottom:4px}
+.network{min-height:330px;background:#fafbfe;border:1px solid var(--line);border-radius:15px;position:relative;overflow:hidden}
+.node{position:absolute;transform:translate(-50%,-50%);background:#fff;border:2px solid var(--blue);border-radius:999px;padding:10px 12px;font-size:11px;font-weight:800;text-align:center;z-index:2;max-width:130px}
+.edge{position:absolute;height:3px;transform-origin:left center;z-index:1;background:#94a3b8}
+.chartwrap{height:320px;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;position:relative}
+svg{width:100%;height:100%}
+.rubric{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.score{border:1px solid var(--line);border-radius:11px;padding:9px;text-align:center;background:#fafbff}
+.score b{display:block;font-size:18px}
+.footerline{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+.mini{font-size:11px;color:var(--muted)}
+.hidden{display:none!important}
+@media(max-width:900px){.nav{grid-template-columns:1fr 1fr}.grid,.articlecols,.perspectives{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.rubric{grid-template-columns:1fr 1fr}.hero{display:block}.badge{display:inline-block;margin-top:8px}}
+@media(max-width:520px){.gallery,.steps{grid-template-columns:1fr}.nav{grid-template-columns:1fr}.top{padding:20px}.wrap{padding:10px}}
+
+#evidenceVault.autoflash{animation:vaultPulse .55s ease-out}
+@keyframes vaultPulse{0%{box-shadow:0 0 0 0 rgba(67,97,238,.18)}100%{box-shadow:0 0 0 10px rgba(67,97,238,0)}}
+
+
+.importedGraph{width:100%;padding:14px;background:#fff}
+.importedGraph .graphHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+.importedGraph .graphHead b{font-size:15px}
+.importedGraph .graphMeta{font-size:11px;color:var(--muted)}
+.importedGraph svg{display:block;width:100%;height:290px}
+.importedGraph .statline{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.importedGraph .statpill{border:1px solid var(--line);background:#f8fafc;border-radius:999px;padding:6px 9px;font-size:11px}
+
+
+.newsResults{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.newsCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;min-width:0}
+.newsCard .newsMeta{font-size:11px;color:var(--muted);margin:5px 0 8px}
+.newsCard .newsTitle{font-weight:800;line-height:1.35}
+.newsCard .newsUrl{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px}
+.newsCard .toolbar{margin-bottom:0}
+@media(max-width:760px){.newsResults{grid-template-columns:1fr}}
+
+
+.vocabGroup{margin-top:12px}
+.vocabGroup>b{display:block;font-size:12px;margin-bottom:6px;color:var(--ink)}
+.vocabChips,.sentenceFrames{display:flex;gap:7px;flex-wrap:wrap}
+.vocabChip{padding:7px 10px;border-radius:999px;background:#f3f6ff;border:1px solid #d8def5;font-size:12px;font-weight:700}
+.frameBtn{padding:9px 11px;border-radius:10px;background:#fff;border:1px dashed #b9c2d8;font-size:12px;text-align:left}
+.vocabChip:hover,.frameBtn:hover{border-color:var(--blue);background:#eef2ff}
+#newsVocabBank.collapsed #vocabBankBody{display:none}
+
+
+.mcell.autoFilled{background:#f4f7ff;border-color:#b9c7ff}
+.mcell.userEdited{background:#fffdf2;border-color:#e6d797}
+.autoTag{display:inline-block;font-size:10px;font-weight:800;padding:3px 6px;border-radius:999px;background:#eef2ff;color:#3949ab;margin-left:6px}
+
+
+@media(max-width:1100px){
+  .labbtn{padding:14px 13px;min-height:82px}
+  .labbtn b{font-size:15px}
+  .labbtn.active b{font-size:16px}
+  .labbtn small{font-size:11.5px}
+}
+@media(max-width:900px){
+  .labbtn b{font-size:16px}
+  .labbtn.active b{font-size:17px}
+}
+
+
+#openNaverDict,#openGoogleTranslate{
+  font-weight:800;
+}
+
+
+/* Floating language tools beside English writing boxes */
+.writeAssistWrap{
+  position:relative;
+}
+.writeAssistWrap textarea{
+  padding-right:86px;
+}
+.floatLangTools{
+  position:absolute;
+  right:8px;
+  top:8px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:3;
+}
+.floatLangBtn{
+  min-width:66px;
+  padding:7px 8px;
+  border-radius:9px;
+  border:1px solid #d7dce8;
+  background:#ffffffee;
+  color:#172033;
+  font-size:11px;
+  font-weight:850;
+  box-shadow:0 3px 10px rgba(20,33,61,.08);
+}
+.floatLangBtn:hover{
+  border-color:#4361ee;
+  background:#f5f7ff;
+}
+.floatLangHint{
+  margin-top:5px;
+  font-size:10px;
+  color:var(--muted);
+}
+@media(max-width:620px){
+  .writeAssistWrap textarea{padding-right:12px;padding-top:56px}
+  .floatLangTools{
+    right:8px;
+    top:8px;
+    flex-direction:row;
+  }
+  .floatLangBtn{min-width:auto}
+}
+
+
+/* Live writing coach */
+.liveCoach{
+  margin-top:7px;
+  border-left:3px solid #4361ee;
+  background:#f7f9ff;
+  padding:9px 11px;
+  border-radius:8px;
+  font-size:12px;
+  line-height:1.5;
+  color:#344054;
+}
+.liveCoach.good{
+  border-left-color:#16a34a;
+  background:#f0fdf4;
+}
+.liveCoach.warn{
+  border-left-color:#f59e0b;
+  background:#fff7ed;
+}
+.liveCoach .coachTitle{
+  display:block;
+  font-weight:900;
+  margin-bottom:3px;
+}
+.liveCoach .coachNext{
+  margin-top:5px;
+  font-weight:800;
+}
+.writeProgress{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+.writeProgress span{
+  font-size:10px;
+  padding:4px 6px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#4353b3;
+  font-weight:800;
+}
+.writeProgress span.on{
+  background:#dcfce7;
+  color:#166534;
+}
+
+
+/* Long-form final feedback */
+.finalFeedbackOutput{
+  margin-top:12px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+  line-height:1.7;
+}
+.finalFeedbackOutput h4{
+  margin:18px 0 7px;
+  font-size:15px;
+}
+.finalFeedbackOutput h4:first-child{margin-top:0}
+.finalFeedbackOutput p{margin:6px 0 10px}
+.finalFeedbackOutput ul{margin:6px 0 10px;padding-left:20px}
+.finalFeedbackOutput .overallScore{
+  display:inline-block;
+  font-size:28px;
+  font-weight:900;
+  margin-right:8px;
+}
+.finalFeedbackOutput .levelTag{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#3949ab;
+  font-size:11px;
+  font-weight:800;
+}
+.finalFeedbackOutput .nextMission{
+  background:#f7f9ff;
+  border-left:4px solid var(--blue);
+  padding:12px 14px;
+  border-radius:8px;
+}
+.finalFeedbackOutput .evidenceQuote{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:12px;
+}
+.pdfOnly{display:none}
+
+@media print{
+  body{background:#fff!important;color:#111!important}
+  body *{visibility:hidden!important}
+  #pdfReport,#pdfReport *{visibility:visible!important}
+  #pdfReport{
+    display:block!important;
+    position:absolute!important;
+    left:0!important;
+    top:0!important;
+    width:100%!important;
+    padding:24px 28px!important;
+    background:#fff!important;
+    color:#111!important;
+  }
+  #pdfReport h1,#pdfReport h2,#pdfReport h3,#pdfReport h4{color:#111!important}
+  #pdfReport .printSection{margin-bottom:18px;break-inside:avoid}
+  #pdfReport .printBox{border:1px solid #ccc;padding:12px;border-radius:8px;white-space:pre-wrap}
+  @page{size:A4;margin:14mm}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>GLOBAL ENGLISH THINKING LAB</h1>
+  <p><b>교육목표:</b> 학생이 실제 뉴스·이미지·그래프·통계 자료에서 근거를 선택·비교·검증한 뒤, 해석을 수정하고 자신의 영어로 설명할 수 있다.</p>
+<p style="margin-top:7px;font-size:13px;color:#bfdbfe"><b>수업 문제:</b> 학생이 AI·검색·요약 결과를 활용하지만, 원자료의 근거를 확인하지 않거나 추론과 사실을 구분하지 않은 채 그대로 제출하는 장면을 줄이는 것이 이 앱의 핵심 문제입니다.</p>
+  <div class="loop">
+    <span>EXPLORE</span><span>NOTICE</span><span>EVIDENCE</span><span>INTERPRET</span><span>WRITE</span><span>CHECK</span><span>REVISE</span><span>REFLECT</span>
+  </div>
+</header>
+<section style="max-width:1440px;margin:auto;padding:16px 18px 0">
+  <div class="panel" style="padding:14px 16px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div class="step done"><b>1 · INPUT</b>기사·이미지·그래프·통계 등 원자료를 선택하고 분석 질문 또는 관찰 대상을 정합니다.</div>
+      <div class="step"><b>2 · ANALYZE · COMPARE</b>AI/규칙 기반 점검을 활용하되, 학생이 근거를 직접 선택·비교·검증하고 초안을 수정합니다.</div>
+      <div class="step"><b>3 · REFLECT · EXPORT</b>수정 전후와 근거, 자기언어화 결과를 남기고 학습 증거를 저장·내보냅니다.</div>
+    </div>
+    <div class="note good" style="margin-top:10px">
+      <b>MVP 정의:</b> 학생이 하나의 실제 영어·시각 자료를 입력하면, 앱이 비교·점검 질문을 제공하고, 학생은 근거를 선택해 영어 초안을 수정한 뒤 <b>근거 + 수정 전후 + 자기언어화 결과</b>를 하나의 학습 기록으로 저장한다.
+    </div>
+  </div>
+</section>
+
+<nav class="nav">
+  <button class="labbtn active" data-lab="visual"><b>01 · Visual-to-Verbal</b><small>Photo · Poster · Graph · Statistics</small></button>
+  <button class="labbtn" data-lab="news"><b>02 · News Framing</b><small>Actor · Action · Evaluation · Omission</small></button>
+  <button class="labbtn" data-lab="perspective"><b>03 · Perspective Map</b><small>Global Issue × Stakeholder Network</small></button>
+  <button class="labbtn" data-lab="climate"><b>04 · Data Storytelling</b><small>Claim · Evidence · Implication · Question</small></button>
+</nav>
+
+<main class="wrap">
+
+<section id="visual" class="lab active">
+  <div class="hero">
+    <div><h2>Visual-to-Verbal English Lab</h2><p><b>학생 행동 목표:</b> 학생이 사진·포스터·그래프에서 보이는 사실을 선택하고, 사실과 추론을 구분한 뒤, 근거가 부족한 해석을 수정하여 영어로 설명한다.</p><p class="mini"><b>관찰 가능한 문제:</b> 학생이 이미지나 그래프를 보고 곧바로 의미를 단정하거나, 시각자료에 없는 원인·의도를 영어 문장에 덧붙이는 경우.</p></div>
+    <span class="badge">학생 영어 입력 필수</span>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>① Explore a visual</h3>
+      <div class="sub">Wikimedia Commons 이미지를 직접 검색하거나, 샘플/URL을 사용하세요.</div>
+      <div class="toolbar">
+        <button class="soft visualType active" data-type="photo">PHOTO</button>
+        <button class="soft visualType" data-type="poster">POSTER</button>
+        <button class="soft visualType" data-type="graph">GRAPH</button>
+        <button class="soft visualType" data-type="data">DATA</button>
+      </div>
+      <label>Search Wikimedia Commons</label>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+        <input id="imageQuery" value="climate protest" placeholder="e.g. climate protest, migration, AI classroom">
+        <button id="imageSearch" class="accent">SEARCH</button>
+      </div>
+      <div class="toolbar">
+        <button id="openGoogle">Google Images ↗</button>
+        <button id="openNaverDict">네이버 영어사전 ↗</button>
+        <button id="openGoogleTranslate">Google 번역기 ↗</button>
+        <button id="showOWID" class="accent">Our World in Data · 바로 불러오기</button>
+        <button id="showWB" class="accent">World Bank Data · 바로 불러오기</button>
+      </div>
+
+      <div id="dataImporter" class="panel hidden" style="padding:12px;margin:10px 0;background:#f8fafc">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+          <div>
+            <b id="importerTitle">Data Importer</b>
+            <div class="mini">외부 페이지를 떠나지 않고 공개 데이터를 이 앱의 Visual Preview에 그래프로 불러옵니다.</div>
+          </div>
+          <button id="closeImporter" type="button">닫기</button>
+        </div>
+
+        <div id="owidImporter" class="hidden">
+          <label>Our World in Data · 대표 지표</label>
+          <select id="owidPreset">
+            <option value="annual-co2-emissions-per-country">Annual CO₂ emissions</option>
+            <option value="co-emissions-per-capita">CO₂ emissions per capita</option>
+            <option value="share-electricity-renewables">Renewables share of electricity</option>
+            <option value="life-expectancy">Life expectancy</option>
+            <option value="population">Population</option>
+          </select>
+          <label>Country / Entity</label>
+          <input id="owidEntity" value="South Korea" placeholder="e.g. South Korea, Bangladesh, World">
+          <label>또는 Grapher slug 직접 입력</label>
+          <input id="owidSlug" placeholder="예: annual-co2-emissions-per-country">
+          <div class="toolbar">
+            <button id="loadOWID" class="primary">LOAD OWID GRAPH</button>
+            <button id="openOWIDExternal">원본 페이지 ↗</button>
+          </div>
+          <div id="owidStatus" class="mini">OWID Grapher CSV를 직접 읽어 앱 안에서 그래프로 변환합니다.</div>
+        </div>
+
+        <div id="wbImporter" class="hidden">
+          <label>World Bank · 지표</label>
+          <select id="wbIndicatorVisual">
+            <option value="EN.ATM.CO2E.PC">CO₂ emissions (metric tons per capita)</option>
+            <option value="EG.FEC.RNEW.ZS">Renewable energy consumption (%)</option>
+            <option value="SE.SEC.ENRR">School enrollment, secondary (%)</option>
+            <option value="SP.URB.TOTL.IN.ZS">Urban population (%)</option>
+            <option value="SP.DYN.LE00.IN">Life expectancy at birth</option>
+          </select>
+          <label>Country</label>
+          <select id="wbCountryVisual">
+            <option value="KOR">Korea, Rep.</option>
+            <option value="BGD">Bangladesh</option>
+            <option value="USA">United States</option>
+            <option value="GBR">United Kingdom</option>
+            <option value="JPN">Japan</option>
+            <option value="IND">India</option>
+            <option value="WLD">World</option>
+          </select>
+          <div class="toolbar">
+            <button id="loadWBVisual" class="primary">LOAD WORLD BANK GRAPH</button>
+            <button id="openWBExternal">원본 페이지 ↗</button>
+          </div>
+          <div id="wbVisualStatus" class="mini">World Bank Indicators API에서 데이터를 직접 가져옵니다.</div>
+        </div>
+      </div>
+      <div id="imageStatus" class="mini">앱을 열면 기본 이미지가 즉시 표시되고, 온라인 연결 시 Wikimedia 검색 결과로 자동 교체됩니다.</div>
+      <div id="gallery" class="gallery" style="margin-top:10px"></div>
+      <label>또는 직접 이미지 URL 붙여넣기</label>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+        <input id="customImage" placeholder="https://...jpg / png / webp">
+        <button id="loadCustom">LOAD</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>② Observe → Infer → Interpret</h3>
+      <div id="visualPreview" class="preview"><div class="mini">왼쪽에서 자료를 선택하세요.</div></div>
+      <div class="steps" style="margin-top:12px">
+        <div class="step" id="s1"><b>OBSERVATION</b>What can you literally see?</div>
+        <div class="step" id="s2"><b>INFERENCE</b>What might the visual suggest?</div>
+        <div class="step" id="s3"><b>INTERPRETATION</b>Why might it matter?</div>
+      </div>
+      <label>O · Observation <span class="mini">— 설명하지 말고 보이는 것만</span></label>
+      <div class="writeAssistWrap" data-assist-for="obs">
+<textarea id="obs" placeholder="I notice that... / The graph shows... / In the foreground, ..."></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="obs">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="obs">번역</button>
+</div>
+</div>
+<div id="obsCoach" class="liveCoach">
+  <span class="coachTitle">Observation Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="obsProgress"></div>
+</div>
+      <label>I · Inference <span class="mini">— may / might / could 사용 권장</span></label>
+      <div class="writeAssistWrap" data-assist-for="inf">
+<textarea id="inf" placeholder="This may suggest that..."></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="inf">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="inf">번역</button>
+</div>
+</div>
+<div id="infCoach" class="liveCoach">
+  <span class="coachTitle">Inference Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="infProgress"></div>
+</div>
+      <label>I · Interpretation <span class="mini">— 의미·맥락·중요성</span></label>
+      <div class="writeAssistWrap" data-assist-for="interp">
+<textarea id="interp" placeholder="This matters because... / One possible interpretation is..."></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="interp">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="interp">번역</button>
+</div>
+</div>
+<div id="interpCoach" class="liveCoach">
+  <span class="coachTitle">Interpretation Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="interpProgress"></div>
+</div>
+      <div class="toolbar">
+        <button id="checkOII" class="primary">CHECK MY REASONING</button>
+        <button id="makeDraft">BUILD FINAL RESPONSE</button>
+      </div>
+      <div id="oiFeedback" class="feedback" aria-live="polite">문장을 입력하면 증거 경계, 추론 표시어, 구체성을 점검합니다.</div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3>③ Evidence Lock → Revision → Ownership</h3>
+    <div class="sub">“보인다”와 “추론한다”가 섞이면 Evidence Lock이 걸립니다. AI 정답 대신 학생이 표현을 조정합니다.</div>
+    <div class="grid">
+      <div>
+        <label>Draft 1</label>
+        <div class="writeAssistWrap" data-assist-for="visualDraft">
+<textarea id="visualDraft" placeholder="Observation + Evidence + Inference + Interpretation"></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="visualDraft">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="visualDraft">번역</button>
+</div>
+</div>
+<div id="visualDraftCoach" class="liveCoach">
+  <span class="coachTitle">Draft Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="visualDraftProgress"></div>
+</div>
+        <div id="evidenceLock" class="note warn">Evidence Lock: 아직 초안이 없습니다.</div>
+      </div>
+      <div>
+        <label>Revision</label>
+        <div class="writeAssistWrap" data-assist-for="visualRevision">
+<textarea id="visualRevision" placeholder="Revise your response after checking the evidence boundary."></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="visualRevision">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="visualRevision">번역</button>
+</div>
+</div>
+<div id="visualRevisionCoach" class="liveCoach">
+  <span class="coachTitle">Revision Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="visualRevisionProgress"></div>
+</div>
+        <label>Reflection</label>
+        <div class="writeAssistWrap" data-assist-for="visualReflect">
+<textarea id="visualReflect" placeholder="What did you change, and why?"></textarea>
+<div class="floatLangTools" aria-label="Language support tools">
+  <button type="button" class="floatLangBtn floatDictBtn" data-target="visualReflect">사전</button>
+  <button type="button" class="floatLangBtn floatTransBtn" data-target="visualReflect">번역</button>
+</div>
+</div>
+<div id="visualReflectCoach" class="liveCoach">
+  <span class="coachTitle">Reflection Coach</span>
+  <span class="coachMsg">문장을 쓰기 시작하면 다음 단계 피드백을 드립니다.</span>
+  <div class="writeProgress" id="visualReflectProgress"></div>
+</div>
+      </div>
+    </div>
+    <div class="rubric" style="margin-top:12px">
+      <div class="score"><span>Evidence</span><b id="rv1">0</b><small>/25</small></div>
+      <div class="score"><span>Precision</span><b id="rv2">0</b><small>/20</small></div>
+      <div class="score"><span>Reasoning</span><b id="rv3">0</b><small>/20</small></div>
+      <div class="score"><span>English</span><b id="rv4">0</b><small>/20</small></div>
+      <div class="score"><span>Revision</span><b id="rv5">0</b><small>/15</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="news" class="lab">
+  <div class="hero"><div><h2>News Framing & Bias Comparator</h2><p><b>학생 행동 목표:</b> 같은 사건을 다룬 기사에서 행위자·동사·평가어·생략 정보를 비교하고, 실제 문장을 근거로 프레이밍 차이를 설명·수정한다.</p><p class="mini"><b>관찰 가능한 문제:</b> 학생이 기사 제목이나 AI 요약만 보고 ‘편향됐다’고 판단하지만, 어떤 표현과 생략이 판단 근거인지 제시하지 못하는 경우.</p></div><span class="badge">Bias ≠ Falsehood</span></div>
+  <div class="panel">
+    <h3>① Search real news articles</h3>
+    <div class="sub">같은 국제 이슈의 기사 링크를 바로 검색하고, 원문을 열어 확인한 뒤 A/B/C 비교 슬롯에 넣으세요.</div>
+
+    <div style="display:grid;grid-template-columns:1fr 170px auto;gap:8px;align-items:end">
+      <div>
+        <label>News topic / keywords</label>
+        <input id="newsQuery" value="climate policy" placeholder="e.g. AI regulation, refugee policy, climate protest">
+      </div>
+      <div>
+        <label>Search scope</label>
+        <select id="newsScope">
+          <option value="">All sources</option>
+          <option value="english">English-language focus</option>
+          <option value="reuters">Reuters</option>
+          <option value="bbc">BBC</option>
+          <option value="aljazeera">Al Jazeera</option>
+          <option value="guardian">The Guardian</option>
+        </select>
+      </div>
+      <button id="searchNewsLinks" class="accent">SEARCH NEWS</button>
+    </div>
+
+    <div class="toolbar">
+      <button id="openGoogleNews">Google News ↗</button>
+      <button id="openBingNews">Bing News ↗</button>
+      <button id="openReutersSearch">Reuters Search ↗</button>
+      <button id="openBBCSearch">BBC Search ↗</button>
+    </div>
+
+    <div id="newsSearchStatus" class="mini">앱 안 검색은 GDELT 공개 뉴스 색인을 사용합니다. 검색 결과의 원문 링크는 새 탭에서 열립니다.</div>
+    <div id="newsResults" class="newsResults" aria-live="polite"></div>
+
+    <div class="toolbar" style="margin-top:14px">
+      <button id="sampleNews">LOAD SAMPLE</button>
+      <button id="clearNews">CLEAR</button>
+    </div>
+    <div class="articlecols">
+      <div class="articlebox"><label>Article A · Source / Headline</label><input id="srcA" placeholder="Reuters / Headline"><label>Article URL</label><input id="urlA" placeholder="https://..."><div class="toolbar"><button class="openSlot" data-slot="A">OPEN ARTICLE ↗</button></div><textarea id="artA" placeholder="원문에서 비교할 핵심 문단/문장을 붙여넣으세요."></textarea></div>
+      <div class="articlebox"><label>Article B · Source / Headline</label><input id="srcB" placeholder="BBC / Headline"><label>Article URL</label><input id="urlB" placeholder="https://..."><div class="toolbar"><button class="openSlot" data-slot="B">OPEN ARTICLE ↗</button></div><textarea id="artB" placeholder="원문에서 비교할 핵심 문단/문장을 붙여넣으세요."></textarea></div>
+      <div class="articlebox"><label>Article C · optional</label><input id="srcC" placeholder="Al Jazeera / Headline"><label>Article URL</label><input id="urlC" placeholder="https://..."><div class="toolbar"><button class="openSlot" data-slot="C">OPEN ARTICLE ↗</button></div><textarea id="artC" placeholder="원문에서 비교할 핵심 문단/문장을 붙여넣으세요."></textarea></div>
+    </div>
+    <div class="kchips" style="margin-top:12px">
+      <span class="kchip actor">ACTOR · who acts?</span><span class="kchip action">ACTION · which verb?</span><span class="kchip eval">EVALUATION · loaded wording?</span><span class="kchip cause">CAUSE · who/what is blamed?</span><span class="kchip omit">OMISSION · what is absent?</span>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h3>Bias / Frame Matrix</h3>
+        <div class="sub">기사 제목·본문에서 프레이밍 단서를 자동 추출한 뒤, 학생이 원문과 대조하여 수정합니다.</div>
+      </div>
+      <div class="toolbar" style="margin:0">
+        <button id="autoExtractFrame" class="accent">AUTO-EXTRACT MATRIX</button>
+        <button id="clearFrameMatrix">CLEAR MATRIX</button>
+      </div>
+    </div>
+    <div id="frameExtractStatus" class="feedback">AUTO-EXTRACT 준비됨 · Article A/B/C의 제목 또는 본문을 입력하면 자동 초안을 만들 수 있습니다.</div>
+    <table class="matrix">
+      <thead><tr><th>Lens</th><th>Article A</th><th>Article B</th><th>Article C</th></tr></thead>
+      <tbody id="frameBody"></tbody>
+    </table>
+    <div class="panel" id="newsVocabBank" style="margin:14px 0 10px;padding:12px;background:#fbfcff">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
+        <div>
+          <h3 style="margin:0">Vocabulary Bank · Click to Insert</h3>
+          <div class="sub">단어·표현을 클릭하면 아래 영어 비교문 입력창에 바로 들어갑니다.</div>
+        </div>
+        <button id="toggleVocabBank" type="button">HIDE BANK</button>
+      </div>
+
+      <div id="vocabBankBody">
+        <div class="vocabGroup">
+          <b>① Framing verbs</b>
+          <div class="vocabChips">
+            <button type="button" class="vocabChip" data-insert="foregrounds ">foregrounds</button>
+            <button type="button" class="vocabChip" data-insert="emphasizes ">emphasizes</button>
+            <button type="button" class="vocabChip" data-insert="highlights ">highlights</button>
+            <button type="button" class="vocabChip" data-insert="frames ">frames</button>
+            <button type="button" class="vocabChip" data-insert="portrays ">portrays</button>
+            <button type="button" class="vocabChip" data-insert="characterizes ">characterizes</button>
+            <button type="button" class="vocabChip" data-insert="downplays ">downplays</button>
+            <button type="button" class="vocabChip" data-insert="omits ">omits</button>
+          </div>
+        </div>
+
+        <div class="vocabGroup">
+          <b>② Evidence language</b>
+          <div class="vocabChips">
+            <button type="button" class="vocabChip" data-insert="The wording ">The wording</button>
+            <button type="button" class="vocabChip" data-insert="The headline suggests that ">The headline suggests that</button>
+            <button type="button" class="vocabChip" data-insert="The article describes ">The article describes</button>
+            <button type="button" class="vocabChip" data-insert="The verb ">The verb</button>
+            <button type="button" class="vocabChip" data-insert="This lexical choice ">This lexical choice</button>
+            <button type="button" class="vocabChip" data-insert="This omission ">This omission</button>
+          </div>
+        </div>
+
+        <div class="vocabGroup">
+          <b>③ Comparison connectors</b>
+          <div class="vocabChips">
+            <button type="button" class="vocabChip" data-insert="whereas ">whereas</button>
+            <button type="button" class="vocabChip" data-insert="while ">while</button>
+            <button type="button" class="vocabChip" data-insert="in contrast, ">in contrast</button>
+            <button type="button" class="vocabChip" data-insert="however, ">however</button>
+            <button type="button" class="vocabChip" data-insert="although ">although</button>
+            <button type="button" class="vocabChip" data-insert="compared with ">compared with</button>
+            <button type="button" class="vocabChip" data-insert="similarly, ">similarly</button>
+          </div>
+        </div>
+
+        <div class="vocabGroup">
+          <b>④ Bias / stance language</b>
+          <div class="vocabChips">
+            <button type="button" class="vocabChip" data-insert="more neutral ">more neutral</button>
+            <button type="button" class="vocabChip" data-insert="more critical ">more critical</button>
+            <button type="button" class="vocabChip" data-insert="more sympathetic ">more sympathetic</button>
+            <button type="button" class="vocabChip" data-insert="more alarmist ">more alarmist</button>
+            <button type="button" class="vocabChip" data-insert="more cautious ">more cautious</button>
+            <button type="button" class="vocabChip" data-insert="more supportive ">more supportive</button>
+          </div>
+        </div>
+
+        <div class="vocabGroup">
+          <b>⑤ Interpretation / hedging</b>
+          <div class="vocabChips">
+            <button type="button" class="vocabChip" data-insert="may suggest that ">may suggest that</button>
+            <button type="button" class="vocabChip" data-insert="could indicate that ">could indicate that</button>
+            <button type="button" class="vocabChip" data-insert="appears to ">appears to</button>
+            <button type="button" class="vocabChip" data-insert="seems to ">seems to</button>
+            <button type="button" class="vocabChip" data-insert="This may lead readers to view ">This may lead readers to view</button>
+          </div>
+        </div>
+
+        <div class="vocabGroup">
+          <b>⑥ Sentence Frames</b>
+          <div class="sentenceFrames">
+            <button type="button" class="frameBtn" data-template="Although both articles describe the same event, Article A foregrounds ___, whereas Article B emphasizes ___.">Frame A · basic comparison</button>
+            <button type="button" class="frameBtn" data-template="The wording '___' in Article A frames the event as ___, while Article B uses '___' to present it as ___.">Frame B · lexical framing</button>
+            <button type="button" class="frameBtn" data-template="Article A highlights ___ but omits ___, whereas Article B includes ___, which may lead readers to view the issue differently.">Frame C · omission</button>
+            <button type="button" class="frameBtn" data-template="Although neither article is necessarily inaccurate, their different choices of actors, verbs, and omitted details create distinct frames of the same event.">Frame D · cautious conclusion</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label>Evidence-based comparison paragraph</label>
+    <textarea id="newsWrite" placeholder="Although both articles describe..., Article A foregrounds..., whereas Article B... The wording '...' frames..."></textarea>
+    <div class="toolbar">
+      <button id="undoNewsInsert" type="button">UNDO LAST INSERT</button>
+      <button id="clearNewsWrite" type="button">CLEAR PARAGRAPH</button>
+    </div>
+    <div class="toolbar"><button id="checkNews" class="primary">CHECK EVIDENCE USE</button></div>
+    <div id="newsFeedback" class="feedback">근거 표현(quotation or lexical reference), contrast marker, omission language를 점검합니다.</div>
+  </div>
+</section>
+
+<section id="perspective" class="lab">
+  <div class="hero"><div><h2>Global Issue Perspective Map</h2><p><b>학생 행동 목표:</b> 동일 이슈에 대한 서로 다른 이해관계자의 관점을 비교하고, 합의·갈등 지점을 근거와 함께 영어로 설명한 뒤 자신의 관점을 수정한다.</p><p class="mini"><b>관찰 가능한 문제:</b> 학생이 자신의 입장만 반복하거나, 국가·세대·직업별 관점 차이를 단순 찬반으로 축소하는 경우.</p></div><span class="badge">Perspective-taking</span></div>
+  <div class="grid">
+    <div class="panel">
+      <h3>① Define a global issue</h3>
+      <label>Issue / debate question</label>
+      <input id="issue" value="Should schools use generative AI for student feedback?">
+      <div class="toolbar"><button id="samplePersp">LOAD STAKEHOLDERS</button></div>
+      <div id="personaList" class="perspectives"></div>
+    </div>
+    <div class="panel">
+      <h3>② Agreement / Conflict Network</h3>
+      <div id="network" class="network"></div>
+      <label>Synthesis</label>
+      <textarea id="perspWrite" placeholder="Teachers and students may agree that..., but they may disagree about..."></textarea>
+      <label>Discussion Reflection</label>
+      <textarea id="perspReflect" placeholder="Which perspective changed or complicated your own view?"></textarea>
+    </div>
+  </div>
+</section>
+
+<section id="climate" class="lab">
+  <div class="hero"><div><h2>Climate Data Storytelling in English</h2><p><b>학생 행동 목표:</b> 데이터에서 수치 근거를 선택하고, 주장·증거·함의·한계를 구분하여 과장된 인과 해석을 수정하고 영어로 설명한다.</p><p class="mini"><b>관찰 가능한 문제:</b> 학생이 그래프 추세를 읽고도 실제 수치를 인용하지 않거나, 상관관계를 원인으로 단정하는 경우.</p></div><span class="badge">CEIQ</span></div>
+  <div class="grid">
+    <div class="panel">
+      <h3>① Choose data</h3>
+      <label>Indicator</label>
+      <select id="indicator">
+        <option value="EN.ATM.CO2E.PC">CO₂ emissions (metric tons per capita)</option>
+        <option value="EG.FEC.RNEW.ZS">Renewable energy consumption (% of total final energy consumption)</option>
+        <option value="SE.SEC.ENRR">School enrollment, secondary (% gross)</option>
+        <option value="SP.URB.TOTL.IN.ZS">Urban population (% of total)</option>
+      </select>
+      <label>Country</label>
+      <select id="country">
+        <option value="KOR">Korea, Rep.</option><option value="BGD">Bangladesh</option><option value="USA">United States</option><option value="GBR">United Kingdom</option><option value="JPN">Japan</option><option value="IND">India</option>
+      </select>
+      <div class="toolbar"><button id="loadWB" class="accent">LOAD WORLD BANK DATA</button><button id="sampleData">USE SAMPLE</button></div>
+      <div id="dataStatus" class="mini">World Bank API는 키 없이 호출됩니다. 네트워크가 제한되면 Sample을 사용하세요.</div>
+      <div class="chartwrap" id="chartwrap"><svg id="chart" viewBox="0 0 760 300" aria-label="data chart"></svg></div>
+    </div>
+    <div class="panel">
+      <h3>② Build a CEIQ story</h3>
+      <label>C · Claim</label><textarea id="claim" placeholder="The data show that..."></textarea>
+      <label>E · Evidence</label><textarea id="evidence" placeholder="Between 2010 and 2020, ... increased from ... to ..."></textarea>
+      <label>I · Implication</label><textarea id="implication" placeholder="This may suggest that..."></textarea>
+      <label>Q · Question / Limitation</label><textarea id="question" placeholder="However, the data do not tell us..."></textarea>
+      <div class="toolbar"><button id="checkCEIQ" class="primary">CHECK DATA STORY</button><button id="buildCEIQ">BUILD PRESENTATION SCRIPT</button></div>
+      <div id="ceiqFeedback" class="feedback">숫자 근거, 추론 표시어, 인과 과장, 한계 인식을 점검합니다.</div>
+      <label>Final English Data Story</label><textarea id="ceiqFinal"></textarea>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="panel" id="finalFeedbackSection" style="margin-top:18px">
+  <div class="hero" style="margin:0 0 10px">
+    <div>
+      <h3 style="font-size:22px">FINAL FEEDBACK · 종합 피드백</h3>
+      <p>학생의 Observation → Inference → Interpretation → Draft → Revision → Reflection 전체 기록을 모아 긴 종합 피드백을 생성합니다.</p>
+    </div>
+    <span class="badge">LONG FORM</span>
+  </div>
+
+  <div class="toolbar">
+    <button id="generateFinalFeedback" class="primary">GENERATE FINAL FEEDBACK</button>
+    <button id="saveFinalPdf" class="accent">SAVE AS PDF</button>
+  </div>
+
+  <div id="finalFeedbackMeta" class="mini">아직 종합 피드백이 생성되지 않았습니다.</div>
+
+  <div id="finalFeedbackOutput" class="finalFeedbackOutput" aria-live="polite">
+    <div class="note">학생이 1번 Lab에서 영어 작성과 수정 활동을 마친 뒤 “GENERATE FINAL FEEDBACK”을 누르세요.</div>
+  </div>
+</section>
+
+<section class="panel" id="evidenceVault" style="margin-top:18px">
+  <div class="hero" style="margin:0 0 8px">
+    <div><h3 style="font-size:20px">Learning Evidence Vault · 학습 증거 저장</h3>
+    <p>결과 점수보다 학생의 <b>근거 선택 · 수정 전후 · 자기언어화 · AI/분석 사용 흔적</b>을 남깁니다. 각 Lab에서 학생이 작업하면 Evidence Vault에 <b>자동 추출·동기화</b>됩니다.</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="badge">AUTO-EXTRACT ON</span><span class="badge">Evidence ≥ 2</span></div>
+  </div>
+  
+  <div class="note" style="margin-bottom:12px">
+    <b>자동 추출 규칙</b> · Visual: 선택 자료 + Observation + Draft/Revision · News: 기사 출처 + Frame Matrix + 비교 문단 · Perspective: 이슈 + 이해관계자 관점 + 성찰 · Data: 지표/국가 + 수치 근거 + CEIQ 결과
+    <div class="mini" id="autoExtractMeta" style="margin-top:5px">아직 자동 추출 기록이 없습니다.</div>
+  </div>
+<div class="grid">
+    <div>
+      <label>선택한 근거 / Evidence selected</label>
+      <textarea id="vaultEvidence" placeholder="기사 문장, 그래프 수치, 이미지의 시각 단서 등을 기록하세요."></textarea>
+      <label>수정 전 / Before revision</label>
+      <textarea id="vaultBefore" placeholder="초안 또는 처음 판단"></textarea>
+    </div>
+    <div>
+      <label>수정 후 · 자기언어화 / After revision & own words</label>
+      <textarea id="vaultAfter" placeholder="근거 확인 후 바꾼 영어 문장과 자신의 설명"></textarea>
+      <label>AI / 분석 사용 로그</label>
+      <textarea id="vaultLog" placeholder="예: Evidence Lock 실행 → 'proves' 과잉 단정 확인 → may suggest로 수정"></textarea>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button id="collectEvidence" class="primary">REFRESH AUTO-EXTRACT</button>
+    <button id="saveEvidence" class="accent">SAVE LEARNING RECORD (.JSON)</button>
+    <button id="exportTxt">EXPORT REPORT (.TXT)</button>
+  </div>
+  <div id="vaultStatus" class="feedback">AUTO-EXTRACT ON · 각 Lab에서 입력·수정하면 학습 증거가 자동으로 갱신됩니다.</div>
+</section>
+<div class="footerline"><span><b>MVP 핵심 3기능:</b> ① 실제 자료 입력·선택 ② 근거 기반 비교·검증·수정 ③ 수정 전후·자기언어화 저장</span><span>Single-file classroom webapp · no login required</span></div>
+
+<div id="pdfReport" class="pdfOnly">
+  <h1>GLOBAL ENGLISH THINKING LAB</h1>
+  <p><b>Visual-to-Verbal English Lab · Student Learning Report</b></p>
+  <div id="pdfReportBody"></div>
+</div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+$$('.labbtn').forEach(b=>b.addEventListener('click',()=>{
+  $$('.labbtn').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+  $$('.lab').forEach(x=>x.classList.remove('active')); $('#'+b.dataset.lab).classList.add('active');
+}));
+
+// ---------- Visual Lab ----------
+const fallbackAssets=[
+ {title:'Climate action demonstration',url:'https://commons.wikimedia.org/wiki/Special:FilePath/Global_Climate_Strike_(48792633548).jpg?width=640',credit:'Wikimedia Commons'},
+ {title:'Wind turbines and renewable energy',url:'https://commons.wikimedia.org/wiki/Special:FilePath/GreenMountainWindFarm_Fluvanna_2004.jpg?width=640',credit:'Wikimedia Commons'},
+ {title:'Global climate data visualization',url:'https://commons.wikimedia.org/wiki/Special:FilePath/Global_Temperature_Anomaly.svg?width=640',credit:'Wikimedia Commons'}
+];
+let selectedAsset=null, currentType='photo';
+$$('.visualType').forEach(b=>b.addEventListener('click',()=>{$$('.visualType').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentType=b.dataset.type;}));
+function visualFallbackData(title='Visual sample'){
+  const safe=String(title).replace(/[<>&\"']/g,'').slice(0,40);
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#dbeafe"/><stop offset="1" stop-color="#ecfeff"/></linearGradient></defs>
+  <rect width="100%" height="100%" fill="url(#g)"/>
+  <circle cx="170" cy="180" r="90" fill="#93c5fd"/>
+  <path d="M0 410 L170 270 L300 360 L470 210 L800 430 L800 500 L0 500Z" fill="#94a3b8"/>
+  <text x="400" y="90" text-anchor="middle" font-family="Arial" font-size="30" fill="#172033">${safe}</text>
+  <text x="400" y="130" text-anchor="middle" font-family="Arial" font-size="17" fill="#64748b">External image unavailable · local visual placeholder</text>
+  </svg>`;
+  return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function renderGallery(items){
+ const g=$('#gallery');g.innerHTML='';
+ items.slice(0,9).forEach((a,i)=>{
+   const d=document.createElement('button'); d.type='button'; d.className='asset';
+   const img=document.createElement('img');
+   img.src=a.url; img.alt=a.title||'visual';
+   img.loading='eager';
+   img.referrerPolicy='no-referrer';
+   img.addEventListener('error',()=>{
+      if(img.dataset.fallbackDone)return;
+      img.dataset.fallbackDone='1';
+      img.src=visualFallbackData(a.title);
+   });
+   const cap=document.createElement('div'); cap.className='cap';
+   cap.innerHTML=`<b>${escapeHtml(a.title)}</b><br>${escapeHtml(a.credit||'')}`;
+   d.appendChild(img); d.appendChild(cap);
+   d.addEventListener('click',()=>selectAsset(a,d)); g.appendChild(d);
+ });
+ if(items.length){ setTimeout(()=>{ const first=g.querySelector('.asset'); if(first) first.click(); },80); }
+}
+function selectAsset(a,node){
+ selectedAsset=a; $$('.asset').forEach(x=>x.classList.remove('selected')); if(node)node.classList.add('selected');
+ const box=$('#visualPreview'); box.innerHTML='';
+ const img=document.createElement('img'); img.src=a.url; img.alt=a.title||'selected visual'; img.referrerPolicy='no-referrer';
+ img.addEventListener('error',()=>{ if(!img.dataset.fallbackDone){img.dataset.fallbackDone='1';img.src=visualFallbackData(a.title);} });
+ box.appendChild(img);
+ scheduleAutoExtract();
+}
+renderGallery(fallbackAssets);
+
+$('#imageQuery').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#imageSearch').click(); }});
+const typeQueries={photo:'climate protest',poster:'climate awareness poster',graph:'climate change graph',data:'global climate statistics'};
+$$('.visualType').forEach(b=>b.addEventListener('click',()=>{
+  const q=typeQueries[b.dataset.type]||'global issue';
+  $('#imageQuery').value=q;
+  setTimeout(()=>$('#imageSearch').click(),120);
+}));
+setTimeout(()=>{ renderGallery(fallbackAssets); setTimeout(()=>$('#imageSearch').click(),250); },120);
+
+$('#imageSearch').addEventListener('click',async()=>{
+ const q=$('#imageQuery').value.trim(); if(!q)return;
+ $('#imageStatus').textContent='Searching Wikimedia Commons...';
+ const url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q)+'&gsrnamespace=6&gsrlimit=9&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=500&format=json&origin=*';
+ try{
+   const r=await fetch(url); const j=await r.json(); const pages=Object.values((j.query&&j.query.pages)||{});
+   const items=pages.map(p=>{const ii=(p.imageinfo||[])[0]||{}; const title=(p.title||'').replace('File:',''); const u=ii.thumburl||ii.url||('https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(title)+'?width=640'); return {title,url:u,credit:'Wikimedia Commons'};}).filter(x=>x.url);
+   if(!items.length)throw new Error('No images');
+   renderGallery(items); $('#imageStatus').textContent=`${items.length}개 자료를 찾았습니다. 하나를 클릭하세요.`;
+ }catch(e){renderGallery(fallbackAssets);$('#imageStatus').textContent='검색 연결이 제한되어 기본 샘플을 표시했습니다.';}
+});
+$('#loadCustom').addEventListener('click',()=>{
+ const u=$('#customImage').value.trim(); if(!/^https?:\/\//i.test(u)){alert('http(s) 이미지 URL을 입력하세요.');return}
+ selectAsset({title:'Custom visual',url:u,credit:'User-provided URL'},null);
+});
+$('#openGoogle').addEventListener('click',()=>window.open('https://www.google.com/search?tbm=isch&q='+encodeURIComponent($('#imageQuery').value||'global issue'),'_blank','noopener'));
+$('#openNaverDict').addEventListener('click',()=>{
+  const q=$('#imageQuery').value.trim();
+  const url=q
+    ? 'https://en.dict.naver.com/#/search?query='+encodeURIComponent(q)
+    : 'https://en.dict.naver.com/';
+  window.open(url,'_blank','noopener');
+});
+$('#openGoogleTranslate').addEventListener('click',()=>{
+  const q=$('#imageQuery').value.trim();
+  const url=q
+    ? 'https://translate.google.com/?sl=auto&tl=ko&text='+encodeURIComponent(q)+'&op=translate'
+    : 'https://translate.google.com/';
+  window.open(url,'_blank','noopener');
+});
+
+let importedDataset=null;
+
+function csvParseSimple(text){
+  const rows=[]; let row=[],cell='',quoted=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i],nx=text[i+1];
+    if(ch==='"'){
+      if(quoted && nx==='"'){cell+='"';i++;}
+      else quoted=!quoted;
+    }else if(ch===',' && !quoted){row.push(cell);cell='';}
+    else if((ch==='\n'||ch==='\r') && !quoted){
+      if(ch==='\r'&&nx==='\n')i++;
+      row.push(cell);cell='';
+      if(row.some(x=>x!==''))rows.push(row);
+      row=[];
+    }else cell+=ch;
+  }
+  if(cell||row.length){row.push(cell);rows.push(row);}
+  return rows;
+}
+
+function renderImportedGraph(title,sourceName,entity,data,unit=''){
+  const clean=data.filter(d=>Number.isFinite(d.y)&&Number.isFinite(d.v)).sort((a,b)=>a.y-b.y);
+  if(!clean.length) throw new Error('No numeric data');
+  importedDataset={title,sourceName,entity,data:clean,unit};
+  selectedAsset={title:`${title} · ${entity}`,url:'',credit:sourceName,type:'data'};
+
+  const W=760,H=300,p={l:58,r:22,t:20,b:42};
+  const vals=clean.map(d=>d.v), yrs=clean.map(d=>d.y);
+  let min=Math.min(...vals),max=Math.max(...vals);
+  if(min===max){min-=1;max+=1}
+  const ymin=min>0?Math.max(0,min-(max-min)*.12):min;
+  const ymax=max+(max-min)*.12;
+  const x=y=>p.l+(y-Math.min(...yrs))/(Math.max(...yrs)-Math.min(...yrs)||1)*(W-p.l-p.r);
+  const yy=v=>H-p.b-(v-ymin)/(ymax-ymin)*(H-p.t-p.b);
+  let grid='',labels='',dots='';
+  for(let k=0;k<=4;k++){
+    const v=ymin+(ymax-ymin)*k/4,Y=yy(v);
+    grid+=`<line x1="${p.l}" y1="${Y}" x2="${W-p.r}" y2="${Y}" stroke="#e5e7eb"/><text x="${p.l-8}" y="${Y+4}" font-size="11" text-anchor="end" fill="#64748b">${Number(v).toLocaleString(undefined,{maximumFractionDigits:2})}</text>`;
+  }
+  const step=Math.max(1,Math.ceil(clean.length/6));
+  clean.forEach((d,i)=>{
+    if(i===0||i===clean.length-1||i%step===0){
+      labels+=`<text x="${x(d.y)}" y="${H-15}" font-size="11" text-anchor="middle" fill="#64748b">${d.y}</text>`;
+      dots+=`<circle cx="${x(d.y)}" cy="${yy(d.v)}" r="4.5" fill="#fff" stroke="#4361ee" stroke-width="3"/>`;
+    }
+  });
+  const pts=clean.map(d=>`${x(d.y)},${yy(d.v)}`).join(' ');
+  const first=clean[0],last=clean[clean.length-1],delta=last.v-first.v;
+  const direction=delta>0?'increase':delta<0?'decrease':'little net change';
+  const box=$('#visualPreview');
+  box.innerHTML=`<div class="importedGraph">
+    <div class="graphHead">
+      <div><b>${escapeHtml(title)}</b><div class="graphMeta">${escapeHtml(sourceName)} · ${escapeHtml(entity)}</div></div>
+      <div class="graphMeta">${clean[0].y}–${clean[clean.length-1].y}</div>
+    </div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(title)}">
+      ${grid}
+      <polyline points="${pts}" fill="none" stroke="#4361ee" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      ${dots}${labels}
+    </svg>
+    <div class="statline">
+      <span class="statpill">Start: ${first.y} · ${Number(first.v).toLocaleString(undefined,{maximumFractionDigits:2})}${escapeHtml(unit)}</span>
+      <span class="statpill">Latest: ${last.y} · ${Number(last.v).toLocaleString(undefined,{maximumFractionDigits:2})}${escapeHtml(unit)}</span>
+      <span class="statpill">Pattern: ${direction}</span>
+      <span class="statpill">N = ${clean.length}</span>
+    </div>
+  </div>`;
+  $('#obs').placeholder=`The data show that ... (${first.y}: ${first.v}; ${last.y}: ${last.v})`;
+  scheduleAutoExtract();
+}
+
+function showImporter(type){
+  $('#dataImporter').classList.remove('hidden');
+  $('#owidImporter').classList.toggle('hidden',type!=='owid');
+  $('#wbImporter').classList.toggle('hidden',type!=='wb');
+  $('#importerTitle').textContent=type==='owid'?'Our World in Data · Direct Import':'World Bank Data · Direct Import';
+  $('#dataImporter').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+$('#showOWID').addEventListener('click',()=>showImporter('owid'));
+$('#showWB').addEventListener('click',()=>showImporter('wb'));
+$('#closeImporter').addEventListener('click',()=>$('#dataImporter').classList.add('hidden'));
+
+$('#owidPreset').addEventListener('change',()=>{$('#owidSlug').value='';});
+$('#loadOWID').addEventListener('click',async()=>{
+  const slug=$('#owidSlug').value.trim()||$('#owidPreset').value;
+  const entity=$('#owidEntity').value.trim()||'World';
+  $('#owidStatus').textContent='Loading OWID Grapher data...';
+  try{
+    const url=`https://ourworldindata.org/grapher/${encodeURIComponent(slug)}.csv`;
+    const r=await fetch(url);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const text=await r.text();
+    const rows=csvParseSimple(text);
+    if(rows.length<2) throw new Error('Empty CSV');
+    const head=rows[0];
+    const ei=head.indexOf('Entity'), yi=head.indexOf('Year');
+    const valueCols=head.map((h,i)=>({h,i})).filter(x=>!['Entity','Code','Year','Day'].includes(x.h));
+    if(ei<0||yi<0||!valueCols.length) throw new Error('Unexpected Grapher columns');
+    const vi=valueCols[0].i, metric=valueCols[0].h || slug;
+    let data=rows.slice(1).filter(r=>String(r[ei]).trim().toLowerCase()===entity.toLowerCase())
+      .map(r=>({y:+r[yi],v:+r[vi]})).filter(d=>Number.isFinite(d.y)&&Number.isFinite(d.v));
+    if(!data.length){
+      const normalized=rows.slice(1).map(r=>String(r[ei]).trim()).filter(Boolean);
+      const guess=[...new Set(normalized)].find(x=>x.toLowerCase().includes(entity.toLowerCase()));
+      if(guess){
+        data=rows.slice(1).filter(r=>String(r[ei]).trim()===guess).map(r=>({y:+r[yi],v:+r[vi]})).filter(d=>Number.isFinite(d.y)&&Number.isFinite(d.v));
+      }
+    }
+    if(!data.length) throw new Error(`Entity "${entity}" not found`);
+    renderImportedGraph(metric,'Our World in Data',entity,data,'');
+    $('#owidStatus').textContent=`Loaded: ${metric} · ${entity} · ${data.length} observations`;
+    currentType='graph';
+  }catch(e){
+    $('#owidStatus').textContent='불러오기 실패: '+e.message+' · 다른 Entity 이름이나 Grapher slug를 시도하세요.';
+  }
+});
+
+$('#openOWIDExternal').addEventListener('click',()=>{
+  const slug=$('#owidSlug').value.trim()||$('#owidPreset').value;
+  window.open(`https://ourworldindata.org/grapher/${encodeURIComponent(slug)}`,'_blank','noopener');
+});
+
+$('#loadWBVisual').addEventListener('click',async()=>{
+  const ind=$('#wbIndicatorVisual').value,c=$('#wbCountryVisual').value;
+  const metric=$('#wbIndicatorVisual').selectedOptions[0].textContent;
+  const entity=$('#wbCountryVisual').selectedOptions[0].textContent;
+  $('#wbVisualStatus').textContent='Loading World Bank data...';
+  try{
+    const r=await fetch(`https://api.worldbank.org/v2/country/${c}/indicator/${ind}?format=json&per_page=100`);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j=await r.json();
+    const data=(j[1]||[]).filter(x=>x.value!=null).map(x=>({y:+x.date,v:+x.value})).filter(d=>Number.isFinite(d.y)&&Number.isFinite(d.v));
+    if(!data.length) throw new Error('No data');
+    renderImportedGraph(metric,'World Bank',entity,data,'');
+    $('#wbVisualStatus').textContent=`Loaded: ${metric} · ${entity} · ${data.length} observations`;
+    currentType='data';
+  }catch(e){
+    $('#wbVisualStatus').textContent='불러오기 실패: '+e.message;
+  }
+});
+$('#openWBExternal').addEventListener('click',()=>window.open('https://data.worldbank.org/','_blank','noopener'));
+
+function words(t){return t.trim().split(/\s+/).filter(Boolean).length}
+function hasAny(t,arr){t=t.toLowerCase();return arr.some(x=>t.includes(x))}
+function scoreVisual(){
+ const o=$('#obs').value,i=$('#inf').value,p=$('#interp').value,r=$('#visualRevision').value;
+ $('#rv1').textContent=Math.min(25,(hasAny(o,['shows','notice','see','visible','percent','%','number','foreground','background'])?15:5)+(words(o)>12?10:4));
+ $('#rv2').textContent=Math.min(20,(hasAny(i,['may','might','could','suggest'])?10:3)+(hasAny(p,['may','might','possible','however','although'])?10:4));
+ $('#rv3').textContent=Math.min(20,(words(i)>10?9:4)+(words(p)>12?11:4));
+ $('#rv4').textContent=Math.min(20,Math.round(Math.min(20,(words(o)+words(i)+words(p))/4)));
+ $('#rv5').textContent=Math.min(15,r.trim()?Math.min(15,5+Math.round(words(r)/8)):0);
+}
+['#obs','#inf','#interp','#visualRevision'].forEach(id=>$(id).addEventListener('input',scoreVisual));
+$('#checkOII').addEventListener('click',()=>{
+ const o=$('#obs').value.trim(),i=$('#inf').value.trim(),p=$('#interp').value.trim();
+ let msgs=[];
+ if(words(o)<8)msgs.push('Observation을 더 구체화하세요: 위치·수치·색·인물·비교 등 실제 보이는 단서를 추가하세요.');
+ if(hasAny(o,['because','therefore','proves','means that']))msgs.push('Observation에 해석/인과가 섞여 있습니다. 보이는 정보만 남겨 보세요.');
+ if(!hasAny(i,['may','might','could','suggest','seem']))msgs.push('Inference에는 may/might/could/suggest 같은 추론 표시어를 넣어 확정적 단정을 피하세요.');
+ if(hasAny(i,['proves','causes','definitely']))msgs.push('Evidence Lock: 시각자료 하나만으로 prove/cause/definitely를 말하기 어렵습니다.');
+ if(words(p)<8)msgs.push('Interpretation에서 “왜 중요한가?” 또는 맥락을 한 단계 더 설명하세요.');
+ if(!msgs.length)msgs.push('좋습니다. Observation과 Inference가 분리되어 있습니다. 이제 Draft 1을 만들고 Evidence Lock을 확인하세요.');
+ $('#oiFeedback').innerHTML=msgs.map(x=>'• '+escapeHtml(x)).join('<br>');
+ $('#s1').classList.toggle('done',words(o)>=8);$('#s2').classList.toggle('done',words(i)>=8);$('#s3').classList.toggle('done',words(p)>=8);
+});
+$('#makeDraft').addEventListener('click',()=>{
+ const o=$('#obs').value.trim(),i=$('#inf').value.trim(),p=$('#interp').value.trim();
+ $('#visualDraft').value=[o,i,p].filter(Boolean).join(' ');
+ const risk=hasAny(o+i+p,['proves','definitely','causes','must mean']);
+ $('#evidenceLock').className='note '+(risk?'warn':'good');
+ $('#evidenceLock').textContent=risk?'⚠ Evidence Lock: 직접 관찰되지 않은 인과·확정 표현이 있습니다. “may/might/suggest/although the visual alone cannot…” 등으로 수정하세요.':'✓ Evidence boundary looks reasonable. Revision에서는 더 정확한 근거와 자기 언어화를 시도하세요.';
+ scoreVisual();
+});
+
+
+
+// ---------- News Vocabulary Bank ----------
+let newsInsertHistory=[];
+
+function insertIntoNewsWrite(text,replaceAll=false){
+  const ta=$('#newsWrite');
+  if(!ta) return;
+  newsInsertHistory.push(ta.value);
+  if(replaceAll){
+    ta.value=text;
+    ta.focus();
+    ta.setSelectionRange(ta.value.length,ta.value.length);
+  }else{
+    const start=ta.selectionStart ?? ta.value.length;
+    const end=ta.selectionEnd ?? ta.value.length;
+    const before=ta.value.slice(0,start);
+    const after=ta.value.slice(end);
+    const needsSpace=before && !/\s$/.test(before) && text && !/^[,.;:!?]/.test(text);
+    const insert=(needsSpace?' ':'')+text;
+    ta.value=before+insert+after;
+    const pos=(before+insert).length;
+    ta.focus();
+    ta.setSelectionRange(pos,pos);
+  }
+  ta.dispatchEvent(new Event('input',{bubbles:true}));
+  scheduleAutoExtract();
+}
+
+$$('.vocabChip').forEach(btn=>btn.addEventListener('click',()=>{
+  insertIntoNewsWrite(btn.dataset.insert||btn.textContent);
+}));
+
+$$('.frameBtn').forEach(btn=>btn.addEventListener('click',()=>{
+  const t=btn.dataset.template||'';
+  const ta=$('#newsWrite');
+  const current=ta.value.trim();
+  newsInsertHistory.push(ta.value);
+  ta.value=current ? current+'\n'+t : t;
+  ta.focus();
+  ta.setSelectionRange(ta.value.length,ta.value.length);
+  ta.dispatchEvent(new Event('input',{bubbles:true}));
+  scheduleAutoExtract();
+}));
+
+$('#toggleVocabBank').addEventListener('click',()=>{
+  const bank=$('#newsVocabBank');
+  bank.classList.toggle('collapsed');
+  $('#toggleVocabBank').textContent=bank.classList.contains('collapsed')?'SHOW BANK':'HIDE BANK';
+});
+
+$('#undoNewsInsert').addEventListener('click',()=>{
+  const ta=$('#newsWrite');
+  if(!newsInsertHistory.length) return;
+  ta.value=newsInsertHistory.pop();
+  ta.dispatchEvent(new Event('input',{bubbles:true}));
+  scheduleAutoExtract();
+});
+
+$('#clearNewsWrite').addEventListener('click',()=>{
+  const ta=$('#newsWrite');
+  newsInsertHistory.push(ta.value);
+  ta.value='';
+  ta.dispatchEvent(new Event('input',{bubbles:true}));
+  ta.focus();
+  scheduleAutoExtract();
+});
+
+// ---------- News Link Search ----------
+let latestNewsResults=[];
+
+function newsScopeQuery(){
+  const q=$('#newsQuery').value.trim();
+  const scope=$('#newsScope').value;
+  if(!q) return '';
+  if(scope==='reuters') return `${q} domain:reuters.com`;
+  if(scope==='bbc') return `${q} domain:bbc.com OR domain:bbc.co.uk`;
+  if(scope==='aljazeera') return `${q} domain:aljazeera.com`;
+  if(scope==='guardian') return `${q} domain:theguardian.com`;
+  if(scope==='english') return `${q} sourcelang:english`;
+  return q;
+}
+
+function cleanNewsDate(s){
+  if(!s) return '';
+  const m=String(s).match(/^(\d{4})(\d{2})(\d{2})T?(\d{2})?(\d{2})?/);
+  if(!m) return s;
+  return `${m[1]}-${m[2]}-${m[3]}`;
+}
+
+function renderNewsResults(items){
+  const box=$('#newsResults'); box.innerHTML='';
+  latestNewsResults=items;
+  if(!items.length){
+    box.innerHTML='<div class="note warn">검색 결과가 없습니다. 검색어를 더 넓게 바꾸거나 Google News/Bing News 버튼을 사용하세요.</div>';
+    return;
+  }
+  items.slice(0,12).forEach((a,i)=>{
+    const card=document.createElement('article');
+    card.className='newsCard';
+    const domain=a.domain||(()=>{try{return new URL(a.url).hostname.replace(/^www\./,'')}catch(e){return ''}})();
+    card.innerHTML=`
+      <div class="newsTitle">${escapeHtml(a.title||'Untitled article')}</div>
+      <div class="newsMeta">${escapeHtml(domain)}${a.seendate?' · '+escapeHtml(cleanNewsDate(a.seendate)):''}${a.sourcecountry?' · '+escapeHtml(a.sourcecountry):''}</div>
+      <div class="newsUrl">${escapeHtml(a.url||'')}</div>
+      <div class="toolbar">
+        <button type="button" class="openNewsResult" data-i="${i}">OPEN ↗</button>
+        <button type="button" class="useNewsSlot" data-i="${i}" data-slot="A">USE AS A</button>
+        <button type="button" class="useNewsSlot" data-i="${i}" data-slot="B">USE AS B</button>
+        <button type="button" class="useNewsSlot" data-i="${i}" data-slot="C">USE AS C</button>
+      </div>`;
+    box.appendChild(card);
+  });
+
+  $$('.openNewsResult').forEach(btn=>btn.addEventListener('click',()=>{
+    const a=latestNewsResults[+btn.dataset.i];
+    if(a?.url) window.open(a.url,'_blank','noopener');
+  }));
+  $$('.useNewsSlot').forEach(btn=>btn.addEventListener('click',()=>{
+    const a=latestNewsResults[+btn.dataset.i];
+    if(!a) return;
+    assignNewsSlot(btn.dataset.slot,a);
+  }));
+}
+
+function assignNewsSlot(slot,a){
+  const domain=a.domain||(()=>{try{return new URL(a.url).hostname.replace(/^www\./,'')}catch(e){return 'News source'}})();
+  const src=document.querySelector('#src'+slot);
+  const url=document.querySelector('#url'+slot);
+  if(src) src.value=`${domain} · ${a.title||'Article'}`;
+  if(url) url.value=a.url||'';
+  $('#newsSearchStatus').textContent=`${slot} 슬롯에 저장했습니다. OPEN ARTICLE로 원문을 확인하고 비교할 핵심 문단을 붙여넣으세요.`;
+  scheduleAutoExtract();
+  setTimeout(()=>extractFrameMatrix(false),180);
+}
+
+$('#searchNewsLinks').addEventListener('click',async()=>{
+  const q=newsScopeQuery();
+  if(!q){ $('#newsSearchStatus').textContent='검색어를 입력하세요.'; return; }
+  $('#newsSearchStatus').textContent='Searching global news index...';
+  $('#newsResults').innerHTML='<div class="mini">뉴스 링크를 불러오는 중입니다...</div>';
+  try{
+    const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(q)+'&mode=ArtList&maxrecords=12&format=json&sort=HybridRel';
+    const r=await fetch(url);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j=await r.json();
+    const items=(j.articles||[]).map(x=>({
+      title:x.title||'',
+      url:x.url||'',
+      domain:x.domain||'',
+      seendate:x.seendate||'',
+      sourcecountry:x.sourcecountry||'',
+      language:x.language||''
+    })).filter(x=>x.url);
+    renderNewsResults(items);
+    $('#newsSearchStatus').textContent=`${items.length}개 기사 링크를 찾았습니다. OPEN으로 원문을 확인하거나 A/B/C에 바로 배치하세요.`;
+  }catch(e){
+    $('#newsResults').innerHTML='<div class="note warn">앱 내부 검색이 현재 네트워크에서 제한되었습니다. 아래 외부 뉴스 검색 버튼은 계속 사용할 수 있습니다.</div>';
+    $('#newsSearchStatus').textContent='내부 뉴스 검색 실패: '+e.message;
+  }
+});
+
+$('#newsQuery').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){e.preventDefault();$('#searchNewsLinks').click();}
+});
+
+$('#openGoogleNews').addEventListener('click',()=>{
+  window.open('https://news.google.com/search?q='+encodeURIComponent($('#newsQuery').value||'global issue'),'_blank','noopener');
+});
+$('#openBingNews').addEventListener('click',()=>{
+  window.open('https://www.bing.com/news/search?q='+encodeURIComponent($('#newsQuery').value||'global issue'),'_blank','noopener');
+});
+$('#openReutersSearch').addEventListener('click',()=>{
+  window.open('https://www.reuters.com/site-search/?query='+encodeURIComponent($('#newsQuery').value||'global issue'),'_blank','noopener');
+});
+$('#openBBCSearch').addEventListener('click',()=>{
+  window.open('https://www.bbc.co.uk/search?q='+encodeURIComponent($('#newsQuery').value||'global issue'),'_blank','noopener');
+});
+
+$$('.openSlot').forEach(btn=>btn.addEventListener('click',()=>{
+  const u=document.querySelector('#url'+btn.dataset.slot)?.value.trim();
+  if(/^https?:\/\//i.test(u)) window.open(u,'_blank','noopener');
+  else $('#newsSearchStatus').textContent=`Article ${btn.dataset.slot}에 유효한 URL이 없습니다.`;
+}));
+
+// ---------- News ----------
+const lenses=['Actor / Agency','Action / Verb','Evaluation / Loaded wording','Cause / Responsibility','Omission / Missing context','Overall Frame'];
+function initMatrix(){
+ const body=$('#frameBody');body.innerHTML='';
+ lenses.forEach((l,ri)=>{const tr=document.createElement('tr');tr.innerHTML=`<th>${l}</th>`+[0,1,2].map(ci=>`<td><textarea class="mcell" data-r="${ri}" data-c="${ci}" placeholder="Evidence + interpretation"></textarea></td>`).join('');body.appendChild(tr);});
+}
+initMatrix();
+
+// ---------- Bias / Frame Matrix Auto Extraction ----------
+const FRAME_EVAL_WORDS = [
+  'controversial','radical','extreme','historic','unprecedented','alarming','dangerous','peaceful',
+  'violent','illegal','legitimate','massive','dramatic','devastating','successful','failed','crisis',
+  'threat','chaos','brutal','aggressive','remarkable','significant','strong','weak','harsh','unfair'
+];
+const FRAME_CAUSE_MARKERS = [
+  'because','due to','as a result of','caused by','triggered by','blamed','responsible for',
+  'following','after','amid','in response to','led to'
+];
+const FRAME_VERBS = [
+  'said','claimed','argued','warned','accused','criticized','praised','announced','ordered','blocked',
+  'dispersed','clashed','attacked','protested','rallied','demanded','defended','rejected','approved',
+  'condemned','urged','called','restricted','arrested','killed','injured','supported','opposed'
+];
+const FRAME_ACTOR_STOP = new Set([
+  'the','a','an','this','that','these','those','it','they','he','she','there','article','report'
+]);
+
+function sentences(text){
+  return String(text||'').replace(/\s+/g,' ').trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+}
+function wordsLower(text){
+  return (String(text||'').toLowerCase().match(/[a-z][a-z'-]*/g)||[]);
+}
+function unique(arr){return [...new Set(arr.filter(Boolean))];}
+
+function extractActors(text){
+  const sents=sentences(text).slice(0,8);
+  const actors=[];
+  sents.forEach(s=>{
+    const patterns=[
+      /^([A-Z][A-Za-z&.\-]*(?:\s+[A-Z][A-Za-z&.\-]*){0,3})\s+(?:said|says|warned|argued|announced|criticized|praised|ordered|called|urged|accused|defended|rejected|approved|condemned|protested|rallied|clashed|attacked|dispersed|blocked|arrested|supported|opposed)\b/,
+      /\b(the\s+[A-Za-z][A-Za-z\-]*(?:\s+[A-Za-z][A-Za-z\-]*){0,3})\s+(?:said|warned|argued|announced|criticized|ordered|called|urged|accused|defended|rejected|approved|protested|rallied|clashed|attacked|dispersed|blocked|arrested|supported|opposed)\b/i
+    ];
+    patterns.forEach(p=>{
+      const m=s.match(p);
+      if(m && m[1]){
+        const a=m[1].trim().replace(/\s+/g,' ');
+        if(!FRAME_ACTOR_STOP.has(a.toLowerCase())) actors.push(a);
+      }
+    });
+  });
+  return unique(actors).slice(0,4);
+}
+
+function extractVerbs(text){
+  const wl=wordsLower(text);
+  const found=[];
+  FRAME_VERBS.forEach(v=>{
+    const c=wl.filter(x=>x===v).length;
+    if(c) found.push({v,c});
+  });
+  return found.sort((a,b)=>b.c-a.c).slice(0,5).map(x=>x.v);
+}
+
+function extractEvaluation(text){
+  const wl=wordsLower(text);
+  const found=FRAME_EVAL_WORDS.filter(w=>wl.includes(w));
+  return unique(found).slice(0,6);
+}
+
+function extractCause(text){
+  const lower=text.toLowerCase();
+  const marker=FRAME_CAUSE_MARKERS.find(m=>lower.includes(m));
+  if(!marker) return '';
+  const i=lower.indexOf(marker);
+  const snippet=text.slice(Math.max(0,i-55),Math.min(text.length,i+120)).replace(/\s+/g,' ').trim();
+  return `"${snippet}"`;
+}
+
+function inferOmission(text){
+  const lower=text.toLowerCase();
+  const checks=[];
+  if(!/\b(official|government|police|authority|minister|agency)\b/.test(lower)) checks.push('official/authority perspective not visible');
+  if(!/\b(protester|demonstrator|resident|student|worker|citizen|refugee|migrant|community)\b/.test(lower)) checks.push('affected-group perspective not visible');
+  if(!/\b(data|figure|percent|percentage|survey|study|report|evidence)\b/.test(lower)) checks.push('quantitative/contextual evidence limited');
+  if(!/\b(because|due to|reason|cause|background|history|context)\b/.test(lower)) checks.push('background/causal context limited');
+  return checks.slice(0,2).join('; ');
+}
+
+function inferOverallFrame(actors,verbs,evals,text){
+  const lower=text.toLowerCase();
+  if(verbs.includes('clashed') || evals.some(x=>['violent','chaos','dangerous','aggressive'].includes(x))) return 'Conflict / disorder frame';
+  if(verbs.includes('dispersed') || verbs.includes('arrested') || lower.includes('security forces')) return 'Authority / security-response frame';
+  if(verbs.includes('criticized') || verbs.includes('condemned') || evals.includes('unfair')) return 'Accountability / criticism frame';
+  if(verbs.includes('supported') || verbs.includes('praised') || evals.includes('successful')) return 'Support / achievement frame';
+  if(lower.includes('rights') || lower.includes('humanitarian') || lower.includes('victim')) return 'Human impact / rights frame';
+  if(lower.includes('economic') || lower.includes('cost') || lower.includes('market')) return 'Economic consequence frame';
+  if(actors.length) return `Actor-centered frame: ${actors[0]}`;
+  return 'Descriptive / mixed frame';
+}
+
+function autoAnalyzeArticle(title,body){
+  const text=[title,body].filter(Boolean).join('. ');
+  if(!text.trim()) return null;
+  const actors=extractActors(text);
+  const verbs=extractVerbs(text);
+  const evals=extractEvaluation(text);
+  const cause=extractCause(text);
+  const omission=inferOmission(text);
+  const overall=inferOverallFrame(actors,verbs,evals,text);
+  return {
+    actor: actors.length ? `${actors.join(', ')} · foregrounded as main actor(s)` : 'Main actor unclear — verify headline/lead',
+    action: verbs.length ? `${verbs.join(', ')} · compare verb choice and agency` : 'No salient action verb automatically detected',
+    eval: evals.length ? `${evals.join(', ')} · possible evaluative/loaded wording` : 'Mostly neutral wording detected — verify manually',
+    cause: cause || 'No explicit causal/responsibility marker detected',
+    omit: omission || 'No obvious omission detected automatically — compare with other articles',
+    overall
+  };
+}
+
+function setMatrixCell(r,c,value){
+  const cell=document.querySelector(`.mcell[data-r="${r}"][data-c="${c}"]`);
+  if(!cell) return;
+  if(cell.dataset.userEdited==='1' && cell.value.trim()) return; // preserve student edits
+  cell.value=value||'';
+  cell.classList.add('autoFilled');
+  cell.classList.remove('userEdited');
+  cell.dataset.autoFilled='1';
+  cell.dispatchEvent(new Event('input',{bubbles:true}));
+}
+
+function extractFrameMatrix(force=false){
+  const articles=[
+    {title:vsel('#srcA'),body:vsel('#artA')},
+    {title:vsel('#srcB'),body:vsel('#artB')},
+    {title:vsel('#srcC'),body:vsel('#artC')}
+  ];
+  let count=0;
+  articles.forEach((a,c)=>{
+    const res=autoAnalyzeArticle(a.title,a.body);
+    if(!res) return;
+    const vals=[res.actor,res.action,res.eval,res.cause,res.omit,res.overall];
+    vals.forEach((v,r)=>{
+      const cell=document.querySelector(`.mcell[data-r="${r}"][data-c="${c}"]`);
+      if(force && cell){ cell.dataset.userEdited='0'; }
+      setMatrixCell(r,c,v);
+    });
+    count++;
+  });
+  $('#frameExtractStatus').innerHTML = count
+    ? `✓ ${count}개 기사에서 Matrix 초안을 자동 추출했습니다. <b>학생이 원문과 반드시 대조·수정하세요.</b>`
+    : '기사 제목 또는 본문이 없습니다. A/B/C에 기사를 먼저 넣으세요.';
+  scheduleAutoExtract();
+}
+
+$('#autoExtractFrame').addEventListener('click',()=>extractFrameMatrix(true));
+
+$('#clearFrameMatrix').addEventListener('click',()=>{
+  $$('.mcell').forEach(cell=>{
+    cell.value='';
+    cell.classList.remove('autoFilled','userEdited');
+    cell.dataset.autoFilled='0';
+    cell.dataset.userEdited='0';
+  });
+  $('#frameExtractStatus').textContent='Matrix를 비웠습니다. 기사 입력 후 AUTO-EXTRACT MATRIX를 누르세요.';
+  scheduleAutoExtract();
+});
+
+// Student edits override auto-extracted suggestions.
+$$('.mcell').forEach(cell=>{
+  cell.addEventListener('input',e=>{
+    if(document.activeElement===cell){
+      cell.dataset.userEdited='1';
+      cell.classList.remove('autoFilled');
+      cell.classList.add('userEdited');
+    }
+  });
+});
+
+// Debounced automatic extraction from article title/body changes.
+let frameAutoTimer=null;
+['#srcA','#srcB','#srcC','#artA','#artB','#artC'].forEach(id=>{
+  const el=document.querySelector(id);
+  if(el) el.addEventListener('input',()=>{
+    clearTimeout(frameAutoTimer);
+    frameAutoTimer=setTimeout(()=>extractFrameMatrix(false),700);
+  });
+});
+
+$('#sampleNews').addEventListener('click',()=>{
+ $('#srcA').value='Source A · Protest headline'; $('#urlA').value=''; $('#artA').value='Protesters clashed with police after thousands gathered in the capital. Officials said several roads were blocked and public services were disrupted.';
+ $('#srcB').value='Source B · Security response headline'; $('#urlB').value=''; $('#artB').value='Police dispersed demonstrators after a large rally in the capital. Organizers said the march remained peaceful until security forces moved into the crowd.';
+ $('#srcC').value='Source C · Policy dispute headline'; $('#urlC').value=''; $('#artC').value='Thousands rallied against the new policy as authorities tightened security in central districts. The government defended the measure, while rights groups called for further dialogue.';
+ setTimeout(()=>extractFrameMatrix(true),120);
+});
+$('#clearNews').addEventListener('click',()=>{$$('#news input,#news textarea').forEach(x=>x.value='');initMatrix();});
+$('#checkNews').addEventListener('click',()=>{
+ const t=$('#newsWrite').value;
+ let m=[]; if(words(t)<35)m.push('비교 문단을 35단어 이상으로 확장하세요.');
+ if(!hasAny(t,['whereas','while','although','however','in contrast','compared']))m.push('whereas/while/however 같은 contrast marker를 사용하세요.');
+ if(!hasAny(t,['foreground','frame','emphas','word','verb','omit','absence','focus']))m.push('프레이밍을 설명하는 분석 어휘를 추가하세요.');
+ if(!(t.includes('"')||t.includes("'")))m.push('기사의 실제 단어/표현을 따옴표로 인용해 lexical evidence를 남겨 보세요.');
+ $('#newsFeedback').innerHTML=(m.length?m:['좋습니다. 이제 “무엇이 빠졌는가?”를 한 문장 더 확인하면 비판적 읽기가 강화됩니다.']).map(x=>'• '+escapeHtml(x)).join('<br>');
+});
+
+// ---------- Perspectives ----------
+const people=['Student','Teacher','Parent','Policy maker','AI company','University researcher'];
+function makePersonas(){
+ const box=$('#personaList');box.innerHTML='';
+ people.forEach((p,i)=>{const d=document.createElement('div');d.className='persona';d.innerHTML=`<strong>${p}</strong><label>Possible benefit</label><textarea class="pbenefit" data-i="${i}" placeholder="${p} may value..."></textarea><label>Possible concern</label><textarea class="pconcern" data-i="${i}" placeholder="${p} may worry that..."></textarea>`;box.appendChild(d);});
+ drawNetwork();
+}
+function drawNetwork(){
+ const n=$('#network');n.innerHTML='';
+ const w=n.clientWidth||500,h=330,cx=w/2,cy=h/2;
+ const center=document.createElement('div');center.className='node';center.style.left=cx+'px';center.style.top=cy+'px';center.style.borderColor='#111827';center.textContent='GLOBAL ISSUE';n.appendChild(center);
+ people.forEach((p,i)=>{
+   const a=(Math.PI*2*i/people.length)-Math.PI/2, x=cx+Math.cos(a)*Math.min(155,w*.34),y=cy+Math.sin(a)*120;
+   const len=Math.hypot(x-cx,y-cy),ang=Math.atan2(y-cy,x-cx)*180/Math.PI;
+   const e=document.createElement('div');e.className='edge';e.style.left=cx+'px';e.style.top=cy+'px';e.style.width=len+'px';e.style.transform=`rotate(${ang}deg)`;n.appendChild(e);
+   const d=document.createElement('div');d.className='node';d.style.left=x+'px';d.style.top=y+'px';d.textContent=p;n.appendChild(d);
+ });
+}
+$('#samplePersp').addEventListener('click',makePersonas); makePersonas();
+window.addEventListener('resize',()=>{if($('#perspective').classList.contains('active'))drawNetwork();});
+
+// ---------- Data ----------
+let currentData=[];
+const sampleSeries=[{y:2010,v:2.5},{y:2012,v:2.8},{y:2014,v:3.4},{y:2016,v:4.1},{y:2018,v:5.2},{y:2020,v:6.7},{y:2022,v:8.1}];
+function drawChart(data){
+ currentData=data.filter(d=>Number.isFinite(d.v)).sort((a,b)=>a.y-b.y);
+ const svg=$('#chart');svg.innerHTML=''; if(!currentData.length){svg.innerHTML='<text x="50%" y="50%" text-anchor="middle">No data</text>';return}
+ const W=760,H=300,p={l:55,r:20,t:20,b:42}, vals=currentData.map(d=>d.v),yrs=currentData.map(d=>d.y);
+ let min=Math.min(...vals),max=Math.max(...vals); if(min===max){min-=1;max+=1}
+ const x=y=>p.l+(y-Math.min(...yrs))/(Math.max(...yrs)-Math.min(...yrs)||1)*(W-p.l-p.r);
+ const yy=v=>H-p.b-(v-min)/(max-min)*(H-p.t-p.b);
+ for(let k=0;k<=4;k++){const v=min+(max-min)*k/4,Y=yy(v);svg.insertAdjacentHTML('beforeend',`<line x1="${p.l}" y1="${Y}" x2="${W-p.r}" y2="${Y}" stroke="#e5e7eb"/><text x="${p.l-8}" y="${Y+4}" font-size="11" text-anchor="end" fill="#64748b">${v.toFixed(1)}</text>`)}
+ const pts=currentData.map(d=>`${x(d.y)},${yy(d.v)}`).join(' ');
+ svg.insertAdjacentHTML('beforeend',`<polyline points="${pts}" fill="none" stroke="#4361ee" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`);
+ currentData.forEach((d,i)=>{if(i===0||i===currentData.length-1||i%Math.ceil(currentData.length/5)===0)svg.insertAdjacentHTML('beforeend',`<circle cx="${x(d.y)}" cy="${yy(d.v)}" r="5" fill="#fff" stroke="#4361ee" stroke-width="3"/><text x="${x(d.y)}" y="${H-14}" font-size="11" text-anchor="middle" fill="#64748b">${d.y}</text>`);});
+}
+drawChart(sampleSeries);
+$('#sampleData').addEventListener('click',()=>{drawChart(sampleSeries);$('#dataStatus').textContent='샘플 시계열을 사용 중입니다.';});
+$('#loadWB').addEventListener('click',async()=>{
+ const ind=$('#indicator').value,c=$('#country').value;
+ $('#dataStatus').textContent='Loading World Bank data...';
+ try{
+  const r=await fetch(`https://api.worldbank.org/v2/country/${c}/indicator/${ind}?format=json&per_page=100`);
+  const j=await r.json(); const rows=(j[1]||[]).filter(x=>x.value!=null).map(x=>({y:+x.date,v:+x.value})).filter(x=>x.y>=2000);
+  if(!rows.length)throw new Error('no data');drawChart(rows);$('#dataStatus').textContent=`${c} · ${ind} · ${rows.length} observations loaded.`;
+ }catch(e){drawChart(sampleSeries);$('#dataStatus').textContent='API 연결이 제한되어 샘플 데이터로 전환했습니다.';}
+});
+$('#checkCEIQ').addEventListener('click',()=>{
+ const c=$('#claim').value,e=$('#evidence').value,i=$('#implication').value,q=$('#question').value;let m=[];
+ if(words(c)<6)m.push('Claim을 완전한 주장 문장으로 쓰세요.');
+ if(!/\d/.test(e))m.push('Evidence에는 실제 숫자·연도·비율 중 하나 이상을 넣으세요.');
+ if(!hasAny(i,['may','might','could','suggest','indicate']))m.push('Implication에는 may/might/could/suggest를 사용해 데이터와 해석의 경계를 표시하세요.');
+ if(hasAny(i,['proves that','caused','definitely']))m.push('인과 과장 가능성: 시계열 상관만으로 cause/prove를 단정하지 마세요.');
+ if(!hasAny(q,['however','does not','cannot','unknown','question','whether','why']))m.push('Q에는 데이터가 답하지 못하는 한계나 후속 질문을 명시하세요.');
+ $('#ceiqFeedback').innerHTML=(m.length?m:['CEIQ 구조가 잘 분리되었습니다. 발표에서는 Evidence 숫자를 천천히 강조하세요.']).map(x=>'• '+escapeHtml(x)).join('<br>');
+});
+$('#buildCEIQ').addEventListener('click',()=>{
+ $('#ceiqFinal').value=[`Claim: ${$('#claim').value.trim()}`,`Evidence: ${$('#evidence').value.trim()}`,`Implication: ${$('#implication').value.trim()}`,`Question: ${$('#question').value.trim()}`].join('\n\n');
+});
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+
+
+// ---------- Live English Writing Coach ----------
+function coachWordCount(t){
+  return String(t||'').trim().split(/\s+/).filter(Boolean).length;
+}
+function coachHas(t,arr){
+  const s=String(t||'').toLowerCase();
+  return arr.some(x=>s.includes(x));
+}
+function setCoach(id,kind,msg,next,flags=[]){
+  const box=document.querySelector('#'+id+'Coach');
+  const msgEl=box?.querySelector('.coachMsg');
+  const prog=document.querySelector('#'+id+'Progress');
+  if(!box||!msgEl||!prog) return;
+  box.classList.remove('good','warn');
+  if(kind) box.classList.add(kind);
+  msgEl.innerHTML=msg+(next?`<div class="coachNext">→ ${next}</div>`:'');
+  prog.innerHTML='';
+  flags.forEach(f=>{
+    const s=document.createElement('span');
+    s.textContent=f.label;
+    if(f.on)s.classList.add('on');
+    prog.appendChild(s);
+  });
+}
+
+function coachObservation(){
+  const t=$('#obs').value.trim(), w=coachWordCount(t);
+  const hasDetail=coachHas(t,['foreground','background','left','right','top','bottom','percent','%','number','shows','notice','see']);
+  const hasCompare=coachHas(t,['more','less','higher','lower','than','increase','decrease','compared']);
+  const hasCause=coachHas(t,['because','therefore','proves','means that','causes']);
+  let kind='',msg='',next='';
+  if(w===0){msg='보이는 사실 하나부터 짧게 적어보세요.';next='“I notice that …” 또는 “The graph shows …”로 시작해보세요.';}
+  else if(w<8){kind='warn';msg='좋은 시작입니다. 아직 관찰 정보가 조금 짧습니다.';next='색, 위치, 수치, 인물, 크기 중 한 가지를 더 추가해보세요.';}
+  else if(hasCause){kind='warn';msg='Observation에 해석이나 인과가 섞여 있을 수 있습니다.';next='because / proves / causes를 빼고 “보이는 것”만 남겨보세요.';}
+  else if(!hasDetail){msg='문장은 충분히 길지만 시각적 근거가 더 구체적이면 좋습니다.';next='“in the foreground”, “about 40%”, “on the left”처럼 보이는 단서를 하나 넣어보세요.';}
+  else {kind='good';msg='관찰과 근거가 잘 드러납니다.';next=hasCompare?'이제 이 패턴이 무엇을 시사하는지 Inference로 넘어가세요.':'비교 표현 하나를 더 넣으면 더 강해집니다.';}
+  setCoach('obs',kind,msg,next,[
+    {label:'8+ words',on:w>=8},{label:'visual detail',on:hasDetail},{label:'comparison',on:hasCompare},{label:'no overclaim',on:!hasCause&&w>0}
+  ]);
+}
+
+function coachInference(){
+  const t=$('#inf').value.trim(), w=coachWordCount(t);
+  const hedge=coachHas(t,['may','might','could','suggest','seem','appears']);
+  const over=coachHas(t,['proves','definitely','must mean','causes']);
+  const evidenceLink=coachHas(t,['because','based on','given that','as shown','this pattern','this trend']);
+  let kind='',msg='',next='';
+  if(w===0){msg='관찰한 사실에서 한 단계만 추론해보세요.';next='“This may suggest that …”로 시작하면 좋습니다.';}
+  else if(w<9){kind='warn';msg='추론이 아직 짧습니다.';next='“왜 그렇게 생각했는지” 근거 연결 표현을 한 구절 더 붙여보세요.';}
+  else if(over){kind='warn';msg='추론을 너무 확정적으로 말하고 있습니다.';next='proves / definitely 대신 may / might / could를 사용해보세요.';}
+  else if(!hedge){kind='warn';msg='추론 표시어가 필요합니다.';next='may suggest / might indicate / could mean 중 하나를 넣어보세요.';}
+  else if(!evidenceLink){msg='좋은 추론입니다. 이제 근거와 더 단단히 연결해보세요.';next='“This may suggest … because …” 구조로 한 번 확장해보세요.';}
+  else {kind='good';msg='추론과 근거 연결이 잘 드러납니다.';next='다음은 “왜 중요한가?”를 Interpretation에서 설명해보세요.';}
+  setCoach('inf',kind,msg,next,[
+    {label:'9+ words',on:w>=9},{label:'hedging',on:hedge},{label:'evidence link',on:evidenceLink},{label:'no overclaim',on:!over&&w>0}
+  ]);
+}
+
+function coachInterpretation(){
+  const t=$('#interp').value.trim(), w=coachWordCount(t);
+  const why=coachHas(t,['because','matters','important','impact','implication','means for','affect']);
+  const limit=coachHas(t,['however','although','cannot','does not tell','alone']);
+  const depth=coachHas(t,['social','economic','environmental','educational','cultural','policy','future']);
+  let kind='',msg='',next='';
+  if(w===0){msg='이 시각자료가 왜 중요한지 한 문장으로 설명해보세요.';next='“This matters because …”로 시작할 수 있습니다.';}
+  else if(w<10){kind='warn';msg='의미 설명이 아직 짧습니다.';next='누구에게, 왜, 어떤 영향을 줄 수 있는지 한 요소를 더 넣어보세요.';}
+  else if(!why){msg='해석은 있지만 중요성이 충분히 드러나지 않습니다.';next='“This matters because …” 또는 “One implication is …”를 추가해보세요.';}
+  else if(!limit){msg='좋습니다. 이제 해석의 한계까지 보여주면 더 비판적으로 보입니다.';next='“However, the visual alone cannot show …” 같은 한계 문장을 덧붙여보세요.';}
+  else {kind='good';msg='의미와 한계를 모두 잘 다뤘습니다.';next='Draft 1으로 묶은 뒤 표현을 더 자연스럽게 다듬어보세요.';}
+  setCoach('interp',kind,msg,next,[
+    {label:'10+ words',on:w>=10},{label:'why it matters',on:why},{label:'context depth',on:depth},{label:'limitation',on:limit}
+  ]);
+}
+
+function coachDraft(){
+  const t=$('#visualDraft').value.trim(), w=coachWordCount(t);
+  const obs=coachHas(t,['shows','notice','see','visible','foreground','background','%']);
+  const inf=coachHas(t,['may','might','could','suggest']);
+  const interp=coachHas(t,['matters','because','implication','however','although']);
+  let kind='',msg='',next='';
+  if(w===0){msg='Observation, Inference, Interpretation을 먼저 작성한 뒤 초안을 만들어보세요.';}
+  else if(w<25){kind='warn';msg='초안이 조금 짧습니다.';next='관찰 근거 + 추론 + 중요성을 각각 한 문장씩 갖추도록 확장해보세요.';}
+  else if(!(obs&&inf&&interp)){msg='초안 안에 세 단계 중 빠진 요소가 있습니다.';next='보이는 사실, 추론 표시어, 중요성 설명이 모두 있는지 확인하세요.';}
+  else {kind='good';msg='구조가 잘 갖춰진 초안입니다.';next='이제 Revision에서 더 정확하고 자연스럽게 자기 언어로 바꿔보세요.';}
+  setCoach('visualDraft',kind,msg,next,[
+    {label:'25+ words',on:w>=25},{label:'observation',on:obs},{label:'inference',on:inf},{label:'interpretation',on:interp}
+  ]);
+}
+
+function coachRevision(){
+  const draft=$('#visualDraft').value.trim(), t=$('#visualRevision').value.trim();
+  const w=coachWordCount(t), changed=draft && t && draft!==t;
+  const precision=coachHas(t,['may','might','could','suggest','however','although']);
+  const own=coachHas(t,['in my view','this matters','one possible','this pattern','this suggests']);
+  let kind='',msg='',next='';
+  if(w===0){msg='초안에서 한 부분만 바꿔도 좋습니다.';next='더 정확한 단어 하나, 근거 하나, 또는 한계 문장 하나를 추가해보세요.';}
+  else if(!changed){kind='warn';msg='수정본이 초안과 거의 같습니다.';next='표현 하나를 더 정확하게 바꾸거나 근거를 하나 추가해보세요.';}
+  else if(w<20){msg='수정은 시작되었습니다.';next='왜 바꿨는지 드러날 만큼 문장을 조금 더 확장해보세요.';}
+  else {kind='good';msg='초안과 다른 수정 흔적이 잘 보입니다.';next='Reflection에서 무엇을 왜 바꿨는지 설명해보세요.';}
+  setCoach('visualRevision',kind,msg,next,[
+    {label:'changed',on:changed},{label:'20+ words',on:w>=20},{label:'precision',on:precision},{label:'own voice',on:own}
+  ]);
+}
+
+function coachReflection(){
+  const t=$('#visualReflect').value.trim(), w=coachWordCount(t);
+  const changed=coachHas(t,['changed','revised','added','removed','replaced']);
+  const reason=coachHas(t,['because','so that','to make','more accurate','clearer','evidence']);
+  let kind='',msg='',next='';
+  if(w===0){msg='수정한 이유를 짧게 돌아보세요.';next='“I changed ___ because ___.”로 시작해보세요.';}
+  else if(w<10){kind='warn';msg='성찰이 아직 짧습니다.';next='무엇을 바꿨는지 + 왜 바꿨는지 둘 다 적어보세요.';}
+  else if(!(changed&&reason)){msg='수정 내용 또는 이유 중 하나가 빠져 있습니다.';next='changed/revised/added + because 구조를 넣어보세요.';}
+  else {kind='good';msg='수정 이유가 잘 드러나는 성찰입니다.';next='이제 학습 증거로 저장해도 좋습니다.';}
+  setCoach('visualReflect',kind,msg,next,[
+    {label:'10+ words',on:w>=10},{label:'what changed',on:changed},{label:'why changed',on:reason}
+  ]);
+}
+
+[
+  ['#obs',coachObservation],
+  ['#inf',coachInference],
+  ['#interp',coachInterpretation],
+  ['#visualDraft',coachDraft],
+  ['#visualRevision',coachRevision],
+  ['#visualReflect',coachReflection]
+].forEach(([id,fn])=>{
+  const el=$(id);
+  if(el){
+    el.addEventListener('input',fn);
+    fn();
+  }
+});
+
+
+// ---------- Final Long-form Feedback + PDF ----------
+function sentenceCount(text){
+  return String(text||'').split(/[.!?]+/).map(x=>x.trim()).filter(Boolean).length;
+}
+function pctScore(value,max){ return Math.max(0,Math.min(max,value)); }
+
+function buildFinalFeedback(){
+  const o=$('#obs').value.trim();
+  const i=$('#inf').value.trim();
+  const p=$('#interp').value.trim();
+  const d=$('#visualDraft').value.trim();
+  const r=$('#visualRevision').value.trim();
+  const ref=$('#visualReflect').value.trim();
+
+  const ow=coachWordCount(o), iw=coachWordCount(i), pw=coachWordCount(p), rw=coachWordCount(r), refw=coachWordCount(ref);
+
+  const obsDetail=coachHas(o,['foreground','background','left','right','top','bottom','percent','%','number','shows','notice','see']);
+  const obsCompare=coachHas(o,['more','less','higher','lower','than','increase','decrease','compared']);
+  const obsOver=coachHas(o,['because','therefore','proves','means that','causes']);
+
+  const infHedge=coachHas(i,['may','might','could','suggest','seem','appears']);
+  const infEvidence=coachHas(i,['because','based on','given that','as shown','this pattern','this trend']);
+  const infOver=coachHas(i,['proves','definitely','must mean','causes']);
+
+  const intWhy=coachHas(p,['because','matters','important','impact','implication','means for','affect']);
+  const intLimit=coachHas(p,['however','although','cannot','does not tell','alone']);
+  const intDepth=coachHas(p,['social','economic','environmental','educational','cultural','policy','future']);
+
+  const revised=!!(d && r && d!==r);
+  const reflectionWhat=coachHas(ref,['changed','revised','added','removed','replaced']);
+  const reflectionWhy=coachHas(ref,['because','so that','to make','more accurate','clearer','evidence']);
+
+  let evidenceScore=0;
+  evidenceScore += ow>=8?8:ow>=4?4:0;
+  evidenceScore += obsDetail?7:0;
+  evidenceScore += obsCompare?5:0;
+  evidenceScore += !obsOver && ow>0?5:0;
+
+  let reasoningScore=0;
+  reasoningScore += iw>=9?6:iw>=5?3:0;
+  reasoningScore += infHedge?6:0;
+  reasoningScore += infEvidence?5:0;
+  reasoningScore += !infOver && iw>0?3:0;
+
+  let interpretationScore=0;
+  interpretationScore += pw>=10?5:pw>=5?2:0;
+  interpretationScore += intWhy?5:0;
+  interpretationScore += intDepth?5:0;
+  interpretationScore += intLimit?5:0;
+
+  let revisionScore=0;
+  revisionScore += revised?7:0;
+  revisionScore += rw>=20?4:rw>=10?2:0;
+  revisionScore += reflectionWhat?2:0;
+  revisionScore += reflectionWhy?2:0;
+
+  const englishScore=Math.min(20,Math.round((ow+iw+pw+rw+refw)/6));
+
+  const total=Math.round(
+    pctScore(evidenceScore,25)+
+    pctScore(reasoningScore,20)+
+    pctScore(interpretationScore,20)+
+    pctScore(revisionScore,15)+
+    pctScore(englishScore,20)
+  );
+
+  const level=total>=85?'Advanced Evidence-based Writer':
+              total>=70?'Developing Critical Writer':
+              total>=55?'Emerging Analytical Writer':'Beginning Evidence Writer';
+
+  const strengths=[];
+  if(obsDetail) strengths.push('시각자료에서 구체적인 세부 정보를 근거로 사용하려는 시도가 보입니다.');
+  if(obsCompare) strengths.push('비교·변화 표현을 사용해 관찰 내용을 단순 묘사보다 한 단계 구체화했습니다.');
+  if(infHedge) strengths.push('may / might / could / suggest와 같은 hedging을 사용해 추론을 사실처럼 단정하지 않았습니다.');
+  if(infEvidence) strengths.push('추론을 관찰 근거와 연결하려는 문장 구조가 나타납니다.');
+  if(intWhy) strengths.push('“왜 중요한가?”를 설명하면서 시각자료의 의미를 영어로 확장했습니다.');
+  if(intLimit) strengths.push('자료가 말해 주지 않는 한계를 인식하여 비판적 해석을 시도했습니다.');
+  if(revised) strengths.push('초안과 수정본 사이에 실제 변화가 있어 수정 과정이 학습 증거로 남았습니다.');
+  if(reflectionWhat && reflectionWhy) strengths.push('무엇을 왜 수정했는지를 성찰 문장으로 설명했습니다.');
+  if(!strengths.length) strengths.push('기본 문장을 작성하고 학습 활동에 참여한 점이 출발점입니다.');
+
+  const next=[];
+  if(ow<8) next.push('Observation을 최소 8단어 이상으로 늘리고, 위치·수치·색·인물·크기 중 1~2개를 추가하세요.');
+  if(!obsDetail) next.push('Observation에 “보이는 근거”를 더 구체적으로 넣으세요. 예: in the foreground, about 40%, on the left.');
+  if(obsOver) next.push('Observation에서는 because / proves / causes 같은 해석 표현을 줄이고, 사실 묘사와 해석을 분리하세요.');
+  if(!infHedge) next.push('Inference에는 may / might / could / suggest 중 하나를 사용해 확정성을 조절하세요.');
+  if(!infEvidence) next.push('Inference를 “This may suggest … because …”처럼 근거와 연결하세요.');
+  if(!intWhy) next.push('Interpretation에서 “This matters because …” 구조를 사용해 중요성을 한 문장 더 설명하세요.');
+  if(!intLimit) next.push('“However, the visual alone cannot show …”처럼 자료의 한계를 한 문장 추가하세요.');
+  if(!revised) next.push('Revision은 Draft와 실제로 달라야 합니다. 근거, 정확성, 어휘, 한계 중 최소 한 요소를 수정하세요.');
+  if(!(reflectionWhat&&reflectionWhy)) next.push('Reflection에서 “I changed ___ because ___.” 구조로 수정 내용과 이유를 모두 적으세요.');
+  if(!next.length) next.push('현재 구조는 잘 갖춰졌습니다. 다음 단계에서는 더 정확한 어휘 선택과 문장 간 연결성을 높여보세요.');
+
+  const overallParagraph =
+    total>=85
+    ? '전체적으로 관찰·추론·해석이 잘 분리되어 있고, 자료의 근거와 자신의 해석을 구분하려는 태도가 분명합니다. 특히 단정적 표현을 피하고 한계를 언급한 점은 높은 수준의 비판적 읽기·쓰기 수행으로 볼 수 있습니다. 다음 단계에서는 문장 간 논리적 연결성과 어휘의 정밀도를 높이면 더 설득력 있는 영어 설명이 됩니다.'
+    : total>=70
+    ? '전체적으로 핵심 구조는 잘 형성되어 있습니다. 관찰에서 해석으로 넘어가는 흐름이 보이고, 자신의 영어로 의미를 설명하려는 시도도 있습니다. 다만 일부 문장에서는 근거와 추론의 경계가 약하거나, 이유 설명이 짧게 끝나는 부분이 있습니다. 한 문장을 더 쓰기보다 “왜 그렇게 말할 수 있는지”를 근거와 연결하면 글의 질이 크게 좋아집니다.'
+    : total>=55
+    ? '기본적인 영어 문장과 분석 단계는 형성되고 있지만, 아직 관찰·추론·해석이 충분히 분리되지 않거나 근거가 구체적으로 제시되지 않는 부분이 있습니다. 현재 단계에서는 길게 쓰는 것보다 각 단계마다 한 가지 기능을 명확히 수행하는 것이 중요합니다. Observation에서는 보이는 것, Inference에서는 가능성, Interpretation에서는 중요성을 분리해서 작성해보세요.'
+    : '현재는 짧은 문장 중심으로 활동이 진행되고 있어 분석의 각 단계가 충분히 드러나지 않습니다. 먼저 완벽한 영어를 쓰려 하기보다, 관찰한 사실 하나를 정확히 적고 그다음 “This may suggest …”, “This matters because …”로 한 문장씩 확장하는 방식이 좋습니다. 문법 정확성보다 근거와 생각의 연결을 먼저 만드는 것이 중요합니다.';
+
+  const htmlFeedback=`
+    <h4>1. Overall Evaluation</h4>
+    <p><span class="overallScore">${total}/100</span><span class="levelTag">${level}</span></p>
+    <p>${overallParagraph}</p>
+
+    <h4>2. Evidence Use</h4>
+    <p>학생의 Observation은 <b>${ow} words</b>이며, 구체적 시각 단서 사용은 <b>${obsDetail?'확인됨':'추가 필요'}</b>, 비교 표현 사용은 <b>${obsCompare?'확인됨':'추가 필요'}</b>입니다. ${obsOver?'현재 문장에는 관찰 단계에서 해석 또는 인과로 읽힐 수 있는 표현이 포함되어 있으므로 사실 묘사와 해석을 더 명확히 분리하는 것이 좋습니다.':'관찰 단계에서 과도한 인과 단정은 크게 나타나지 않습니다.'}</p>
+
+    <h4>3. Inference & Reasoning</h4>
+    <p>Inference는 <b>${iw} words</b>입니다. Hedging 표현은 <b>${infHedge?'사용됨':'부족함'}</b>, 근거 연결 표현은 <b>${infEvidence?'사용됨':'부족함'}</b>입니다. ${infOver?'일부 표현은 자료가 직접 증명하지 않는 내용을 확정적으로 말할 가능성이 있습니다.':'추론의 확정성을 비교적 적절하게 조절하고 있습니다.'}</p>
+
+    <h4>4. Interpretation & Critical Literacy</h4>
+    <p>Interpretation은 <b>${pw} words</b>입니다. 중요성 설명은 <b>${intWhy?'포함됨':'추가 필요'}</b>, 사회·경제·환경·교육·문화 등 맥락 확장은 <b>${intDepth?'확인됨':'추가 가능'}</b>, 자료의 한계 언급은 <b>${intLimit?'포함됨':'추가 필요'}</b>입니다. 비판적 읽기 수준을 높이려면 “자료가 말하는 것”과 “자료만으로는 알 수 없는 것”을 함께 설명하는 것이 좋습니다.</p>
+
+    <h4>5. Revision & Ownership</h4>
+    <p>Draft와 Revision의 실제 변화는 <b>${revised?'확인됨':'충분하지 않음'}</b>입니다. Reflection에서 수정 내용을 설명한 흔적은 <b>${reflectionWhat?'있음':'부족함'}</b>, 수정 이유 설명은 <b>${reflectionWhy?'있음':'부족함'}</b>입니다. 수정의 핵심은 문장을 단순히 길게 만드는 것이 아니라, 근거·정확성·표현·한계 중 무엇이 개선되었는지 드러내는 것입니다.</p>
+
+    <h4>6. Strengths</h4>
+    <ul>${strengths.map(x=>`<li>${x}</li>`).join('')}</ul>
+
+    <h4>7. Next Writing Missions</h4>
+    <div class="nextMission"><ul>${next.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+
+    <h4>8. Evidence Snapshot</h4>
+    <div class="evidenceQuote">
+      <b>Observation</b><br>${escapeHtml(o||'(not written)')}<br><br>
+      <b>Inference</b><br>${escapeHtml(i||'(not written)')}<br><br>
+      <b>Interpretation</b><br>${escapeHtml(p||'(not written)')}<br><br>
+      <b>Revision</b><br>${escapeHtml(r||'(not written)')}<br><br>
+      <b>Reflection</b><br>${escapeHtml(ref||'(not written)')}
+    </div>
+  `;
+
+  $('#finalFeedbackOutput').innerHTML=htmlFeedback;
+  $('#finalFeedbackMeta').textContent=`Generated · ${new Date().toLocaleString()} · ${level}`;
+
+  return {total,level,htmlFeedback,o,i,p,d,r,ref};
+}
+
+function buildPdfReport(){
+  const result=buildFinalFeedback();
+  const selected=selectedAsset ? `${selectedAsset.title} · ${selectedAsset.credit||''}` : 'No visual selected';
+  $('#pdfReportBody').innerHTML=`
+    <div class="printSection">
+      <h2>1. Source / Visual</h2>
+      <div class="printBox">${escapeHtml(selected)}</div>
+    </div>
+    <div class="printSection">
+      <h2>2. Observation</h2>
+      <div class="printBox">${escapeHtml(result.o||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>3. Inference</h2>
+      <div class="printBox">${escapeHtml(result.i||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>4. Interpretation</h2>
+      <div class="printBox">${escapeHtml(result.p||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>5. Draft 1</h2>
+      <div class="printBox">${escapeHtml(result.d||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>6. Revision</h2>
+      <div class="printBox">${escapeHtml(result.r||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>7. Reflection</h2>
+      <div class="printBox">${escapeHtml(result.ref||'(not written)')}</div>
+    </div>
+    <div class="printSection">
+      <h2>8. Final Feedback</h2>
+      ${result.htmlFeedback}
+    </div>
+  `;
+  return result;
+}
+
+$('#generateFinalFeedback').addEventListener('click',()=>{
+  buildFinalFeedback();
+  scheduleAutoExtract();
+});
+
+$('#saveFinalPdf').addEventListener('click',()=>{
+  buildPdfReport();
+  setTimeout(()=>window.print(),120);
+});
+
+// ---------- Floating Dictionary / Translation Tools ----------
+function textForAssist(targetId){
+  const ta=document.getElementById(targetId);
+  if(!ta) return '';
+  const start=typeof ta.selectionStart==='number'?ta.selectionStart:0;
+  const end=typeof ta.selectionEnd==='number'?ta.selectionEnd:0;
+  const selected=(end>start)?ta.value.slice(start,end).trim():'';
+  return selected || ta.value.trim();
+}
+function openNaverFromTextarea(targetId){
+  const q=textForAssist(targetId);
+  const url=q
+    ? 'https://en.dict.naver.com/#/search?query='+encodeURIComponent(q)
+    : 'https://en.dict.naver.com/';
+  window.open(url,'_blank','noopener');
+}
+function openTranslateFromTextarea(targetId){
+  const q=textForAssist(targetId);
+  const url=q
+    ? 'https://translate.google.com/?sl=auto&tl=ko&text='+encodeURIComponent(q)+'&op=translate'
+    : 'https://translate.google.com/';
+  window.open(url,'_blank','noopener');
+}
+$$('.floatDictBtn').forEach(btn=>{
+  btn.addEventListener('click',()=>openNaverFromTextarea(btn.dataset.target));
+});
+$$('.floatTransBtn').forEach(btn=>{
+  btn.addEventListener('click',()=>openTranslateFromTextarea(btn.dataset.target));
+});
+
+// ---------- Learning Evidence Vault ----------
+function currentLabId(){ const a=document.querySelector('.lab.active'); return a?a.id:'visual'; }
+function vsel(id){ const e=document.querySelector(id); return e?e.value.trim():''; }
+
+let autoExtractTimer=null;
+let lastAutoExtractSource='';
+
+function getCurrentLabEvidence(){
+  const lab=currentLabId();
+  let evidence='',before='',after='',log='',source='';
+  if(lab==='visual'){
+    source=selectedAsset ? `Visual source: ${selectedAsset.title}${selectedAsset.credit ? ' · '+selectedAsset.credit : ''}` : 'Visual source not selected';
+    const importedSummary=importedDataset ? [
+      `Imported data: ${importedDataset.sourceName} · ${importedDataset.title} · ${importedDataset.entity}`,
+      `Data range: ${importedDataset.data[0].y}–${importedDataset.data[importedDataset.data.length-1].y}`,
+      `Start value: ${importedDataset.data[0].v}`,
+      `Latest value: ${importedDataset.data[importedDataset.data.length-1].v}`
+    ].join('\n') : '';
+    evidence=[
+      source,
+      importedSummary,
+      vsel('#obs') ? `Observation evidence: ${vsel('#obs')}` : ''
+    ].filter(Boolean).join('\n');
+    before=vsel('#visualDraft');
+    after=vsel('#visualRevision') || [vsel('#obs'),vsel('#inf'),vsel('#interp')].filter(Boolean).join(' ');
+    const checks=[
+      document.querySelector('#oiFeedback')?.textContent?.trim(),
+      document.querySelector('#evidenceLock')?.textContent?.trim()
+    ].filter(Boolean);
+    log=checks.join('\n');
+  } else if(lab==='news'){
+    source=[
+      vsel('#srcA') ? `A: ${vsel('#srcA')}${vsel('#urlA') ? ' · '+vsel('#urlA') : ''}` : '',
+      vsel('#srcB') ? `B: ${vsel('#srcB')}${vsel('#urlB') ? ' · '+vsel('#urlB') : ''}` : '',
+      vsel('#srcC') ? `C: ${vsel('#srcC')}${vsel('#urlC') ? ' · '+vsel('#urlC') : ''}` : ''
+    ].filter(Boolean).join(' | ');
+    const matrix=$$('.mcell').map((x,i)=>{
+      if(!x.value.trim()) return '';
+      const provenance=x.dataset.userEdited==='1'?'student-verified/edited':(x.dataset.autoFilled==='1'?'auto-extracted draft':'student entry');
+      return `${lenses[Math.floor(i/3)]} · ${['A','B','C'][i%3]} [${provenance}]: ${x.value.trim()}`;
+    }).filter(Boolean);
+    evidence=[source?`Sources: ${source}`:'',...matrix].filter(Boolean).join('\n');
+    before=[vsel('#artA'),vsel('#artB'),vsel('#artC')].filter(Boolean).join('\n---\n');
+    after=vsel('#newsWrite');
+    log=document.querySelector('#newsFeedback')?.textContent?.trim() || '';
+  } else if(lab==='perspective'){
+    source=vsel('#issue') ? `Issue: ${vsel('#issue')}` : '';
+    const views=[];
+    $$('.persona').forEach((p,i)=>{
+      const b=p.querySelector('.pbenefit')?.value.trim()||'';
+      const c=p.querySelector('.pconcern')?.value.trim()||'';
+      if(b||c) views.push(`${people[i]} — Benefit: ${b || '-'} / Concern: ${c || '-'}`);
+    });
+    evidence=[source,...views].filter(Boolean).join('\n');
+    before='';
+    after=[vsel('#perspWrite'),vsel('#perspReflect')].filter(Boolean).join('\n');
+    log='Perspective comparison / synthesis / reflection evidence auto-extracted.';
+  } else if(lab==='climate'){
+    const ind=document.querySelector('#indicator')?.selectedOptions[0]?.textContent||'';
+    const country=document.querySelector('#country')?.selectedOptions[0]?.textContent||'';
+    source=`Data source: World Bank / ${country} / ${ind}`;
+    const range=currentData.length ? `Loaded data range: ${currentData[0].y}–${currentData[currentData.length-1].y}; ${currentData.length} observations` : '';
+    evidence=[source,range,vsel('#evidence')?`Student numerical evidence: ${vsel('#evidence')}`:''].filter(Boolean).join('\n');
+    before=[vsel('#claim'),vsel('#implication')].filter(Boolean).join('\n');
+    after=vsel('#ceiqFinal') || [vsel('#claim'),vsel('#evidence'),vsel('#implication'),vsel('#question')].filter(Boolean).join('\n');
+    log=document.querySelector('#ceiqFeedback')?.textContent?.trim() || '';
+  }
+  return {lab,evidence,before,after,log,source};
+}
+
+function autoExtractEvidence(force=false){
+  const rec=getCurrentLabEvidence();
+  const hasAny=[rec.evidence,rec.before,rec.after,rec.log].some(Boolean);
+  if(!hasAny && !force) return;
+
+  if(rec.evidence) $('#vaultEvidence').value=rec.evidence;
+  if(rec.before) $('#vaultBefore').value=rec.before;
+  if(rec.after) $('#vaultAfter').value=rec.after;
+  if(rec.log) $('#vaultLog').value=rec.log;
+
+  const now=new Date();
+  lastAutoExtractSource=rec.lab;
+  const meta=$('#autoExtractMeta');
+  if(meta) meta.textContent=`최근 자동 추출: ${rec.lab.toUpperCase()} Lab · ${now.toLocaleTimeString()} · ${evidenceCount()}개 증거 유형 감지`;
+  $('#vaultStatus').textContent=`AUTO-EXTRACTED · ${rec.lab.toUpperCase()} Lab의 학습 증거가 자동 갱신되었습니다.`;
+  const vault=document.querySelector('#evidenceVault');
+  if(vault){vault.classList.remove('autoflash'); void vault.offsetWidth; vault.classList.add('autoflash');}
+}
+
+function scheduleAutoExtract(){
+  clearTimeout(autoExtractTimer);
+  autoExtractTimer=setTimeout(()=>autoExtractEvidence(false),350);
+}
+
+function evidenceCount(){ return ['#vaultEvidence','#vaultBefore','#vaultAfter','#vaultLog'].filter(x=>vsel(x)).length; }
+
+function recordObject(){
+  return {
+    app:'Global English Thinking Lab',
+    savedAt:new Date().toISOString(),
+    lab:lastAutoExtractSource || currentLabId(),
+    educationGoal:'학생이 실제 뉴스·이미지·그래프·통계 자료에서 근거를 선택·비교·검증한 뒤, 해석을 수정하고 자신의 영어로 설명할 수 있다.',
+    evidenceSelected:vsel('#vaultEvidence'),
+    beforeRevision:vsel('#vaultBefore'),
+    afterRevisionOwnWords:vsel('#vaultAfter'),
+    analysisLog:vsel('#vaultLog'),
+    autoExtracted:true
+  };
+}
+function dl(name,text,type){
+  const blob=new Blob([text],{type:type||'text/plain;charset=utf-8'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+// Manual refresh remains available, but normal workflow is automatic.
+$('#collectEvidence').addEventListener('click',()=>autoExtractEvidence(true));
+
+$('#saveEvidence').addEventListener('click',()=>{
+  autoExtractEvidence(true);
+  if(evidenceCount()<2){$('#vaultStatus').textContent='저장 불가: 자동 추출된 학습 증거가 2개 미만입니다. 학생이 근거 선택·수정·자기언어화 활동을 더 진행하세요.';return;}
+  const r=recordObject();
+  dl(`learning_evidence_${r.lab}.json`,JSON.stringify(r,null,2),'application/json;charset=utf-8');
+  $('#vaultStatus').textContent=`저장 완료: ${evidenceCount()}개 유형의 자동 추출 학습 증거가 포함되었습니다.`;
+});
+
+$('#exportTxt').addEventListener('click',()=>{
+  autoExtractEvidence(true);
+  if(evidenceCount()<2){$('#vaultStatus').textContent='내보내기 전 자동 추출 가능한 학습 증거가 최소 2개 필요합니다.';return;}
+  const r=recordObject();
+  const text=`GLOBAL ENGLISH THINKING LAB
+
+교육목표
+${r.educationGoal}
+
+LAB
+${r.lab}
+
+AUTO-EXTRACT
+ON
+
+1. 선택한 근거
+${r.evidenceSelected}
+
+2. 수정 전
+${r.beforeRevision}
+
+3. 수정 후 · 자기언어화
+${r.afterRevisionOwnWords}
+
+4. AI/분석 사용 로그
+${r.analysisLog}
+`;
+  dl(`learning_report_${r.lab}.txt`,text,'text/plain;charset=utf-8');
+  $('#vaultStatus').textContent='자동 추출 학습 보고서를 내보냈습니다.';
+});
+
+// Watch all student inputs inside the four labs.
+$$('.lab input,.lab textarea,.lab select').forEach(el=>{
+  el.addEventListener('input',scheduleAutoExtract);
+  el.addEventListener('change',scheduleAutoExtract);
+});
+
+// Watch navigation so switching labs refreshes the vault from that lab.
+$$('.labbtn').forEach(btn=>btn.addEventListener('click',()=>setTimeout(()=>autoExtractEvidence(false),80)));
+
+// Hook important action buttons whose results are generated programmatically.
+[
+  '#checkOII','#makeDraft','#checkNews','#sampleNews','#clearNews',
+  '#samplePersp','#checkCEIQ','#buildCEIQ','#sampleData','#loadWB',
+  '#imageSearch','#loadCustom','#loadOWID','#loadWBVisual','#searchNewsLinks','#autoExtractFrame'
+].forEach(id=>{
+  const el=document.querySelector(id);
+  if(el) el.addEventListener('click',()=>setTimeout(()=>autoExtractEvidence(false),500));
+});
+
+// Observe programmatic feedback text changes.
+['#oiFeedback','#evidenceLock','#newsFeedback','#ceiqFeedback','#dataStatus'].forEach(id=>{
+  const el=document.querySelector(id);
+  if(el && typeof MutationObserver!=='undefined'){
+    const obsr=new MutationObserver(scheduleAutoExtract);
+    obsr.observe(el,{childList:true,subtree:true,characterData:true});
+  }
+});
+
+// Initial attempt after page load.
+setTimeout(()=>autoExtractEvidence(false),500);
+</script>
+</body>
+</html>
