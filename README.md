@@ -19,6 +19,13 @@ AIEDAP 전문성 강화연수(영어교과 심화) 5차시용 자료. 교재 제
 | `Prompting_Thinking_Lab_Research.html` | **Prompting Thinking Lab Research+** — 질문 자동생성 · CoT/ToT/L2M/Decomposed 비교 · PL·TGV·WT 자동 코딩 · Gemini Graph Runner |
 | `AIEDAP_English_WebApp_Innovation_Planner.html` | **WebApp Innovation Planner** — 나만의 AI 융합 영어 WebApp 7단계 기획 위저드. API·키 불필요 |
 
+### 별도 배포 웹앱 (다른 저장소)
+
+| 도구 | 링크 |
+|---|---|
+| English Teacher Harness Engineering + Distractor Lab | https://irenechey820712-star.github.io/english-teacher-harness-lab/ |
+| EFL 리딩 그래프 | https://irenechey820712-star.github.io/efl-reading-graph/ |
+
 ## 사용
 
 각 파일은 단일 HTML. 브라우저(Chrome 권장)에서 바로 열립니다. 설치·빌드 없음.
