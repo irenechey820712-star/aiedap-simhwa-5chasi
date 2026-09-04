@@ -16,6 +16,28 @@ input,textarea,select{width:100%;border:1px solid #cec7b7;border-radius:11px;bac
 .ideaFilters{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.ideaFilter{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:.7rem;font-weight:900}.ideaFilter.active{background:var(--navy);color:#fff;border-color:var(--navy)}.ideaMeta{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}.metaTag{font:800 .64rem ui-monospace,monospace;border-radius:999px;padding:4px 6px;background:#eef4f0;border:1px solid #d8e3dc}.metaTag.fusion{background:#fff0f6;border-color:#f1c1d3}.ideaCard{display:flex;flex-direction:column;min-height:245px}.ideaCard .ideaAction{margin-top:auto}.ideaCard .micro{font-size:.67rem;line-height:1.5;color:#5f6a79;background:#f7f6f1;border-radius:9px;padding:7px;margin-top:7px}
 
 .ideaCards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}@media(max-width:960px){.ideaCards{grid-template-columns:1fr}}.ideaCard{border:1px solid var(--line);border-radius:13px;padding:11px;background:#fff}.ideaCard button{margin-top:8px}.ideaCard h4{margin:0;font-size:.92rem}.ideaCard p{font-size:.72rem;color:var(--muted);line-height:1.55}.preview{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;line-height:1.55;background:#172338;color:#eaf2ee;border-radius:14px;padding:14px;min-height:320px;overflow:auto}.rubricTable{width:100%;border-collapse:collapse}.rubricTable th,.rubricTable td{border-bottom:1px solid #eee9dd;padding:8px;font-size:.73rem;text-align:left}.rubricTable th{background:#2f7059;color:#fff}.scoreSel{width:auto;min-width:72px}.status{font-size:.73rem;color:var(--muted);margin-top:8px}.callout{background:#fff7d8;border:1px solid #eadf9d;border-radius:12px;padding:11px;font-size:.77rem;line-height:1.6}.mini{font-size:.68rem;color:var(--muted)}footer{max-width:1480px;margin:auto;padding:4px 18px 26px;color:#7d8591;font-size:.7rem}
+
+.aiMapWrap{overflow-x:auto}
+.aiMapTable{width:100%;border-collapse:separate;border-spacing:0;min-width:980px}
+.aiMapTable th,.aiMapTable td{border-right:1px solid #e6e0d4;border-bottom:1px solid #e6e0d4;padding:8px;vertical-align:top}
+.aiMapTable th:first-child,.aiMapTable td:first-child{border-left:1px solid #e6e0d4}
+.aiMapTable thead th{background:#edf6ee;color:#2f7059;font-weight:900;font-size:.75rem;border-top:1px solid #b8d2bb}
+.aiMapTable thead th:first-child{border-radius:12px 0 0 0}.aiMapTable thead th:last-child{border-radius:0 12px 0 0}
+.aiMapTable textarea,.aiMapTable input,.aiMapTable select{min-height:72px;font-size:.72rem;padding:8px}
+.aiMapTable select{min-height:42px}
+.aiRoleTag{font-size:.65rem;font-weight:900;color:#2f7059;margin-top:4px}
+.designCheckList{display:grid;gap:8px;margin-top:10px}
+.designCheck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid #cfe0d1;background:#f7fbf7;border-radius:11px;font-size:.76rem;line-height:1.55}
+.designCheck input{width:auto;margin-top:2px;accent-color:#2f7059}
+.designCheck b{color:#2f7059}
+.aiMapSummary{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#f2f8f3;border:1px solid #cbdccc;border-radius:12px;padding:10px 12px}
+.aiMapScore{font:900 1.1rem ui-monospace,monospace;color:#2f7059}
+@media(max-width:700px){.aiMapSummary{grid-template-columns:1fr}}
+
+.webappReportBar{margin:0 0 14px;background:linear-gradient(120deg,#fffdfa,#f2f8f3);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px}.webappReportGrid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:9px;align-items:end}.webappReportBar .field label{display:flex;align-items:center;gap:6px}.webappReportBar .urlState{font-size:.68rem;color:var(--muted);margin-top:6px}.webappReportBar .urlState.ok{color:var(--green);font-weight:800}.webappReportBar .urlState.bad{color:#a33;font-weight:800}.reverseActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.sourceChoice{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 10px}.sourceChip{border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 9px;font-size:.69rem;font-weight:900}.reverseStatus{margin-top:9px;padding:9px 11px;border-radius:10px;background:#f7f6f1;border:1px solid #e5dfd2;font-size:.72rem;line-height:1.55}.reverseStatus.working{background:#eef5ff;border-color:#cbd9ee;color:#284c7c}.reverseStatus.ok{background:#eef8f1;border-color:#c9dfce;color:#256044}.reverseStatus.bad{background:#fff0f0;border-color:#efcaca;color:#8a3030}.fileDrop{position:relative}.fileDrop input[type=file]{padding:8px;background:#fff}.privacyNote{font-size:.65rem;color:var(--muted);margin-top:5px;line-height:1.45}.miniProgress{height:7px;background:#ebe7dd;border-radius:999px;overflow:hidden;margin-top:7px}.miniProgress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#456caf,#d8ff52);transition:width .25s ease}@media(max-width:1050px){.webappReportGrid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.webappReportGrid{grid-template-columns:1fr}.reverseActions .btn{width:100%}}.suggestionBox{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px}.suggestionBox h4{margin:0 0 6px;font:900 .82rem ui-monospace,monospace;color:var(--navy)}.suggestionList{margin:0;padding-left:20px;color:#455064;font-size:.75rem;line-height:1.65}.exportTools{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.exportNote{font-size:.69rem;color:var(--muted);line-height:1.55}.printFrame{display:none}
+
+
+.socialSharePanel{display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:13px;background:#f7f8f4}.socialSharePanel.open{display:block}.socialShareGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.socialBtn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font-weight:900;text-align:left}.socialBtn small{display:block;margin-top:3px;font-size:.65rem;color:var(--muted);font-weight:600}@media(max-width:700px){.socialShareGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -25,7 +47,24 @@ input,textarea,select{width:100%;border:1px solid #cec7b7;border-radius:11px;bac
 <div class="card pad"><div class="eyebrow">START HERE</div><h2 class="sectionTitle">내가 해결하고 싶은 수업 문제를 한 문장으로</h2><div class="field"><label for="oneLine">교육 목표 / 문제 정의</label><input id="oneLine" placeholder="예: 학생이 AI 답변을 그대로 받아쓰지 않고 본문 근거를 확인하도록 돕는 웹앱"></div><div class="row" style="margin-top:8px"><button class="btn primary" id="buildOutline">기획 뼈대 자동 만들기</button><button class="btn ghost" id="samplePlan">샘플 불러오기</button><button class="btn pink" id="resetAll">초기화</button></div><div class="status" id="status">먼저 교육 목표를 한 문장으로 써보세요.</div></div>
 <aside class="card pad"><div class="eyebrow">PLANNER PROGRESS</div><h3 class="sectionTitle">기획 완성도</h3><div class="kpiGrid"><div class="kpi"><b id="progressPct">0%</b><span>작성 진행률</span></div><div class="kpi"><b id="scoreTotal">0/8</b><span>Self-check rubric</span></div></div><div class="progressTrack" style="margin-top:10px"><div class="progressFill" id="progressFill"></div></div><div class="note" style="margin-top:10px"><b>원칙:</b> 기능보다 먼저 교육 목표를 정의하고, AI는 학생 사고를 대체하기보다 질문·검증·수정·자기언어화를 지원하도록 설계하세요.</div></aside>
 </section>
-<nav class="tabs"><button class="tab active" data-tab="problem">1. Problem</button><button class="tab" data-tab="design">2. Experience</button><button class="tab" data-tab="ai">3. AI & Data</button><button class="tab" data-tab="ui">4. UI Flow</button><button class="tab" data-tab="mvp">5. MVP</button><button class="tab" data-tab="review">6. Review</button><button class="tab" data-tab="export">7. Export</button></nav>
+<nav class="tabs"><button class="tab active" data-tab="problem">1. Problem</button><button class="tab" data-tab="design">2. Experience</button><button class="tab" data-tab="ai">3. AI & Data</button><button class="tab" data-tab="intervention">4. AI Intervention Map</button><button class="tab" data-tab="ui">5. UI Flow</button><button class="tab" data-tab="mvp">6. MVP</button><button class="tab" data-tab="review">7. Review</button><button class="tab" data-tab="export">8. Export</button></nav>
+
+<section class="webappReportBar" aria-label="완성 웹앱 역분석 및 자동 보고서 생성"><input id="appTitle" type="hidden" value=""><input id="reverseSuggestions" type="hidden" value="">
+  <div class="sectionHead">
+    <div><div class="eyebrow">REVERSE WEBAPP → AUTO REPORT</div><h3 class="sectionTitle" style="font-size:1.08rem">내가 만든 웹앱을 넣으면 1번부터 보고서를 자동 작성</h3></div>
+    <div class="hint">공개 URL · Claude Artifact · GitHub Pages · Streamlit · Vercel · Netlify · HTML 파일</div>
+  </div>
+  <div class="sourceChoice"><span class="sourceChip">① URL/Claude Artifact 붙여넣기</span><span class="sourceChip">또는</span><span class="sourceChip">② HTML 파일 선택</span><span class="sourceChip">→</span><span class="sourceChip">③ 1번부터 자동작성</span></div>
+  <div class="webappReportGrid">
+    <div class="field"><label for="appUrl">웹앱 / Claude Artifact 주소</label><input id="appUrl" type="url" inputmode="url" placeholder="https://... 또는 https://claude.ai/.../artifact/..."><div class="urlState" id="urlState">공개 접근 가능한 주소를 붙여넣으세요.</div></div>
+    <div class="field fileDrop"><label for="appHtmlFile">HTML 파일</label><input id="appHtmlFile" type="file" accept=".html,.htm,text/html"><div class="privacyNote">HTML은 브라우저에서 읽습니다. 파일 자체를 업로드하지 않습니다.</div></div>
+    <div class="field"><label for="geminiKey">Gemini API Key <span class="mini">(URL 분석 시 필요)</span></label><input id="geminiKey" type="password" autocomplete="off" placeholder="AIza..."><div class="privacyNote">키는 저장하지 않으며 이번 브라우저 세션의 요청에만 사용합니다.</div></div>
+  </div>
+  <div class="reverseActions"><button class="btn ghost" id="openApp">↗ 웹앱 보기</button><button class="btn primary" id="reverseAnalyze">⚡ 1번부터 보고서 자동작성</button><button class="btn pink" id="generateSuggestions">✨ 수정 제안 받기</button><button class="btn green" id="makeReport">8. Export에서 보고서 보기</button></div>
+  <div class="reverseStatus" id="reverseStatus">완성된 웹앱을 역분석해 Problem → Experience → AI & Data → AI Intervention → UI → MVP → Review → Export를 자동 채웁니다.</div>
+  <div class="miniProgress" aria-hidden="true"><span id="reverseProgress"></span></div>
+  <div class="suggestionBox"><div class="sectionHead"><div><h4 style="margin:0">REVISION COACH · 수정 제안</h4><div class="mini" style="margin-top:4px">교육목표 · 학생주체성 · 근거검증 · AI개입 · UI/MVP · 수업실행 가능성을 점검합니다.</div></div><button class="btn pink" id="generateSuggestionsTop">다시 분석</button></div><ol class="suggestionList" id="suggestionList"><li>웹앱을 분석하면 개선 우선순위와 구체적인 수정 행동을 제안합니다.</li></ol></div>
+</section>
 
 <section class="panel active" id="problem">
 <div class="grid2">
@@ -46,31 +85,90 @@ input,textarea,select{width:100%;border:1px solid #cec7b7;border-radius:11px;bac
 <div class="card pad sectionSpace"><div class="eyebrow">PROMPT / GRAPH DESIGN</div><h3 class="sectionTitle">프롬프트 또는 노드 흐름</h3><div class="field sectionSpace"><textarea id="promptFlow" placeholder="예: INPUT → QUESTION → RETRIEVE → GRADE → RETRY → ANSWER → VERIFY"></textarea></div><div class="row" style="margin-top:8px"><button class="btn ghost" id="cotPreset">CoT형 체크포인트</button><button class="btn ghost" id="totPreset">ToT형 후보 비교</button><button class="btn ghost" id="ragPreset">RAG 검증 루프</button></div></div>
 </section>
 
+
+<section class="panel" id="intervention">
+<div class="card pad">
+  <div class="eyebrow">04 · AI INTERVENTION MAP</div>
+  <div class="sectionHead">
+    <div>
+      <h2 class="sectionTitle">AI 개입 지점 표를 완성한다</h2>
+      <p class="hint">각 학습 단계에서 <b>개입 시점 / 사용 도구 / AI의 역할 / 학습자의 역할 / 교사의 개입 방식</b>을 명시하세요. AI 역할은 탐색형·교정형·협력형 중 하나를 선택하도록 구성했습니다.</p>
+    </div>
+    <div class="row">
+      <button class="btn green" id="fillAiMap">기본 5단계 자동 채우기</button>
+      <button class="btn ghost" id="clearAiMap">표 비우기</button>
+    </div>
+  </div>
+</div>
+
+<div class="card pad sectionSpace aiMapWrap">
+<table class="aiMapTable">
+<thead>
+<tr>
+<th style="width:17%">개입 시점</th>
+<th style="width:17%">사용 도구</th>
+<th style="width:16%">AI의 역할</th>
+<th style="width:25%">학습자의 역할</th>
+<th style="width:25%">교사의 개입 방식</th>
+</tr>
+</thead>
+<tbody id="aiMapBody"></tbody>
+</table>
+</div>
+
+<div class="grid2 sectionSpace">
+  <div class="card pad">
+    <div class="eyebrow">DESIGN CHECK</div>
+    <h3 class="sectionTitle">AI 개입 설계 5문항 점검</h3>
+    <div class="designCheckList" id="interventionChecks">
+      <label class="designCheck"><input type="checkbox" class="interventionCheck" value="roleType"><span>각 단계의 AI 역할이 <b>탐색형·교정형·협력형</b> 중 무엇인지 명시했는가?</span></label>
+      <label class="designCheck"><input type="checkbox" class="interventionCheck" value="postTask"><span>AI 개입 <b>직후</b> 학습자가 수행할 언어적 판단 과제가 설계되어 있는가?</span></label>
+      <label class="designCheck"><input type="checkbox" class="interventionCheck" value="noOveruse"><span>AI 없이도 가능한 활동에 불필요하게 AI를 배치하지는 않았는가?</span></label>
+      <label class="designCheck"><input type="checkbox" class="interventionCheck" value="priority"><span>설계 우선순위 1순위인 <b>학습자 영어 사용 시간</b>이 지켜지는가?</span></label>
+      <label class="designCheck"><input type="checkbox" class="interventionCheck" value="oneTool"><span>AI 도구가 목표와 연결된 <b>한두 가지 핵심 도구</b>로 제한되어 있는가?</span></label>
+    </div>
+  </div>
+  <div class="card pad">
+    <div class="eyebrow">INTERVENTION QUALITY</div>
+    <h3 class="sectionTitle">설계 적합도</h3>
+    <div class="aiMapSummary">
+      <div>
+        <div class="hint">체크리스트와 표 작성 정도를 함께 확인하세요. 점수가 높더라도 AI가 학생의 영어 사용을 대신한다면 다시 설계해야 합니다.</div>
+        <div class="note" style="margin-top:10px"><b>핵심 원칙:</b> AI 개입 → 학습자 판단/표현 → 교사 피드백의 순서를 유지합니다. AI가 개입한 뒤에는 반드시 학생이 영어로 선택·비교·수정·설명하는 과제가 이어지도록 설계하세요.</div>
+      </div>
+      <div class="aiMapScore" id="aiMapScore">0/5</div>
+    </div>
+    <div class="field sectionSpace"><label>AI 개입 설계 한 줄 요약</label><textarea id="interventionSummary" class="smallArea" placeholder="예: AI는 근거 탐색과 피드백까지만 수행하고, 최종 판단·수정·설명은 학생이 영어로 수행한다."></textarea></div>
+  </div>
+</div>
+</section>
+
 <section class="panel" id="ui">
-<div class="card pad"><div class="eyebrow">04 · UI / SCREEN FLOW</div><h2 class="sectionTitle">화면은 몇 개면 충분한가?</h2><p class="hint">처음부터 거대한 대시보드를 만들지 말고, 연수에서는 3개 화면 정도로 MVP를 설계하는 것이 좋습니다.</p></div>
+<div class="card pad"><div class="eyebrow">05 · UI / SCREEN FLOW</div><h2 class="sectionTitle">화면은 몇 개면 충분한가?</h2><p class="hint">처음부터 거대한 대시보드를 만들지 말고, 연수에서는 3개 화면 정도로 MVP를 설계하는 것이 좋습니다.</p></div>
 <div class="screenGrid sectionSpace"><div class="screen"><b>Screen 1 · INPUT</b><ul><li>입력 텍스트/데이터</li><li>샘플/preset</li><li>실행 버튼</li></ul><textarea id="screen1" class="smallArea" placeholder="이 화면에 추가할 요소"></textarea></div><div class="screen"><b>Screen 2 · ANALYZE</b><ul><li>핵심 결과</li><li>그래프/카드</li><li>비교/검증</li></ul><textarea id="screen2" class="smallArea" placeholder="이 화면에 추가할 요소"></textarea></div><div class="screen"><b>Screen 3 · REFLECT / EXPORT</b><ul><li>학생 수정</li><li>루브릭</li><li>MD/CSV 저장</li></ul><textarea id="screen3" class="smallArea" placeholder="이 화면에 추가할 요소"></textarea></div></div>
 <div class="card pad sectionSpace"><div class="eyebrow">VISUALS</div><h3 class="sectionTitle">어떤 시각화가 실제로 필요한가?</h3><div class="checkGrid sectionSpace" id="vizChecks"></div><div class="field sectionSpace"><label>색감 / UI 분위기</label><input id="visualTone" placeholder="예: Academic zine / clean dashboard / playful classroom"></div></div>
 </section>
 
 <section class="panel" id="mvp">
-<div class="grid2"><div class="card pad"><div class="eyebrow">05 · MVP SCOPE</div><h2 class="sectionTitle">첫 버전에서 반드시 되는 것</h2><div class="field sectionSpace"><label>MVP 한 문장</label><textarea id="mvpText" class="smallArea" placeholder="예: 텍스트를 넣으면 3개 지표와 근거 문장을 보여주고 MD로 저장한다"></textarea></div><div class="field sectionSpace"><label>이번 버전에서 하지 않을 것</label><textarea id="notNow" class="smallArea" placeholder="로그인, 데이터베이스, 자동 채점 등 다음 버전으로 미룰 기능"></textarea></div><div class="field sectionSpace"><label>성공 조건</label><textarea id="successText" class="smallArea" placeholder="연수생이 10분 안에 샘플 데이터를 넣어 결과와 MD 파일을 얻는다"></textarea></div></div>
+<div class="grid2"><div class="card pad"><div class="eyebrow">06 · MVP SCOPE</div><h2 class="sectionTitle">첫 버전에서 반드시 되는 것</h2><div class="field sectionSpace"><label>MVP 한 문장</label><textarea id="mvpText" class="smallArea" placeholder="예: 텍스트를 넣으면 3개 지표와 근거 문장을 보여주고 MD로 저장한다"></textarea></div><div class="field sectionSpace"><label>이번 버전에서 하지 않을 것</label><textarea id="notNow" class="smallArea" placeholder="로그인, 데이터베이스, 자동 채점 등 다음 버전으로 미룰 기능"></textarea></div><div class="field sectionSpace"><label>성공 조건</label><textarea id="successText" class="smallArea" placeholder="연수생이 10분 안에 샘플 데이터를 넣어 결과와 MD 파일을 얻는다"></textarea></div></div>
 <div class="card pad"><div class="eyebrow">BUILD / DEPLOY</div><h3 class="sectionTitle">어떻게 배포할까?</h3><div class="field sectionSpace"><label>구현 방식</label><select id="buildType"><option>단일 HTML · 브라우저 로컬 실행</option><option>GitHub Pages</option><option>HTML + Gemini/OpenAI API</option><option>Python/Streamlit</option><option>Colab/Notebook</option></select></div><div class="field sectionSpace"><label>API 필요 여부 / 키 처리</label><textarea id="apiText" class="smallArea" placeholder="예: API 없이 1차 MVP → 다음 버전에서 사용자 키 입력 방식"></textarea></div><div class="field sectionSpace"><label>다음 버전 아이디어</label><textarea id="nextText" placeholder="v2에서 추가할 기능"></textarea></div></div></div>
 </section>
 
 <section class="panel" id="review">
-<div class="card pad"><div class="eyebrow">06 · SELF REVIEW</div><h2 class="sectionTitle">기획서 자기점검 루브릭</h2><div class="tableWrap"><table class="rubricTable"><thead><tr><th>기준</th><th>점검 질문</th><th>0–2</th></tr></thead><tbody><tr><td>Problem fit</td><td>실제 수업 문제와 기능이 직접 연결되는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>Learner agency</td><td>AI가 학생 사고를 대신하지 않고 검증·수정을 촉진하는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>Evidence design</td><td>결과를 뒷받침할 텍스트·데이터·수정 기록이 있는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>MVP feasibility</td><td>첫 버전이 작고 실제로 실행·배포 가능한가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr></tbody></table></div><div id="rubricFeedback" class="callout sectionSpace">0–2점부터 선택해 보세요.</div></div>
-<div class="grid2 sectionSpace"><div class="card pad"><div class="eyebrow">PITCH</div><h3 class="sectionTitle">30초 기획 피치</h3><textarea id="pitchText" placeholder="우리 웹앱은 ___한 학생/교사를 위해 ___ 문제를 해결한다. 사용자는 ___를 입력하고 ___ 결과를 얻으며, 핵심 차별점은 ___이다."></textarea><button class="btn green" id="autoPitch" style="margin-top:8px">피치 자동 초안</button></div><div class="card pad"><div class="eyebrow">CRITICAL CHECK</div><h3 class="sectionTitle">반대 질문</h3><div id="criticalQuestions" class="hint" style="margin-top:8px;line-height:1.8">① 이 기능이 정말 웹앱이어야 하는가?<br>② 엑셀/구글폼으로도 해결되는 문제는 아닌가?<br>③ AI가 없어도 되는 기능을 억지로 AI화하지 않았는가?<br>④ 학생이 결과를 믿기 전에 검증할 장치가 있는가?<br>⑤ 수업 시간 안에 실제로 쓸 수 있는가?</div></div></div>
+<div class="card pad"><div class="eyebrow">07 · SELF REVIEW</div><h2 class="sectionTitle">기획서 자기점검 루브릭</h2><div class="tableWrap"><table class="rubricTable"><thead><tr><th>기준</th><th>점검 질문</th><th>0–2</th></tr></thead><tbody><tr><td>Problem fit</td><td>실제 수업 문제와 기능이 직접 연결되는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>Learner agency</td><td>AI가 학생 사고를 대신하지 않고 검증·수정을 촉진하는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>Evidence design</td><td>결과를 뒷받침할 텍스트·데이터·수정 기록이 있는가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr><tr><td>MVP feasibility</td><td>첫 버전이 작고 실제로 실행·배포 가능한가?</td><td><select class="scoreSel rubricScore"><option>0</option><option>1</option><option>2</option></select></td></tr></tbody></table></div><div id="rubricFeedback" class="callout sectionSpace">0–2점부터 선택해 보세요.</div></div>
+<div class="card pad sectionSpace"><div class="sectionHead"><div><div class="eyebrow">REVISION COACH</div><h3 class="sectionTitle">자동 수정 제안</h3><p class="hint">현재 1~7번 작성 내용을 기준으로 부족한 지점을 다시 진단합니다. 제안은 자동 적용되지 않으며, 교사가 판단해 필요한 항목만 반영합니다.</p></div><button class="btn pink" id="generateSuggestionsReview">수정 제안 갱신</button></div><ol class="suggestionList" id="reviewSuggestionList"><li>상단의 웹앱 역분석 또는 ‘수정 제안 갱신’을 실행하세요.</li></ol></div>
+<div class="grid2 sectionSpace"><div class="card pad"><div class="eyebrow">PITCH</div><h3 class="sectionTitle">30초 기획 피치</h3><textarea id="pitchText" placeholder="우리 웹앱은 ___한 학생/교사를 위해 ___ 문제를 해결한다. 사용자는 ___를 입력하고 ___ 결과를 얻으며, 핵심 차별점은 ___이다."></textarea><button class="btn green" id="autoPitch" style="margin-top:8px">피치 자동 초안</button></div><div class="card pad"><div class="eyebrow">CRITICAL CHECK</div><h3 class="sectionTitle">반대 질문</h3><div id="criticalQuestions" class="hint" style="margin-top:8px;line-height:1.8">① 이 기능이 정말 웹앱이어야 하는가?<br>② 엑셀/구글폼으로도 해결되는 문제는 아닌가?<br>③ AI가 없어도 되는 기능을 억지로 AI화하지 않았는가?<br>④ 학생이 결과를 믿기 전에 검증할 장치가 있는가?<br>⑤ 수업 시간 안에 실제로 쓸 수 있는가?<br>⑥ 각 AI 개입 직후 학생이 영어로 판단·수정·설명하는가?</div></div></div>
 </section>
 
 <section class="panel" id="export">
-<div class="grid2"><div class="card pad"><div class="eyebrow">07 · LIVE PLAN PREVIEW</div><h2 class="sectionTitle">Markdown 기획서 미리보기</h2><div class="row" style="margin-bottom:8px"><button class="btn primary" id="refreshPreview">미리보기 갱신</button><button class="btn green" id="downloadMd">MD 저장</button><button class="btn ghost" id="downloadJson">JSON 저장</button></div><div class="preview" id="mdPreview"></div></div><div class="card pad"><div class="eyebrow">HANDOFF PROMPT</div><h3 class="sectionTitle">AI에게 웹앱 제작을 맡길 때</h3><p class="hint">기획 내용을 기반으로 실제 HTML 제작을 요청할 수 있는 전달용 프롬프트입니다.</p><textarea id="handoffPrompt" style="min-height:330px"></textarea><button class="btn ghost" id="makeHandoff" style="margin-top:8px">제작 요청 프롬프트 생성</button><div class="note" style="margin-top:10px">권장: 첫 제작에서는 <b>단일 HTML + 외부 라이브러리 최소화 + 샘플 데이터 내장 + 모든 버튼 작동 + MD export</b>를 요구하세요.</div></div></div>
+<div class="grid2"><div class="card pad"><div class="eyebrow">08 · FINAL REPORT / EXPORT</div><h2 class="sectionTitle">최종 보고서 자동생성</h2><p class="hint">1~7번의 작성 내용, 웹앱 역분석 결과, AI 개입 설계, 루브릭, 수정 제안을 하나의 최종 보고서로 자동 통합합니다.</p><div class="row" style="margin-bottom:8px"><button class="btn primary" id="refreshPreview">보고서 미리보기 갱신</button><button class="btn green" id="downloadMd">MD 저장</button><button class="btn ghost" id="downloadJson">JSON 저장</button></div><div class="exportTools"><button class="btn primary" id="autoFinalReportPdf">✨ 최종 보고서 자동생성 + PDF 저장</button><button class="btn ghost" id="downloadReportPdf">현재 보고서 PDF 저장</button><button class="btn green" id="downloadSlidePdf">슬라이드 PDF 저장</button><button class="btn ghost" id="downloadSlideHtml">슬라이드 HTML 저장</button></div><div class="exportNote">‘최종 보고서 자동생성 + PDF 저장’을 누르면 1~7번의 실제 작성값을 다시 수집하고, 수정 제안·피치를 보완한 뒤 A4 가로형 한 장 보고서로 렌더링합니다. 저장 전 내용 존재 여부를 검사하므로 빈 PDF가 생성되지 않습니다. 직접 저장이 제한된 브라우저에서는 내용이 포함된 인쇄 화면이 열립니다.</div><div class="preview" id="mdPreview"></div></div><div class="card pad"><div class="eyebrow">HANDOFF PROMPT</div><h3 class="sectionTitle">AI에게 웹앱 제작을 맡길 때</h3><p class="hint">기획 내용을 기반으로 실제 HTML 제작을 요청할 수 있는 전달용 프롬프트입니다.</p><textarea id="handoffPrompt" style="min-height:330px"></textarea><div class="row" style="margin-top:8px"><button class="btn ghost" id="makeHandoff">제작 요청 프롬프트 생성</button><button class="btn green" id="shareHandoff">↗ 공유</button></div><div class="socialSharePanel" id="socialSharePanel"><div class="socialShareGrid"><button class="socialBtn" id="shareKakao">💬 카카오톡<small>모바일 시스템 공유창에서 카카오톡 선택</small></button><button class="socialBtn" id="shareInstagram">◎ 인스타그램<small>프롬프트 복사 후 Instagram 열기</small></button><button class="socialBtn" id="shareThreads">＠ Threads<small>Threads 작성 화면으로 전달</small></button><button class="socialBtn" id="shareNaver">N 네이버 블로그<small>네이버 공유 화면으로 전달</small></button></div></div><div class="status" id="shareStatus">공유할 서비스를 선택하세요. 일부 서비스는 브라우저 정책상 텍스트를 클립보드에 복사한 뒤 해당 앱/사이트를 엽니다.</div><div class="note" style="margin-top:10px">권장: 첫 제작에서는 <b>단일 HTML + 외부 라이브러리 최소화 + 샘플 데이터 내장 + 모든 버튼 작동 + MD export</b>를 요구하세요. 완성 후 이 Planner에 URL/HTML을 다시 넣으면 보고서·수정제안·슬라이드 PDF까지 생성됩니다.</div></div></div>
 </section>
 </div>
 <footer>My Teaching WebApp Planner · Training prototype · Plan first, build small, verify with learners.</footer>
 <script>
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const fields=['oneLine','problemText','behaviorText','evidenceText','userText','contextText','inputText','outputText','missionText','coreFeatures','niceFeatures','agencyText','teacherText','saveText','aiRole','aiGuard','dataText','analysisText','claimEvidence','promptFlow','screen1','screen2','screen3','visualTone','mvpText','notNow','successText','apiText','nextText','pitchText'];
+const fields=['appTitle','appUrl','reverseSuggestions','oneLine','problemText','behaviorText','evidenceText','userText','contextText','inputText','outputText','missionText','coreFeatures','niceFeatures','agencyText','teacherText','saveText','aiRole','aiGuard','dataText','analysisText','claimEvidence','promptFlow','interventionSummary','screen1','screen2','screen3','visualTone','mvpText','notNow','successText','apiText','nextText','pitchText'];
 const ideas=[
  {cat:'수능·읽기',t:'Evidence-First CSAT Reading Harness',comp:'비판적 읽기 · 근거 확인 · 추론',fusion:'RAG × LangGraph',d:'수능 지문과 AI 답변을 넣으면 주장별 본문 근거를 매칭하고 PASS/RETRY를 거쳐 학생이 답을 수정하는 검증형 독해 랩.',goal:'학생이 수능 영어 지문에서 AI의 해석을 그대로 수용하지 않고 본문 근거를 찾아 검증·수정하도록 돕는 웹앱',f:'1. 지문/질문 입력\n2. 근거 검색 + PASS/RETRY\n3. 수정 전후 비교 + MD 저장',out:'근거표 · 수정답 · 검증 로그'},
  {cat:'수능·읽기',t:'Distractor Engineering Lab',comp:'독해 · 평가 문식성 · 메타인지',fusion:'문항분석 × 생성형 AI',d:'정답이 아니라 “좋은 오답”을 설계하고, 오답 유형·정답률·변별도 가설을 비교하는 평가 전문성 랩.',goal:'학생과 교사가 수능형 오답의 그럴듯함과 오류 유형을 분석하여 독해 판단 기준을 명료화하도록 돕는 웹앱',f:'1. 지문/정답 입력\n2. 오답 4개 유형별 생성\n3. 오답 매력도·근거 분석',out:'오답 유형표 · 문항 설계 보고서'},
@@ -113,22 +211,286 @@ const aiOpts=['질문 생성','초안 생성','분류/태깅','근거 검색/RAG
 $('#aiChecks').innerHTML=aiOpts.map(x=>`<label class="check"><input type="checkbox" class="aiOpt" value="${x}"><span>${x}</span></label>`).join('');
 const vizOpts=['막대/선 그래프','산점도','Heatmap','Word Cloud','Network','Timeline','Radar','Table','Boxplot','PCA/Cluster','KWIC/Concordance','Progress/Rubric'];
 $('#vizChecks').innerHTML=vizOpts.map(x=>`<label class="check"><input type="checkbox" class="vizOpt" value="${x}"><span>${x}</span></label>`).join('');
+
+const aiMapDefaults=[
+  {point:'① 학습 목표/문제 인식 직후',tool:'질문 생성기 · Prompt scaffold',role:'탐색형',learner:'AI가 제시한 질문 후보를 비교하고, 자신의 학습 목적에 맞는 질문을 영어로 다시 작성한다.',teacher:'핵심 질문의 수준과 범위를 제시하고, AI가 대신 답을 쓰지 않도록 질문의 질에 피드백한다.'},
+  {point:'② 1차 읽기/자료 탐색 후',tool:'RAG · 키워드/근거 탐색',role:'탐색형',learner:'AI가 찾은 근거 후보를 원문과 대조하고, 가장 타당한 근거를 직접 선택·표시한다.',teacher:'근거의 위치·충분성·관련성을 확인하게 하고, 단순 키워드 일치가 근거가 아님을 점검한다.'},
+  {point:'③ 학생 초안/판단 생성 직후',tool:'오류 탐지 · 비교 피드백',role:'교정형',learner:'피드백을 수용할지 기각할지 판단하고, 수정 이유를 영어로 짧게 설명한다.',teacher:'정답 제공보다 오류 유형과 판단 기준을 묻고, 학생의 수정 근거를 확인한다.'},
+  {point:'④ 대안 비교/협상 단계',tool:'A/B/C 후보 · Multi-agent/ToT',role:'협력형',learner:'여러 후보를 기준에 따라 비교하고, 최종 선택안을 자신의 표현으로 재구성한다.',teacher:'비교 기준(Fidelity, Evidence, Register 등)을 제공하고, 선택 근거의 명료성을 피드백한다.'},
+  {point:'⑤ 최종 수정·자기언어화 전',tool:'루브릭 코치 · Reflection prompt',role:'협력형',learner:'최종 결과를 스스로 작성하고 AI 사용 흔적, 수정 이유, 배운 점을 성찰한다.',teacher:'최종 산출물보다 사고 과정·근거·수정 흔적을 평가하고 다음 학습 목표를 연결한다.'}
+];
+function renderAiMap(rows=aiMapDefaults){
+  $('#aiMapBody').innerHTML=rows.map((r,i)=>`
+    <tr>
+      <td><textarea class="aiMapPoint" data-i="${i}">${r.point||''}</textarea></td>
+      <td><textarea class="aiMapTool" data-i="${i}">${r.tool||''}</textarea></td>
+      <td>
+        <select class="aiMapRole" data-i="${i}">
+          ${['탐색형','교정형','협력형'].map(x=>`<option ${x===(r.role||'탐색형')?'selected':''}>${x}</option>`).join('')}
+        </select>
+        <div class="aiRoleTag">탐색=질문/근거 · 교정=오류/피드백 · 협력=비교/공동구성</div>
+      </td>
+      <td><textarea class="aiMapLearner" data-i="${i}">${r.learner||''}</textarea></td>
+      <td><textarea class="aiMapTeacher" data-i="${i}">${r.teacher||''}</textarea></td>
+    </tr>`).join('');
+  $$('.aiMapPoint,.aiMapTool,.aiMapRole,.aiMapLearner,.aiMapTeacher').forEach(x=>x.addEventListener('input',updateProgress));
+}
+function getAiMap(){
+  return $$('.aiMapPoint').map((x,i)=>({
+    point:x.value.trim(),
+    tool:$$('.aiMapTool')[i].value.trim(),
+    role:$$('.aiMapRole')[i].value,
+    learner:$$('.aiMapLearner')[i].value.trim(),
+    teacher:$$('.aiMapTeacher')[i].value.trim()
+  }));
+}
+function interventionScore(){
+  const t=$$('.interventionCheck:checked').length;
+  $('#aiMapScore').textContent=t+'/5';
+  return t;
+}
+renderAiMap([{},{},{},{},{}]);
+$('#fillAiMap').addEventListener('click',()=>{
+  renderAiMap(aiMapDefaults);
+  if(!val('interventionSummary')) $('#interventionSummary').value='AI는 탐색·교정·협력의 보조 역할만 수행하고, 각 개입 직후 학생이 영어로 선택·검증·수정·설명하도록 설계한다.';
+  updateProgress();
+});
+$('#clearAiMap').addEventListener('click',()=>{renderAiMap([{},{},{},{},{}]);updateProgress()});
+$$('.interventionCheck').forEach(x=>x.addEventListener('change',()=>{interventionScore();updateProgress()}));
+
 function val(id){return ($('#'+id)?.value||'').trim()}function listChecked(cls){return $$(cls+':checked').map(x=>x.value)}
 function switchTab(id){$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===id))}$$('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-function updateProgress(){const filled=fields.filter(id=>val(id).length>2).length,extra=(listChecked('.aiOpt').length?1:0)+(listChecked('.vizOpt').length?1:0),pct=Math.round((filled+extra)/(fields.length+2)*100);$('#progressPct').textContent=pct+'%';$('#progressFill').style.width=pct+'%'}
+function updateProgress(){const filled=fields.filter(id=>val(id).length>2).length,mapFilled=getAiMap().filter(r=>r.point&&r.tool&&r.learner&&r.teacher).length,extra=(listChecked('.aiOpt').length?1:0)+(listChecked('.vizOpt').length?1:0)+(mapFilled>=3?1:0)+(interventionScore()>=3?1:0),pct=Math.round((filled+extra)/(fields.length+4)*100);$('#progressPct').textContent=pct+'%';$('#progressFill').style.width=pct+'%'}
 fields.forEach(id=>$('#'+id)?.addEventListener('input',updateProgress));$$('.aiOpt,.vizOpt').forEach(x=>x.addEventListener('change',updateProgress));
 function outline(){const g=val('oneLine');if(!g){$('#status').textContent='먼저 교육 목표를 한 문장으로 작성하세요.';return}if(!val('problemText'))$('#problemText').value=`현재 수업에서는 ${g.replace(/웹앱.*$/,'')} 과정이 교사의 반복 설명이나 학생의 임의적 판단에 의존한다.`;if(!val('behaviorText'))$('#behaviorText').value='학생이 결과를 바로 받아들이지 않고, 근거를 확인하고 자신의 판단으로 수정하도록 한다.';if(!val('evidenceText'))$('#evidenceText').value='입력 기록, 분석 결과, 근거 선택, 수정 이력, 최종 자기언어화 결과를 남긴다.';if(!val('missionText'))$('#missionText').value='입력 → 분석 결과 확인 → 근거 검증 → 수정 → 자기 언어로 최종 결과 저장';if(!val('agencyText'))$('#agencyText').value='AI는 후보·질문·피드백을 제공하되 최종 판단과 작성은 학생이 수행한다.';if(!val('saveText'))$('#saveText').value='학생 결과를 Markdown으로 저장하고 필요 시 CSV/JSON 분석값도 내려받는다.';if(!val('mvpText'))$('#mvpText').value='한 종류의 입력을 넣으면 핵심 분석 결과와 검증 질문을 보여주고 최종 결과를 Markdown으로 저장한다.';$('#status').textContent='기본 기획 뼈대를 만들었습니다. 각 탭에서 수업 맥락에 맞게 구체화하세요.';updateProgress()}
 $('#buildOutline').addEventListener('click',outline);
-$('#samplePlan').addEventListener('click',()=>{$('#oneLine').value='학생이 영어 지문에서 핵심 주장과 근거를 확인하고 AI 응답을 수정하도록 돕는 Evidence Reading Lab';$('#problemText').value='학생이 생성형 AI의 요약이나 해석을 빠르게 수용하지만, 본문과 대조하여 근거를 확인하는 과정은 약하다.';$('#behaviorText').value='AI 응답의 각 주장에 대해 본문 근거를 표시하고, 근거가 부족하면 직접 수정한다.';$('#evidenceText').value='근거 문장 선택, 수정 전/후 문장, 최종 자기언어화 답안.';$('#userText').value='고등학교 영어 학습자';$('#contextText').value='수능 독해 또는 영미문학 수업의 15~20분 탐구 활동';$('#inputText').value='영어 지문 + 학생 질문 또는 AI 답변';$('#outputText').value='근거 매칭표, RETRY 경고, 수정문, Markdown 탐구기록';$('#missionText').value='지문 입력 → AI 주장 확인 → 근거 문장 매칭 → 근거 부족 항목 수정 → 자기언어화';$('#coreFeatures').value='1. 문장별 근거 검색\n2. PASS/RETRY 검증\n3. 수정 전후 비교 + MD 저장';$('#niceFeatures').value='점수, 모둠 미션, 랜덤 오답, 그래프 실행 애니메이션';$('#agencyText').value='정답을 자동 확정하지 않고 학생이 근거를 선택한 뒤 수정하도록 한다.';$('#teacherText').value='샘플 지문 preset, 결과 CSV, 모둠별 비교 화면';$('#saveText').value='학생 탐구기록 MD + 교사용 CSV';$('#aiRole').value='본문 근거와 학생 답안을 비교하여 검증 질문과 수정 힌트를 주는 코치';$('#aiGuard').value='최종 정답과 최종 해석을 학생 대신 제출하지 않는다.';$('#dataText').value='수능/교과서 지문, 학생 Prompt Log, AI 응답';$('#analysisText').value='문장 분할, 키워드/근거 매칭, LLM 평가, 규칙 기반 PASS/RETRY';$('#claimEvidence').value='텍스트 근거 + 학생 수정 기록';$('#promptFlow').value='INPUT → QUESTION → RETRIEVE → GRADE → RETRY → ANSWER → VERIFY → REFLECT';$('#screen1').value='지문 입력, 샘플 선택, 분석 버튼';$('#screen2').value='노드 흐름, 근거 문장, PASS/RETRY, 수정 힌트';$('#screen3').value='최종 자기언어화, 루브릭, MD 저장';$('#visualTone').value='Academic zine + clean graph dashboard';$('#mvpText').value='지문과 답변을 넣으면 근거 매칭과 PASS/RETRY를 보여주고 수정 결과를 MD로 저장한다.';$('#notNow').value='로그인, 학급 DB, 자동 성적 반영';$('#successText').value='연수생이 10분 내 자신의 지문으로 실행하고 MD 결과를 저장할 수 있다.';$('#apiText').value='1차는 샘플 휴리스틱, 선택적으로 사용자 Gemini API 키 입력';$('#nextText').value='LangGraph 시각화, 모둠 경쟁, 교사용 분석 대시보드';$$('.aiOpt').forEach(x=>x.checked=['질문 생성','근거 검색/RAG','피드백','오류 탐지'].includes(x.value));$$('.vizOpt').forEach(x=>x.checked=['Network','Table','Progress/Rubric'].includes(x.value));outline();updateProgress()});
+$('#samplePlan').addEventListener('click',()=>{$('#oneLine').value='학생이 영어 지문에서 핵심 주장과 근거를 확인하고 AI 응답을 수정하도록 돕는 Evidence Reading Lab';$('#problemText').value='학생이 생성형 AI의 요약이나 해석을 빠르게 수용하지만, 본문과 대조하여 근거를 확인하는 과정은 약하다.';$('#behaviorText').value='AI 응답의 각 주장에 대해 본문 근거를 표시하고, 근거가 부족하면 직접 수정한다.';$('#evidenceText').value='근거 문장 선택, 수정 전/후 문장, 최종 자기언어화 답안.';$('#userText').value='고등학교 영어 학습자';$('#contextText').value='수능 독해 또는 영미문학 수업의 15~20분 탐구 활동';$('#inputText').value='영어 지문 + 학생 질문 또는 AI 답변';$('#outputText').value='근거 매칭표, RETRY 경고, 수정문, Markdown 탐구기록';$('#missionText').value='지문 입력 → AI 주장 확인 → 근거 문장 매칭 → 근거 부족 항목 수정 → 자기언어화';$('#coreFeatures').value='1. 문장별 근거 검색\n2. PASS/RETRY 검증\n3. 수정 전후 비교 + MD 저장';$('#niceFeatures').value='점수, 모둠 미션, 랜덤 오답, 그래프 실행 애니메이션';$('#agencyText').value='정답을 자동 확정하지 않고 학생이 근거를 선택한 뒤 수정하도록 한다.';$('#teacherText').value='샘플 지문 preset, 결과 CSV, 모둠별 비교 화면';$('#saveText').value='학생 탐구기록 MD + 교사용 CSV';$('#aiRole').value='본문 근거와 학생 답안을 비교하여 검증 질문과 수정 힌트를 주는 코치';$('#aiGuard').value='최종 정답과 최종 해석을 학생 대신 제출하지 않는다.';$('#dataText').value='수능/교과서 지문, 학생 Prompt Log, AI 응답';$('#analysisText').value='문장 분할, 키워드/근거 매칭, LLM 평가, 규칙 기반 PASS/RETRY';$('#claimEvidence').value='텍스트 근거 + 학생 수정 기록';$('#promptFlow').value='INPUT → QUESTION → RETRIEVE → GRADE → RETRY → ANSWER → VERIFY → REFLECT';$('#screen1').value='지문 입력, 샘플 선택, 분석 버튼';$('#screen2').value='노드 흐름, 근거 문장, PASS/RETRY, 수정 힌트';$('#screen3').value='최종 자기언어화, 루브릭, MD 저장';$('#visualTone').value='Academic zine + clean graph dashboard';$('#mvpText').value='지문과 답변을 넣으면 근거 매칭과 PASS/RETRY를 보여주고 수정 결과를 MD로 저장한다.';$('#notNow').value='로그인, 학급 DB, 자동 성적 반영';$('#successText').value='연수생이 10분 내 자신의 지문으로 실행하고 MD 결과를 저장할 수 있다.';$('#apiText').value='1차는 샘플 휴리스틱, 선택적으로 사용자 Gemini API 키 입력';$('#nextText').value='LangGraph 시각화, 모둠 경쟁, 교사용 분석 대시보드';$$('.aiOpt').forEach(x=>x.checked=['질문 생성','근거 검색/RAG','피드백','오류 탐지'].includes(x.value));$$('.vizOpt').forEach(x=>x.checked=['Network','Table','Progress/Rubric'].includes(x.value));renderAiMap(aiMapDefaults);$$('.interventionCheck').forEach(x=>x.checked=true);$('#interventionSummary').value='AI는 근거 탐색과 피드백을 제공하지만, 근거 선택·수정·최종 표현은 학생이 영어로 수행한다.';interventionScore();outline();updateProgress()});
 $('#cotPreset').addEventListener('click',()=>{$('#promptFlow').value='INPUT → STRUCTURE CHECK → MEANING CHECK → EVIDENCE CHECK → DRAFT → VERIFY';updateProgress()});$('#totPreset').addEventListener('click',()=>{$('#promptFlow').value='INPUT → GENERATE A/B/C CANDIDATES → COMPARE CRITERIA → SELECT → VERIFY → REVISE';updateProgress()});$('#ragPreset').addEventListener('click',()=>{$('#promptFlow').value='INPUT → QUESTION → RETRIEVE → GRADE EVIDENCE → (RETRY if weak) → ANSWER → CITATION VERIFY';updateProgress()});
 function rubric(){const scores=$$('.rubricScore').map(x=>+x.value),t=scores.reduce((a,b)=>a+b,0);$('#scoreTotal').textContent=t+'/8';let msg=t<=2?'기획 초안 단계입니다. 문제 정의와 MVP를 먼저 줄이세요.':t<=4?'핵심 기능은 보이지만 학습자 행동과 근거 설계를 더 구체화하세요.':t<=6?'실행 가능한 기획입니다. 수업 시간·데이터·검증 장치를 실제로 테스트해 보세요.':'MVP 제작으로 넘어갈 수 있는 수준입니다. 기능을 더 늘리기보다 작은 버전을 먼저 완성하세요.';$('#rubricFeedback').innerHTML=`<b>${t}/8</b> · ${msg}`;return t}$$('.rubricScore').forEach(x=>x.addEventListener('change',rubric));
 $('#autoPitch').addEventListener('click',()=>{$('#pitchText').value=`우리 웹앱은 ${val('userText')||'학습자'}를 위해 “${val('oneLine')||'수업 문제'}”를 해결한다. 사용자는 ${val('inputText')||'학습 자료'}를 입력하고 ${val('outputText')||'분석·피드백 결과'}를 얻는다. 핵심 차별점은 ${val('agencyText')||'학생의 검증과 수정 과정을 남긴다는 점'}이다.`;updateProgress()});
-function md(){const ai=listChecked('.aiOpt').join(', ')||'-',viz=listChecked('.vizOpt').join(', ')||'-',score=rubric();return `# AIEDAP English WebApp Innovation Plan\n\n## 1. 교육 목표 / 문제 정의\n${val('oneLine')||'-'}\n\n### 현재 문제\n${val('problemText')||'-'}\n\n### 바꾸고 싶은 학생 행동\n${val('behaviorText')||'-'}\n\n### 관찰 가능한 증거\n${val('evidenceText')||'-'}\n\n## 2. 사용자와 사용 장면\n- 사용자: ${val('userText')||'-'}\n- 사용 장면: ${val('contextText')||'-'}\n- Input: ${val('inputText')||'-'}\n- Output: ${val('outputText')||'-'}\n\n## 3. 학습 경험\n### 핵심 미션\n${val('missionText')||'-'}\n\n### 필수 기능\n${val('coreFeatures')||'-'}\n\n### 선택 기능\n${val('niceFeatures')||'-'}\n\n### 학습자 주체성 장치\n${val('agencyText')||'-'}\n\n### 교사용 기능\n${val('teacherText')||'-'}\n\n### 저장 결과\n${val('saveText')||'-'}\n\n## 4. AI & Data\n- AI 기능: ${ai}\n- AI 역할: ${val('aiRole')||'-'}\n- AI 금지/제약: ${val('aiGuard')||'-'}\n- 데이터 소스: ${val('dataText')||'-'}\n- 분석 방법: ${val('analysisText')||'-'}\n- 근거 유형: ${val('claimEvidence')||'-'}\n\n### Prompt / Graph Flow\n${val('promptFlow')||'-'}\n\n## 5. UI Flow\n### Screen 1 · Input\n${val('screen1')||'-'}\n\n### Screen 2 · Analyze\n${val('screen2')||'-'}\n\n### Screen 3 · Reflect / Export\n${val('screen3')||'-'}\n\n- 시각화: ${viz}\n- UI 분위기: ${val('visualTone')||'-'}\n\n## 6. MVP\n### MVP 한 문장\n${val('mvpText')||'-'}\n\n### 이번 버전에서 하지 않을 것\n${val('notNow')||'-'}\n\n### 성공 조건\n${val('successText')||'-'}\n\n### 구현/배포\n- 방식: ${$('#buildType').value}\n- API: ${val('apiText')||'-'}\n- 다음 버전: ${val('nextText')||'-'}\n\n## 7. 30초 Pitch\n${val('pitchText')||'-'}\n\n## 8. Self-check Rubric\n${score}/8\n\n## 9. 개발 전 마지막 질문\n1. 이 기능이 정말 웹앱이어야 하는가?\n2. 학생 사고를 AI가 대신하고 있지 않은가?\n3. 중요한 결과를 검증할 텍스트/데이터가 있는가?\n4. 첫 버전을 10~20분 안에 시연할 수 있는가?\n5. 결과를 학생이 MD/CSV 등으로 가져갈 수 있는가?\n`}
+function md(){const ai=listChecked('.aiOpt').join(', ')||'-',viz=listChecked('.vizOpt').join(', ')||'-',score=rubric();return `# AIEDAP English WebApp Innovation Plan\n\n## 0. 완성 웹앱\n- 웹앱 이름: ${val('appTitle')||val('oneLine')||'-'}\n- 실행 링크: ${val('appUrl') ? `[웹앱 바로 열기](${val('appUrl')})` : '-'}\n- URL: ${val('appUrl')||'-'}\n\n## 0-1. 자동 수정 제안\n${val('reverseSuggestions')||'-'}\n\n## 1. 교육 목표 / 문제 정의\n${val('oneLine')||'-'}\n\n### 현재 문제\n${val('problemText')||'-'}\n\n### 바꾸고 싶은 학생 행동\n${val('behaviorText')||'-'}\n\n### 관찰 가능한 증거\n${val('evidenceText')||'-'}\n\n## 2. 사용자와 사용 장면\n- 사용자: ${val('userText')||'-'}\n- 사용 장면: ${val('contextText')||'-'}\n- Input: ${val('inputText')||'-'}\n- Output: ${val('outputText')||'-'}\n\n## 3. 학습 경험\n### 핵심 미션\n${val('missionText')||'-'}\n\n### 필수 기능\n${val('coreFeatures')||'-'}\n\n### 선택 기능\n${val('niceFeatures')||'-'}\n\n### 학습자 주체성 장치\n${val('agencyText')||'-'}\n\n### 교사용 기능\n${val('teacherText')||'-'}\n\n### 저장 결과\n${val('saveText')||'-'}\n\n## 4. AI & Data\n- AI 기능: ${ai}\n- AI 역할: ${val('aiRole')||'-'}\n- AI 금지/제약: ${val('aiGuard')||'-'}\n- 데이터 소스: ${val('dataText')||'-'}\n- 분석 방법: ${val('analysisText')||'-'}\n- 근거 유형: ${val('claimEvidence')||'-'}\n\n### Prompt / Graph Flow\n${val('promptFlow')||'-'}\n\n## 5. UI Flow\n### Screen 1 · Input\n${val('screen1')||'-'}\n\n### Screen 2 · Analyze\n${val('screen2')||'-'}\n\n### Screen 3 · Reflect / Export\n${val('screen3')||'-'}\n\n- 시각화: ${viz}\n- UI 분위기: ${val('visualTone')||'-'}\n\n## 7. MVP\n### MVP 한 문장\n${val('mvpText')||'-'}\n\n### 이번 버전에서 하지 않을 것\n${val('notNow')||'-'}\n\n### 성공 조건\n${val('successText')||'-'}\n\n### 구현/배포\n- 방식: ${$('#buildType').value}\n- API: ${val('apiText')||'-'}\n- 다음 버전: ${val('nextText')||'-'}\n\n## 8. 30초 Pitch\n${val('pitchText')||'-'}\n\n## 9. Self-check Rubric\n${score}/8\n\n## 10. 개발 전 마지막 질문\n1. 이 기능이 정말 웹앱이어야 하는가?\n2. 학생 사고를 AI가 대신하고 있지 않은가?\n3. 중요한 결과를 검증할 텍스트/데이터가 있는가?\n4. 첫 버전을 10~20분 안에 시연할 수 있는가?\n5. 결과를 학생이 MD/CSV 등으로 가져갈 수 있는가?\n`}
 function refresh(){const x=md();$('#mdPreview').textContent=x;return x}$('#refreshPreview').addEventListener('click',refresh);
-function download(name,content,type){const blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}$('#downloadMd').addEventListener('click',()=>download('AIEDAP_English_WebApp_Innovation_Plan.md','\ufeff'+refresh(),'text/markdown;charset=utf-8'));$('#downloadJson').addEventListener('click',()=>{const obj={};fields.forEach(id=>obj[id]=val(id));obj.aiFunctions=listChecked('.aiOpt');obj.visualizations=listChecked('.vizOpt');obj.buildType=$('#buildType').value;obj.rubric=rubric();download('AIEDAP_English_WebApp_Innovation_Plan.json',JSON.stringify(obj,null,2),'application/json')});
-$('#makeHandoff').addEventListener('click',()=>{const p=`아래 기획서를 기반으로 실제 실행 가능한 단일 HTML 웹앱을 만들어줘.\n\n[필수 구현 원칙]\n- HTML/CSS/Vanilla JS 중심\n- 모든 버튼 실제 작동\n- 샘플 데이터 내장\n- 반응형 UI\n- 가능하면 브라우저 로컬 실행\n- 학생 결과 Markdown 저장 기능\n- 중요한 분석에는 방법론적 한계/주의문 표시\n- AI는 최종 판단을 대신하지 않고 검증·수정·자기언어화를 지원\n\n[기획서]\n${md()}`;$('#handoffPrompt').value=p});
-$('#resetAll').addEventListener('click',()=>{if(!confirm('작성한 기획 내용을 모두 지울까요?'))return;fields.forEach(id=>$('#'+id).value='');$$('.aiOpt,.vizOpt').forEach(x=>x.checked=false);$$('.rubricScore').forEach(x=>x.value='0');$('#handoffPrompt').value='';$('#mdPreview').textContent='';$('#status').textContent='초기화했습니다.';rubric();updateProgress()});
-refresh();updateProgress();rubric();
+function download(name,content,type){const blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}$('#downloadMd').addEventListener('click',()=>download('AIEDAP_English_WebApp_Innovation_Plan.md','\ufeff'+refresh(),'text/markdown;charset=utf-8'));$('#downloadJson').addEventListener('click',()=>{const obj={};fields.forEach(id=>obj[id]=val(id));obj.aiFunctions=listChecked('.aiOpt');obj.visualizations=listChecked('.vizOpt');obj.aiInterventionMap=getAiMap();obj.aiInterventionChecklist=interventionScore();obj.buildType=$('#buildType').value;obj.rubric=rubric();download('AIEDAP_English_WebApp_Innovation_Plan.json',JSON.stringify(obj,null,2),'application/json')});
+
+function escapeHtml(str){return String(str||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function markdownToHtml(m){return escapeHtml(m).replace(/^# (.*)$/gm,'<h1>$1</h1>').replace(/^## (.*)$/gm,'<h2>$1</h2>').replace(/^### (.*)$/gm,'<h3>$1</h3>').replace(/^- (.*)$/gm,'<li>$1</li>').replace(/\n/g,'<br>')}
+function reportHtml(){return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>AIEDAP WebApp Report</title><style>@page{size:A4;margin:16mm}body{font-family:Inter,'Noto Sans KR',system-ui,sans-serif;color:#162033;line-height:1.58}h1{font-family:Georgia,serif;font-size:24pt;margin:0 0 12px}h2{font-size:16pt;border-top:2px solid #172338;padding-top:12px;margin-top:18px}h3{font-size:12pt;color:#2f7059}.meta{background:#f2f8f3;border-left:5px solid #2f7059;padding:10px 12px;margin-bottom:14px}li{margin:3px 0}br+br{display:block;margin:6px 0;content:''}</style></head><body><div class="meta"><b>AIEDAP English WebApp Reverse Design Report</b><br>Generated from Planner · ${new Date().toLocaleString('ko-KR')}</div>${markdownToHtml(refresh())}</body></html>`}
+function compactText(txt,max=360){const t=String(txt||'-').replace(/\s+/g,' ').trim();return t.length>max?t.slice(0,max-1)+'…':t}
+function bulletsFrom(txt,maxItems=4,maxChars=145){return String(txt||'').split(/\n+/).map(x=>x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, '').trim()).filter(Boolean).slice(0,maxItems).map(x=>`<li>${escapeHtml(compactText(x,maxChars))}</li>`).join('')||'<li>-</li>'}
+function onePageReportHtml(){
+  const aiMap=getAiMap().filter(r=>r.point||r.tool||r.learner).slice(0,3);
+  const sugg=(val('reverseSuggestions')||'').split(/\n+/).map(x=>x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, '').trim()).filter(Boolean).slice(0,4);
+  const url=val('appUrl');
+  const title=val('appTitle')||val('oneLine')||'AIEDAP English WebApp';
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>AIEDAP One-page Report</title><style>
+  @page{size:A4 landscape;margin:0}*{box-sizing:border-box}html,body{margin:0;padding:0;width:1123px;height:794px;background:#fff;color:#162033;font-family:Inter,'Pretendard','Noto Sans KR',system-ui,sans-serif}body{overflow:hidden}.sheet{width:1123px;height:794px;padding:27px 34px 22px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(155deg,#fffdfa 0%,#fff 56%,#f1f8f2 100%);overflow:hidden}.head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;border-bottom:5px solid #172338;padding-bottom:11px}.brand{font:900 10px ui-monospace,monospace;letter-spacing:.1em;color:#2f7059}.title{font-family:Georgia,'Noto Serif KR',serif;font-size:26px;line-height:1.08;margin:4px 0 0;max-width:820px;white-space:normal}.meta{font-size:9px;line-height:1.35;text-align:right;color:#687385}.goal{background:#172338;color:#fff;border-radius:11px;padding:11px 15px;font-size:12px;line-height:1.35}.goal b{color:#d8ff52}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;flex:1;min-height:0}.col{display:flex;flex-direction:column;gap:10px;min-width:0}.box{border:1px solid #ddd7c8;border-radius:10px;background:rgba(255,255,255,.94);padding:10px 11px;break-inside:avoid;overflow:hidden}.box h2{font-size:12px;margin:0 0 5px;color:#172338;display:flex;align-items:center;gap:6px}.n{display:inline-grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#d8ff52;color:#172338;font:900 9px ui-monospace,monospace;flex:0 0 auto}.box p,.box li{font-size:9.1px;line-height:1.3;margin:2px 0;overflow-wrap:anywhere}.box ul{padding-left:17px;margin:3px 0}.lab{font-weight:900;color:#2f7059}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.mini{padding:6px 7px;background:#f3f6f2;border-radius:7px;font-size:8.5px;line-height:1.25;overflow-wrap:anywhere}.flow{font:800 8.6px ui-monospace,monospace;line-height:1.32;background:#f7f6f1;padding:6px 7px;border-radius:7px;overflow-wrap:anywhere}.rev{border-left:4px solid #ec2b7a}.pitch{border-left:4px solid #456caf}.foot{display:flex;justify-content:space-between;gap:18px;border-top:1px solid #ddd7c8;padding-top:6px;font-size:8px;color:#687385}.url{max-width:700px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grow{flex:1}.tight p,.tight li{font-size:8.8px;line-height:1.25}@media print{html,body,.sheet{width:297mm;height:210mm}.sheet{page-break-after:avoid;page-break-inside:avoid}}
+  </style></head><body><main class="sheet"><header class="head"><div><div class="brand">AIEDAP · ENGLISH WEBAPP INNOVATION</div><div class="title">${escapeHtml(compactText(title,110))}</div></div><div class="meta">ONE-PAGE DESIGN REPORT<br>${new Date().toLocaleDateString('ko-KR')} · Self-check ${rubric()}/8</div></header>
+  <div class="goal"><b>교육 목표</b> · ${escapeHtml(compactText(val('oneLine'),300))}</div>
+  <section class="grid">
+    <div class="col">
+      <article class="box"><h2><span class="n">1</span> Problem & Learner</h2><p><span class="lab">현재 문제</span> ${escapeHtml(compactText(val('problemText'),250))}</p><p><span class="lab">학생 행동</span> ${escapeHtml(compactText(val('behaviorText'),210))}</p><div class="miniGrid"><div class="mini"><b>사용자</b><br>${escapeHtml(compactText(val('userText'),80))}</div><div class="mini"><b>사용 장면</b><br>${escapeHtml(compactText(val('contextText'),80))}</div></div></article>
+      <article class="box grow"><h2><span class="n">2</span> Learning Experience</h2><p><span class="lab">핵심 미션</span> ${escapeHtml(compactText(val('missionText'),210))}</p><ul>${bulletsFrom(val('coreFeatures'),4,105)}</ul><p><span class="lab">주체성</span> ${escapeHtml(compactText(val('agencyText'),180))}</p><p><span class="lab">교사 기능</span> ${escapeHtml(compactText(val('teacherText'),150))}</p></article>
+    </div>
+    <div class="col">
+      <article class="box"><h2><span class="n">3</span> Evidence & Output</h2><p><span class="lab">근거</span> ${escapeHtml(compactText(val('evidenceText')||val('claimEvidence'),190))}</p><div class="miniGrid"><div class="mini"><b>Input</b><br>${escapeHtml(compactText(val('inputText'),85))}</div><div class="mini"><b>Output</b><br>${escapeHtml(compactText(val('outputText'),85))}</div></div><p><span class="lab">저장</span> ${escapeHtml(compactText(val('saveText'),125))}</p></article>
+      <article class="box"><h2><span class="n">4</span> AI & Data</h2><p><span class="lab">AI 역할</span> ${escapeHtml(compactText(val('aiRole'),185))}</p><p><span class="lab">AI 경계</span> ${escapeHtml(compactText(val('aiGuard'),145))}</p><p><span class="lab">데이터/분석</span> ${escapeHtml(compactText((val('dataText')||'-')+' · '+(val('analysisText')||'-'),175))}</p><div class="flow">${escapeHtml(compactText(val('promptFlow'),165))}</div></article>
+      <article class="box grow tight"><h2><span class="n">5</span> AI Intervention</h2><ul>${(aiMap.length?aiMap:[{role:'-',point:'개입 설계 미작성',learner:'-'}]).map(r=>`<li><b>${escapeHtml(r.role||'-')}</b> · ${escapeHtml(compactText(r.point,62))}<br>${escapeHtml(compactText(r.learner,105))}</li>`).join('')}</ul><p><span class="lab">원칙</span> ${escapeHtml(compactText(val('interventionSummary'),145))}</p></article>
+    </div>
+    <div class="col">
+      <article class="box"><h2><span class="n">6</span> UI / MVP</h2><p><span class="lab">MVP</span> ${escapeHtml(compactText(val('mvpText'),175))}</p><div class="miniGrid"><div class="mini"><b>Screen 1</b><br>${escapeHtml(compactText(val('screen1'),72))}</div><div class="mini"><b>Screen 2</b><br>${escapeHtml(compactText(val('screen2'),72))}</div><div class="mini"><b>Screen 3</b><br>${escapeHtml(compactText(val('screen3'),72))}</div><div class="mini"><b>성공 조건</b><br>${escapeHtml(compactText(val('successText'),72))}</div></div></article>
+      <article class="box rev grow tight"><h2><span class="n">7</span> Revision Coach</h2><ul>${(sugg.length?sugg:['수정 제안 없음']).map(x=>`<li>${escapeHtml(compactText(x,125))}</li>`).join('')}</ul><p><span class="lab">다음 버전</span> ${escapeHtml(compactText(val('nextText'),120))}</p></article>
+      <article class="box pitch"><h2><span class="n">8</span> 30-sec Pitch</h2><p>${escapeHtml(compactText(val('pitchText'),260))}</p></article>
+    </div>
+  </section><footer class="foot"><span>AIEDAP English WebApp Reverse Design & Evidence Report</span><span class="url">${escapeHtml(url||'WebApp URL 미입력')}</span></footer></main></body></html>`
+}
+function slideData(){return [
+ ['01 Problem',val('oneLine')||'교육 목표 미작성',[val('problemText'),val('behaviorText'),val('evidenceText')]],
+ ['02 Target Users',val('userText')||'주 사용자',[`사용 장면: ${val('contextText')||'-'}`,`Input: ${val('inputText')||'-'}`,`Output: ${val('outputText')||'-'}`]],
+ ['03 Learning Experience',val('missionText')||'핵심 미션',[val('coreFeatures'),val('agencyText'),val('saveText')]],
+ ['04 AI & Data',val('aiRole')||'AI 역할',[`AI 기능: ${listChecked('.aiOpt').join(', ')||'-'}`,`데이터: ${val('dataText')||'-'}`,`분석: ${val('analysisText')||'-'}`]],
+ ['05 AI Intervention',val('interventionSummary')||'AI 개입 요약',getAiMap().filter(r=>r.point||r.tool).slice(0,3).map(r=>`${r.role||''} · ${r.point||''} · ${r.learner||''}`)],
+ ['06 UI / MVP',val('mvpText')||'MVP',[val('screen1'),val('screen2'),val('screen3'),`하지 않을 것: ${val('notNow')||'-'}`]],
+ ['07 Revision Coach','수정 제안',(val('reverseSuggestions')||'수정 제안 없음').split(/\n+/).slice(0,5)],
+ ['08 Pitch & Evidence',val('pitchText')||'30초 피치',[`성공 조건: ${val('successText')||'-'}`,`Self-check: ${rubric()}/8`,val('appUrl')?`WebApp: ${val('appUrl')}`:'WebApp URL 없음']]
+]}
+function slidesHtml(){const slides=slideData().map(([k,t,pts])=>`<section class="slide"><div class="k">${escapeHtml(k)}</div><h1>${escapeHtml(t)}</h1><ul>${(pts||[]).filter(Boolean).flatMap(x=>String(x).split('\n')).slice(0,6).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></section>`).join('');return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>AIEDAP WebApp Slides</title><style>@page{size:16in 9in;margin:0}*{box-sizing:border-box}body{margin:0;background:#172338;color:#162033;font-family:Inter,'Noto Sans KR',system-ui,sans-serif}.slide{width:16in;height:9in;page-break-after:always;padding:.82in .95in;background:linear-gradient(135deg,#fffdfa 0%,#f2f8f3 58%,#e8f9ce 100%);position:relative;overflow:hidden}.slide:after{content:'';position:absolute;width:4in;height:4in;border-radius:50%;right:-1.2in;bottom:-1.4in;background:#d8ff52;opacity:.35}.k{font:900 16pt ui-monospace,monospace;color:#2f7059;letter-spacing:.08em}h1{font-family:Georgia,serif;font-size:44pt;line-height:1.08;max-width:12in;margin:.25in 0 .4in;color:#172338}ul{font-size:24pt;line-height:1.35;max-width:12.2in;margin:0;padding-left:.42in}li{margin:.13in 0} @media screen{body{display:grid;gap:20px;padding:20px}.slide{box-shadow:0 20px 60px rgba(0,0,0,.25);transform-origin:top left;}}</style></head><body>${slides}</body></html>`}
+function openPrintable(html){const w=window.open('','_blank','noopener,noreferrer');if(!w){alert('팝업이 차단되었습니다. 브라우저에서 팝업을 허용하세요.');return}w.document.open();w.document.write(html);w.document.close();setTimeout(()=>{try{w.focus();w.print()}catch(e){}},500)}
+function loadScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
+function extractPdfPayload(html){
+  const parsed=new DOMParser().parseFromString(html,'text/html');
+  const css=[...parsed.querySelectorAll('style')].map(x=>x.textContent||'').join('\n');
+  const bodyHtml=parsed.body ? parsed.body.innerHTML : html;
+  return {css,bodyHtml};
+}
+function reportHasContent(){
+  const meaningful=['oneLine','problemText','behaviorText','evidenceText','userText','inputText','outputText','missionText','coreFeatures','aiRole','dataText','mvpText','successText','pitchText'];
+  return meaningful.filter(id=>val(id).length>2).length>=3;
+}
+async function htmlToPdf(html,filename,slide=false){
+  let host=null;
+  try{
+    if(!window.html2pdf) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
+    const payload=extractPdfPayload(html);
+    const pageW=slide?1536:1123, pageH=slide?864:794;
+    host=document.createElement('div');
+    host.className='pdfRenderHost';
+    host.style.position='fixed';
+    host.style.left='0';host.style.top='0';host.style.width=pageW+'px';host.style.height=pageH+'px';
+    host.style.background='#fff';host.style.zIndex='-99999';host.style.pointerEvents='none';host.style.overflow='hidden';
+    host.innerHTML=`<style>${payload.css}</style><div class="pdfRenderBody" style="width:${pageW}px;height:${pageH}px;overflow:hidden">${payload.bodyHtml}</div>`;
+    document.body.appendChild(host);
+    const target=host.querySelector('.pdfRenderBody');
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+    if(!target || !target.innerText.trim()) throw new Error('PDF로 변환할 보고서 내용이 비어 있습니다.');
+    if(typeof window.html2canvas!=='function') throw new Error('html2canvas를 불러오지 못했습니다.');
+    const canvas=await window.html2canvas(target,{scale:2,useCORS:true,backgroundColor:'#ffffff',scrollX:0,scrollY:0,width:pageW,height:pageH,windowWidth:pageW,windowHeight:pageH,x:0,y:0,logging:false});
+    const jspdfNS=window.jspdf;
+    if(!jspdfNS || !jspdfNS.jsPDF) throw new Error('jsPDF를 불러오지 못했습니다.');
+    const pdf=slide?new jspdfNS.jsPDF({orientation:'landscape',unit:'mm',format:[406.4,228.6]}):new jspdfNS.jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+    const outW=slide?406.4:297, outH=slide?228.6:210;
+    pdf.addImage(canvas.toDataURL('image/jpeg',0.98),'JPEG',0,0,outW,outH,undefined,'FAST');
+    pdf.save(filename);
+  }catch(e){
+    console.warn('PDF direct export failed:',e);
+    alert('직접 PDF 저장이 어려운 브라우저 환경입니다. 보고서가 들어 있는 인쇄 화면을 엽니다. 인쇄 메뉴에서 “PDF로 저장”을 선택하세요.');
+    openPrintable(html);
+  }finally{
+    if(host) host.remove();
+  }
+}
+$('#downloadReportPdf').addEventListener('click',()=>{refresh();if(!reportHasContent()){alert('보고서 내용이 충분하지 않습니다. 먼저 1~7번을 작성하거나 웹앱 역분석을 실행하세요.');return}htmlToPdf(onePageReportHtml(),'AIEDAP_WebApp_Report_A4_Landscape_OnePage.pdf',false)});
+async function finalizeAndDownloadReport(){
+  if(!val('reverseSuggestions')){const sug=localRevisionSuggestions();$('#reverseSuggestions').value=sug;renderSuggestions(sug)}
+  if(!val('pitchText')) $('#pitchText').value=`우리 웹앱은 ${val('userText')||'학습자'}를 위해 “${val('oneLine')||'수업 문제'}”를 해결한다. 사용자는 ${val('inputText')||'학습 자료'}를 입력하고 ${val('outputText')||'분석·피드백 결과'}를 얻는다. 핵심 차별점은 ${val('agencyText')||'학생의 검증과 수정 과정을 남긴다는 점'}이다.`;
+  const preview=refresh();updateProgress();switchTab('export');
+  if(!reportHasContent() || preview.replace(/[-#\s]/g,'').length<80){
+    alert('최종 보고서에 넣을 분석 내용이 충분하지 않습니다. 먼저 웹앱 URL/HTML을 분석하거나 1~7번 내용을 작성한 뒤 다시 시도하세요.');
+    return;
+  }
+  $('#reverseStatus').textContent='✓ 최종 보고서 내용을 확인했습니다. PDF를 생성합니다.';
+  await htmlToPdf(onePageReportHtml(),'AIEDAP_English_WebApp_Final_Report_A4_Landscape_OnePage.pdf',false);
+}
+$('#autoFinalReportPdf').addEventListener('click',finalizeAndDownloadReport);
+$('#downloadSlidePdf').addEventListener('click',()=>htmlToPdf(slidesHtml(),'AIEDAP_WebApp_Slides.pdf',true));
+$('#downloadSlideHtml').addEventListener('click',()=>download('AIEDAP_WebApp_Slides.html','\ufeff'+slidesHtml(),'text/html;charset=utf-8'));
+
+function normalizedAppUrl(){let u=val('appUrl');if(!u)return '';if(!/^https?:\/\//i.test(u))u='https://'+u;return u}
+function validateAppUrl(){const raw=val('appUrl'),state=$('#urlState');if(!raw){state.textContent='공개 접근 가능한 주소를 붙여넣으세요.';state.className='urlState';return false}try{const u=new URL(normalizedAppUrl());const ok=['http:','https:'].includes(u.protocol);state.textContent=ok?'✓ 공개 URL/Artifact 분석 대상으로 사용할 수 있습니다.':'http/https 주소를 입력하세요.';state.className='urlState '+(ok?'ok':'bad');return ok}catch(e){state.textContent='올바른 웹 주소 형식을 확인하세요.';state.className='urlState bad';return false}}
+$('#appUrl').addEventListener('input',()=>{validateAppUrl();updateProgress()});
+$('#openApp').addEventListener('click',()=>{if(!validateAppUrl())return;window.open(normalizedAppUrl(),'_blank','noopener,noreferrer')});
+
+let selectedHtmlText='';
+let selectedHtmlName='';
+$('#appHtmlFile').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f){selectedHtmlText='';selectedHtmlName='';return}selectedHtmlName=f.name;selectedHtmlText=await f.text();setReverseStatus(`✓ ${f.name}을 읽었습니다. “1번부터 보고서 자동작성”을 누르세요.`,'ok');$('#reverseProgress').style.width='12%'});
+function setReverseStatus(msg,type=''){const el=$('#reverseStatus');el.textContent=msg;el.className='reverseStatus'+(type?' '+type:'')}
+function safeText(v){return typeof v==='string'?v.trim():''}
+function toSuggestionText(v){if(Array.isArray(v))return v.map(x=>typeof x==='string'?x:(x.title?`${x.title}: ${x.detail||x.reason||''}`:JSON.stringify(x))).join('\n');return safeText(v)}
+function renderSuggestions(txt){
+  const items=(txt||'').split(/\n+/).map(x=>x.replace(/^\s*(?:[-*•]|\d+[.)])\s*/,'').trim()).filter(Boolean);
+  const html=items.length?items.map(x=>`<li>${escapeHtml(x)}</li>`).join(''):'<li>자동 수정 제안이 아직 없습니다. 웹앱 URL/HTML 분석 또는 “수정 제안 받기”를 실행하세요.</li>';
+  const top=$('#suggestionList'),review=$('#reviewSuggestionList');if(top)top.innerHTML=html;if(review)review.innerHTML=html;
+}
+function localRevisionSuggestions(){
+  const out=[];
+  const goal=val('oneLine'), problem=val('problemText'), behavior=val('behaviorText'), evidence=val('evidenceText');
+  const mission=val('missionText'), core=val('coreFeatures'), agency=val('agencyText'), aiRole=val('aiRole'), guard=val('aiGuard');
+  const claim=val('claimEvidence'), mvp=val('mvpText'), success=val('successText'), screens=[val('screen1'),val('screen2'),val('screen3')];
+  const ai=listChecked('.aiOpt');
+  if(!goal || goal.length<25) out.push('【교육목표】 기능명이 아니라 “학생이 무엇을 더 잘하게 되는가”가 드러나도록 교육 목표를 한 문장으로 구체화하세요.');
+  if(!problem || problem.length<35) out.push('【문제 적합성】 현재 수업의 실제 문제를 관찰 가능한 장면으로 써보세요. 예: 학생이 AI 요약을 사용하지만 본문 근거 확인 없이 그대로 제출한다.');
+  if(!behavior || !/(확인|검증|비교|수정|설명|작성|선택)/.test(behavior)) out.push('【학생 행동】 목표를 “이해한다”로 두기보다 선택·비교·검증·수정·설명처럼 화면에서 확인 가능한 행동으로 바꾸세요.');
+  if(!evidence || !/(근거|기록|로그|수정|인용|산출|저장)/.test(evidence)) out.push('【증거 설계】 성공 증거로 결과 점수만 두지 말고 근거 선택, 수정 전후, Prompt/AI 사용 로그, 자기언어화 결과 중 최소 2개를 저장하세요.');
+  if(ai.length && (!agency || agency.length<30)) out.push('【학습자 주체성】 AI 출력 다음에 학생이 반드시 판단·수정·재작성하는 단계와 입력칸을 UI에 명시하세요.');
+  if(ai.length && (!guard || guard.length<20)) out.push('【AI 경계】 AI가 하지 않아야 할 일을 명시하세요. 특히 최종 답안 자동 확정·학생 대신 제출·근거 없는 단정은 제한하는 것이 좋습니다.');
+  if(ai.length && (!claim || claim.length<15)) out.push('【근거 검증】 AI가 생성한 핵심 주장마다 무엇으로 검증할지 지정하세요: 원문 문장, 데이터, 학생 수정 기록, 선행연구 등.');
+  if(!mission || mission.split('→').length<3) out.push('【학습 흐름】 핵심 미션을 INPUT → AI/분석 → 근거 확인 → 학생 수정 → 자기언어화/저장처럼 단계적으로 표현하세요.');
+  if(!core || core.split(/\n+/).filter(Boolean).length<3) out.push('【MVP 범위】 필수 기능은 3개 정도로 제한하고 각 기능이 교육 목표와 직접 연결되는지 확인하세요.');
+  if(screens.filter(Boolean).length<3) out.push('【UI 흐름】 Input / Analyze·Compare / Reflect·Export의 3화면 구조를 완성해 사용자가 다음 행동을 바로 알 수 있게 하세요.');
+  if(!mvp || mvp.length<25) out.push('【MVP 정의】 “무엇을 입력하면 무엇이 나오고 무엇을 저장하는지”가 한 문장에 드러나도록 MVP를 다시 정의하세요.');
+  if(!success || !/(분|시간|명|회|저장|완료|실행)/.test(success)) out.push('【성공 조건】 10~20분 내 실행, 결과 저장 가능, 학생의 근거 확인률 등 시간·행동 기준이 들어간 성공 조건을 추가하세요.');
+  const scores=$$('.rubricScore').map(x=>+x.value); const labels=['Problem fit','Learner agency','Evidence design','MVP feasibility'];
+  scores.forEach((v,i)=>{if(v===0)out.push(`【루브릭 · ${labels[i]}】 현재 0점입니다. 이 항목을 먼저 보완한 뒤 자동 보고서를 다시 생성하세요.`)});
+  if(!out.length) out.push('【고도화 제안】 기본 설계는 비교적 충실합니다. 기능을 더 늘리기보다 실제 학생 1~2명의 사용 로그를 수집해 막히는 지점과 불필요한 AI 개입을 찾아 수정하세요.');
+  out.push('【제출물 품질】 최종 보고서와 슬라이드에는 “웹앱 기능 설명”만 넣지 말고, 교육 목표 → 학생 행동 → 근거 → 수정 → 한계가 한 흐름으로 보이도록 정리하세요.');
+  return out.slice(0,8).join('\n');
+}
+function generateRevisionSuggestions(){
+  const txt=localRevisionSuggestions();$('#reverseSuggestions').value=txt;renderSuggestions(txt);refresh();setReverseStatus('✓ 현재 보고서 내용을 기준으로 수정 제안을 갱신했습니다. 필요한 제안만 선택해 반영하세요.','ok');return txt;
+}
+
+function applyAnalysis(d){
+  const map={oneLine:'oneLine',problemText:'problemText',behaviorText:'behaviorText',evidenceText:'evidenceText',userText:'userText',contextText:'contextText',inputText:'inputText',outputText:'outputText',missionText:'missionText',coreFeatures:'coreFeatures',niceFeatures:'niceFeatures',agencyText:'agencyText',teacherText:'teacherText',saveText:'saveText',aiRole:'aiRole',aiGuard:'aiGuard',dataText:'dataText',analysisText:'analysisText',claimEvidence:'claimEvidence',promptFlow:'promptFlow',interventionSummary:'interventionSummary',screen1:'screen1',screen2:'screen2',screen3:'screen3',visualTone:'visualTone',mvpText:'mvpText',notNow:'notNow',successText:'successText',apiText:'apiText',nextText:'nextText',pitchText:'pitchText'};
+  Object.entries(map).forEach(([k,id])=>{if(safeText(d[k])) $('#'+id).value=safeText(d[k])});
+  if(safeText(d.appTitle)) $('#appTitle').value=safeText(d.appTitle);
+  const aiSuggestions=toSuggestionText(d.revisionSuggestions||d.suggestions||d.improvementSuggestions);const suggestions=aiSuggestions||localRevisionSuggestions();$('#reverseSuggestions').value=suggestions;renderSuggestions(suggestions)
+  if(Array.isArray(d.aiFunctions)) $$('.aiOpt').forEach(x=>x.checked=d.aiFunctions.includes(x.value));
+  if(Array.isArray(d.visualizations)) $$('.vizOpt').forEach(x=>x.checked=d.visualizations.includes(x.value));
+  if(Array.isArray(d.aiInterventionMap)&&d.aiInterventionMap.length){const rows=d.aiInterventionMap.slice(0,5).map(r=>({point:safeText(r.point),tool:safeText(r.tool),role:['탐색형','교정형','협력형'].includes(r.role)?r.role:'탐색형',learner:safeText(r.learner),teacher:safeText(r.teacher)}));while(rows.length<5)rows.push({});renderAiMap(rows)}
+  if(Array.isArray(d.interventionChecks)) $$('.interventionCheck').forEach(x=>x.checked=d.interventionChecks.includes(x.value));
+  if(safeText(d.buildType)){const opts=[...$('#buildType').options].map(o=>o.text);const hit=opts.find(x=>x===d.buildType)||opts.find(x=>x.includes(d.buildType)||d.buildType.includes(x));if(hit)$('#buildType').value=hit}
+  if(Array.isArray(d.rubricScores)) $$('.rubricScore').forEach((x,i)=>x.value=String(Math.max(0,Math.min(2,Number(d.rubricScores[i]??0)))));
+  rubric();interventionScore();updateProgress();refresh();
+}
+$('#generateSuggestions').addEventListener('click',generateRevisionSuggestions);$('#generateSuggestionsTop').addEventListener('click',generateRevisionSuggestions);$('#generateSuggestionsReview').addEventListener('click',generateRevisionSuggestions);
+function extractHtmlEvidence(html){
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const title=(doc.querySelector('title')?.textContent||doc.querySelector('h1')?.textContent||selectedHtmlName||'').trim();
+  const headings=[...doc.querySelectorAll('h1,h2,h3,h4')].map(x=>x.textContent.trim()).filter(Boolean).slice(0,60);
+  const buttons=[...doc.querySelectorAll('button,a,[role=button]')].map(x=>x.textContent.trim()).filter(Boolean).slice(0,80);
+  const inputs=[...doc.querySelectorAll('input,textarea,select')].map(x=>[x.getAttribute('placeholder'),x.getAttribute('aria-label'),x.name,x.id].filter(Boolean).join(' / ')).filter(Boolean).slice(0,80);
+  const text=(doc.body?.innerText||doc.body?.textContent||'').replace(/\s+/g,' ').trim().slice(0,35000);
+  const scripts=[...doc.scripts].map(x=>x.textContent||'').join('\n').slice(0,22000);
+  return {title,headings,buttons,inputs,text,scripts};
+}
+function heuristicHtmlReport(ev){
+  const all=(ev.title+' '+ev.headings.join(' ')+' '+ev.buttons.join(' ')+' '+ev.inputs.join(' ')+' '+ev.text).toLowerCase();
+  const hasAI=/gemini|openai|claude|llm|prompt|rag|agent|langgraph|ai/.test(all);
+  const hasExport=/markdown|\.md|csv|json|download|저장|export/.test(all);
+  const hasGraph=/chart|graph|network|radar|plot|시각화|그래프/.test(all);
+  const inputs=ev.inputs.length?ev.inputs.slice(0,8).join(', '):'텍스트/자료 입력';
+  const outputs=[...new Set(ev.buttons.filter(x=>/분석|생성|실행|저장|다운|보고서|결과|export|generate|analy/i.test(x)))].slice(0,8).join(', ')||'분석 결과와 피드백';
+  return {appTitle:ev.title,oneLine:`${ev.title||'이 웹앱'}의 기능을 활용해 학습자가 영어 학습 과제를 수행하고 결과를 검토·수정하도록 지원한다.`,problemText:`웹앱 화면과 기능을 역분석한 결과, ${ev.title||'이 도구'}는 반복적인 영어 학습/분석 과정을 디지털 환경에서 구조화하려는 목적을 가진 것으로 보인다.`,behaviorText:'학생이 입력 자료를 바탕으로 결과를 확인하고, 필요한 경우 비교·검증·수정하여 자신의 최종 결과를 완성한다.',evidenceText:`입력 기록, 화면 결과, ${hasExport?'저장/내보내기 결과, ':''}학생의 선택·수정 흔적`,userText:'영어 학습자 또는 영어교사',contextText:'영어 수업의 개별·모둠 실습 또는 교사 설계 활동',inputText:inputs,outputText:outputs,missionText:'자료 입력 → 기능 실행 → 결과 확인 → 비교/검증 → 수정 → 최종 결과 활용',coreFeatures:ev.buttons.slice(0,6).map((x,i)=>`${i+1}. ${x}`).join('\n')||'1. 입력\n2. 분석/생성\n3. 결과 확인',niceFeatures:hasGraph?'그래프/시각화 및 인터랙티브 화면':'인터랙티브 버튼과 즉각적 피드백',agencyText:'자동 생성 결과를 최종 답으로 확정하지 않고 사용자가 결과를 검토·선택·수정하는 단계를 유지한다.',teacherText:'샘플 입력, 수업 적용 안내, 결과 점검 및 학습자 산출물 확인 기능',saveText:hasExport?'Markdown/CSV/JSON 또는 브라우저 다운로드 결과':'화면 결과 캡처 또는 후속 버전에서 MD/CSV 저장 기능 권장',aiRole:hasAI?'질문·분석·생성·피드백을 지원하는 보조 시스템':'현재 HTML에서 명시적 생성형 AI 연결 여부는 확인되지 않음',aiGuard:'최종 학습 판단과 표현을 학생 대신 확정하지 않도록 제한한다.',dataText:'사용자가 웹앱에 입력하는 영어 텍스트·자료 및 화면 내 샘플 데이터',analysisText:hasAI?'브라우저 로직 + 생성형 AI/프롬프트 기반 처리':'HTML/JavaScript 기반 규칙 처리 및 인터랙션',claimEvidence:'웹앱 화면 요소, 사용자 입력, 출력 결과, 수정/저장 기록',promptFlow:hasAI?'INPUT → AI/ANALYZE → RESULT → USER CHECK → REVISE → EXPORT':'INPUT → PROCESS → RESULT → USER CHECK → EXPORT',interventionSummary:'AI/자동화 기능은 분석·후보 제시를 지원하고, 결과 선택·수정·설명은 학습자가 수행하도록 설계한다.',screen1:`입력: ${inputs}`,screen2:`실행/분석: ${outputs}`,screen3:`결과 검토${hasExport?' · 저장/Export':''}`,visualTone:hasGraph?'Interactive dashboard / data visualization':'Interactive web learning tool',mvpText:`${ev.title||'웹앱'}의 핵심 입력→처리→결과 확인 흐름을 브라우저에서 실행한다.`,notNow:'로그인·학급 데이터베이스·복잡한 서버 기능은 실제 코드에서 확인되지 않으면 후속 버전으로 둔다.',successText:'사용자가 자신의 자료를 넣고 핵심 기능을 실행한 뒤 결과를 확인·수정할 수 있다.',apiText:hasAI?'코드 내 API 호출 또는 AI 관련 로직을 확인해 키 처리 방식을 점검해야 한다.':'명시적인 외부 AI API는 HTML 정적 분석에서 확인되지 않음',nextText:'사용 로그 저장, 교사용 결과 대시보드, 근거 검증 및 학습자 성찰 기능 고도화',pitchText:`${ev.title||'이 웹앱'}은 영어 학습/수업에서 반복되는 입력·분석·결과 확인 과정을 하나의 인터랙티브 흐름으로 제공한다.`,revisionSuggestions:[`학습 목표와 실제 버튼 기능의 연결을 더 명시하세요. 현재 확인된 핵심 버튼: ${outputs}.`,'학생이 자동 결과를 그대로 수용하지 않도록 근거 선택, 수정 이유, 최종 자기언어화 칸을 추가하세요.','교사용 제출물로 Markdown 보고서뿐 아니라 수정 전후 기록과 근거 확인 체크리스트를 함께 남기세요.',hasAI?'API Key 처리 방식, 오류 메시지, 개인정보 입력 제한 안내를 화면에 명확히 표시하세요.':'AI 기능이 없다면 AI 없이도 되는 활동과 AI가 들어갈 경우의 교육적 필요성을 구분해 설명하세요.',hasGraph?'그래프가 장식이 되지 않도록 그래프 해석 질문과 학생 설명 칸을 연결하세요.':'시각화가 필요하다면 표, 단계 흐름, 루브릭 진행률 중 하나만 작게 추가해 MVP 범위를 유지하세요.'],aiFunctions:hasAI?['질문 생성','초안 생성','피드백','비교/평가']:[],visualizations:hasGraph?['Network','Table','Progress/Rubric']:['Table'],interventionChecks:['roleType','postTask','priority'],rubricScores:[2,1,1,2]};
+}
+const reportSchemaKeys=['appTitle','oneLine','problemText','behaviorText','evidenceText','userText','contextText','inputText','outputText','missionText','coreFeatures','niceFeatures','agencyText','teacherText','saveText','aiRole','aiGuard','dataText','analysisText','claimEvidence','promptFlow','interventionSummary','screen1','screen2','screen3','visualTone','mvpText','notNow','successText','apiText','nextText','pitchText','revisionSuggestions','aiFunctions','visualizations','aiInterventionMap','interventionChecks','buildType','rubricScores'];
+function analysisPrompt(sourceLabel,sourceContent=''){
+return `당신은 AIEDAP 영어교과 웹앱 수업설계 분석가다. 완성된 웹앱을 역설계하여 아래 Planner의 1번 Problem부터 8번 Export까지 자동 작성한다. 웹앱에서 실제로 확인되는 기능을 우선 근거로 삼고, 확인되지 않는 기능은 단정하지 말고 '확인되지 않음/후속 검토 필요'라고 쓴다. 영어교육 관점에서 학생의 실제 행동, 입력·출력, AI 개입, 근거 검증, 자기언어화를 구체화한다.\n\n분석 대상: ${sourceLabel}\n${sourceContent?`\n[HTML에서 추출한 근거]\n${sourceContent}`:''}\n\n반드시 JSON 객체 하나만 반환한다. 키는 다음과 같다:\n${reportSchemaKeys.join(', ')}\n\n규칙:\n- coreFeatures는 번호 목록 문자열\n- aiFunctions는 다음 중 해당 항목 배열: 질문 생성, 초안 생성, 분류/태깅, 근거 검색/RAG, 피드백, 오류 탐지, 비교/평가, 요약, 번역/재표현, 루브릭 코칭\n- visualizations는 다음 중 배열: 막대/선 그래프, 산점도, Heatmap, Word Cloud, Network, Timeline, Radar, Table, Boxplot, PCA/Cluster, KWIC/Concordance, Progress/Rubric\n- aiInterventionMap은 최대 5개 객체 배열이며 각 객체는 point, tool, role(탐색형/교정형/협력형), learner, teacher\n- interventionChecks는 roleType, postTask, noOveruse, priority, oneTool 중 타당한 값 배열\n- buildType은 '단일 HTML · 브라우저 로컬 실행', 'GitHub Pages', 'HTML + Gemini/OpenAI API', 'Python/Streamlit', 'Colab/Notebook' 중 가장 가까운 값\n- rubricScores는 Problem fit, Learner agency, Evidence design, MVP feasibility 순서의 0~2 숫자 배열\n- 추론은 가능하지만 웹앱에서 관찰한 근거를 넘어서 기능을 발명하지 않는다.`;
+}
+async function geminiAnalyze({url,htmlEvidence,key}){
+  const endpoint=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+  const sourceLabel=url?`공개 웹앱/Claude Artifact URL: ${url}`:`업로드 HTML 파일: ${selectedHtmlName||'webapp.html'}`;
+  const evidence=htmlEvidence?JSON.stringify(htmlEvidence).slice(0,60000):'';
+  const body={contents:[{role:'user',parts:[{text:analysisPrompt(sourceLabel,evidence)}]}],generationConfig:{temperature:0.2,responseMimeType:'application/json'}};
+  if(url) body.tools=[{url_context:{}}];
+  const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const raw=await r.text();if(!r.ok)throw new Error(`Gemini API ${r.status}: ${raw.slice(0,300)}`);
+  const obj=JSON.parse(raw);const text=obj.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';if(!text)throw new Error('AI 분석 결과가 비어 있습니다. URL 공개 접근 여부를 확인하세요.');
+  return JSON.parse(text.replace(/^```json\s*|\s*```$/g,''));
+}
+$('#reverseAnalyze').addEventListener('click',async()=>{
+  const url=val('appUrl')?normalizedAppUrl():'';const key=val('geminiKey');const hasFile=!!selectedHtmlText;
+  if(!url&&!hasFile){setReverseStatus('웹앱 URL/Claude Artifact 주소를 붙여넣거나 HTML 파일을 선택하세요.','bad');return}
+  if(url&&!validateAppUrl()){setReverseStatus('URL 형식을 먼저 확인하세요.','bad');return}
+  $('#reverseAnalyze').disabled=true;$('#reverseProgress').style.width='24%';setReverseStatus('웹앱을 읽고 화면·기능·입출력 구조를 분석하고 있습니다…','working');
+  try{
+    let result;
+    if(hasFile){const ev=extractHtmlEvidence(selectedHtmlText);$('#reverseProgress').style.width='45%';if(key){setReverseStatus('HTML 구조를 읽었습니다. AI가 영어교육 관점에서 1~8번 보고서로 재구성하고 있습니다…','working');result=await geminiAnalyze({htmlEvidence:ev,key})}else{result=heuristicHtmlReport(ev);setReverseStatus('HTML을 브라우저에서 기본 역분석했습니다. Gemini 키를 넣으면 교육적 목적·AI 개입까지 더 정밀하게 작성할 수 있습니다.','working')}}
+    else {if(!key)throw new Error('외부 URL/Claude Artifact는 브라우저 보안상 페이지 내용을 직접 읽을 수 없습니다. Gemini API Key를 입력하면 공개 URL을 분석해 자동 작성합니다.');$('#reverseProgress').style.width='42%';setReverseStatus('공개 URL을 AI가 읽고 있습니다. Claude Artifact는 공개 공유 상태여야 합니다…','working');result=await geminiAnalyze({url,key})}
+    $('#reverseProgress').style.width='82%';applyAnalysis(result);if(url)$('#appUrl').value=url;$('#reverseProgress').style.width='100%';setReverseStatus('✓ 완료: 1. Problem부터 8. Export까지 자동 작성했습니다. 각 탭을 확인한 뒤 필요한 부분만 수정하세요.','ok');switchTab('problem');document.querySelector('#problem').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){console.error(err);$('#reverseProgress').style.width='0%';setReverseStatus('자동 분석 실패: '+err.message,'bad')}
+  finally{$('#reverseAnalyze').disabled=false}
+});
+$('#makeReport').addEventListener('click',()=>{refresh();switchTab('export');$('#mdPreview').scrollIntoView({behavior:'smooth',block:'start'});});
+function buildHandoffPrompt(){const p=`아래 기획서를 기반으로 실제 실행 가능한 단일 HTML 웹앱을 만들어줘.\n\n[필수 구현 원칙]\n- HTML/CSS/Vanilla JS 중심\n- 모든 버튼 실제 작동\n- 샘플 데이터 내장\n- 반응형 UI\n- 가능하면 브라우저 로컬 실행\n- 학생 결과 Markdown 저장 기능\n- 중요한 분석에는 방법론적 한계/주의문 표시\n- AI는 최종 판단을 대신하지 않고 검증·수정·자기언어화를 지원\n\n[기획서]\n${md()}`;$('#handoffPrompt').value=p;return p}
+$('#makeHandoff').addEventListener('click',buildHandoffPrompt);
+function sharePayload(){const text=val('handoffPrompt')||buildHandoffPrompt();const title=(val('appTitle')||'AIEDAP English WebApp')+' 제작 요청 프롬프트';const url=normalizedAppUrl()||location.href;return {text,title,url}}
+async function copyShareText(msg='프롬프트를 클립보드에 복사했습니다.') {const {text}=sharePayload();const status=$('#shareStatus');try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);else{const ta=$('#handoffPrompt');ta.focus();ta.select();document.execCommand('copy')}status.textContent='✓ '+msg;return true}catch(e){status.textContent='복사에 실패했습니다. 프롬프트를 직접 복사해 주세요.';return false}}
+$('#shareHandoff').addEventListener('click',()=>{$('#socialSharePanel').classList.toggle('open');$('#shareStatus').textContent=$('#socialSharePanel').classList.contains('open')?'공유할 서비스를 선택하세요.':'공유 메뉴를 닫았습니다.'});
+$('#shareKakao').addEventListener('click',async()=>{const {text,title,url}=sharePayload();const status=$('#shareStatus');try{if(navigator.share){await navigator.share({title,text,url});status.textContent='✓ 시스템 공유창을 열었습니다. 카카오톡을 선택하세요.'}else{await copyShareText('카카오톡 공유용 프롬프트를 복사했습니다. 모바일에서 공유 기능을 사용하면 카카오톡으로 보낼 수 있습니다.')}}catch(e){if(e?.name==='AbortError')status.textContent='공유를 취소했습니다.';else await copyShareText('카카오톡 공유용 프롬프트를 복사했습니다.')}});
+$('#shareInstagram').addEventListener('click',async()=>{await copyShareText('Instagram용 프롬프트를 복사했습니다. Instagram을 열어 붙여넣으세요.');window.open('https://www.instagram.com/','_blank','noopener,noreferrer')});
+$('#shareThreads').addEventListener('click',()=>{const {text,url}=sharePayload();const body=compactText(text,430)+'\n\n'+url;window.open('https://www.threads.net/intent/post?text='+encodeURIComponent(body),'_blank','noopener,noreferrer');$('#shareStatus').textContent='✓ Threads 작성 화면을 열었습니다.'});
+$('#shareNaver').addEventListener('click',()=>{const {title,url,text}=sharePayload();copyShareText('네이버 블로그용 전체 프롬프트를 복사했습니다. 공유 화면에서 필요하면 붙여넣으세요.');const shareUrl='https://share.naver.com/web/shareView?url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title+' · '+compactText(text,90));window.open(shareUrl,'_blank','noopener,noreferrer');$('#shareStatus').textContent='✓ 네이버 블로그 공유 화면을 열었습니다. 전체 프롬프트는 클립보드에도 복사했습니다.'});
+$('#resetAll').addEventListener('click',()=>{if(!confirm('작성한 기획 내용을 모두 지울까요?'))return;fields.forEach(id=>$('#'+id).value='');$$('.aiOpt,.vizOpt,.interventionCheck').forEach(x=>x.checked=false);renderAiMap([{},{},{},{},{}]);$$('.rubricScore').forEach(x=>x.value='0');interventionScore();$('#handoffPrompt').value='';$('#mdPreview').textContent='';$('#reverseSuggestions').value='';renderSuggestions('');$('#urlState').textContent='공개 접근 가능한 주소를 붙여넣으세요.';$('#appHtmlFile').value='';$('#geminiKey').value='';selectedHtmlText='';selectedHtmlName='';$('#reverseProgress').style.width='0%';setReverseStatus('완성된 웹앱을 역분석해 Problem → Experience → AI & Data → AI Intervention → UI → MVP → Review → Export를 자동 채웁니다.');$('#urlState').className='urlState';$('#status').textContent='초기화했습니다.';rubric();updateProgress()});
+renderSuggestions(val('reverseSuggestions'));refresh();interventionScore();updateProgress();rubric();
 })();
 </script>
 </body>
