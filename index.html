@@ -50,6 +50,20 @@
 
   footer{margin-top:3.5rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--dim);font-size:.82rem}
   footer a{color:var(--c1)}
+
+  .steps{list-style:none;margin:1.1rem 0 0;padding:0;counter-reset:step}
+  .step{position:relative;padding:0 0 1.5rem 2.7rem;border-left:2px dashed var(--line)}
+  .step:last-child{border-left:2px dashed transparent;padding-bottom:0}
+  .step::before{counter-increment:step;content:counter(step);position:absolute;left:-.95rem;top:0;
+    width:1.9rem;height:1.9rem;border-radius:50%;background:var(--gc,var(--c1));color:#fff;
+    display:flex;align-items:center;justify-content:center;font:700 .85rem/1 "IBM Plex Mono",monospace;
+    box-shadow:0 0 0 3px var(--paper)}
+  .step .tag{font:700 .68rem/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--gc,var(--c1))}
+  .step .stitle{display:block;font-family:"Fraunces","Noto Serif KR",serif;font-weight:700;font-size:1.05rem;margin:.25rem 0 .3rem}
+  .step .stitle a{color:inherit;text-decoration:none}
+  .step .stitle a:hover{text-decoration:underline}
+  .step .stitle .sep{color:var(--dim);font-weight:400;font-family:"Noto Sans KR",sans-serif;font-size:.85rem}
+  .step .sd{color:var(--dim);font-size:.87rem;margin:0}
 </style>
 </head>
 <body>
@@ -61,6 +75,52 @@
     <div class="band">AI 개입 지점을 정하는 기준은 도구가 아니라 그 단계의 학습 목적이다</div>
     <p class="by">작성자 — 최시강 (아이린쌤 · 「아이린쌤의 데이터분석랩」 운영자 · 대구 학남고 영어교사 · irenechey@naver.com)</p>
   </header>
+
+  <div class="grp" style="--gc:var(--c3)">
+    <h2>추천 실습 순서</h2>
+    <ol class="steps">
+      <li class="step" style="--gc:var(--cR)">
+        <p class="tag">연수 전</p>
+        <p class="stitle"><a href="https://irenechey820712-star.github.io/english-terminology-deck/" target="_blank" rel="noopener">AI × 영어교육 전문용어 덱</a> <span class="sep">· 새 창에서</span></p>
+        <p class="sd">약 140개 용어를 먼저 훑어 공통 언어를 맞춘다. 이후 도구들에 나오는 용어(하네스·RAG·CoT 등)가 낯설지 않게.</p>
+      </li>
+      <li class="step" style="--gc:var(--c2)">
+        <p class="tag">1차시 실습</p>
+        <p class="stitle"><a href="https://irenechey820712-star.github.io/efl-reading-graph/" target="_blank" rel="noopener">EFL 리딩 그래프</a> <span class="sep">· 새 창에서</span></p>
+        <p class="sd">retrieve→grade→RETRY 루프를 직접 돌려 "체인이면 됐을까, 그래프가 필요했나"를 눈으로 확인한다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c4)">
+        <p class="tag">2차시 실습</p>
+        <p class="stitle"><a href="Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html">Literary Style &amp; Emotion Spectrum Lab v2.6</a></p>
+        <p class="sd">관통 시연 사례('영미문학 원문 가독성 향상 프로젝트')를 감정 곡선·QUICK PROFILE로 3축(이해/표현/성찰) 해부한다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c2)">
+        <p class="tag">3차시 실습</p>
+        <p class="stitle"><a href="https://irenechey820712-star.github.io/english-teacher-harness-lab/" target="_blank" rel="noopener">English Teacher Harness Engineering + Distractor Lab</a> <span class="sep">· 새 창에서</span></p>
+        <p class="sd">"프롬프트만" vs "하네스 적용"을 나란히 실행해 검증 게이트가 왜 필요한지 확인한다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c4)">
+        <p class="tag">3~4차시 실습</p>
+        <p class="stitle"><a href="Prompting_Thinking_Lab_Research.html">Prompting Thinking Lab Research+</a></p>
+        <p class="sd">CoT · ToT · Least-to-Most · Decomposed 전략을 비교하며 AI 개입 지점을 정교화한다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c4)">
+        <p class="tag">4차시 실습</p>
+        <p class="stitle"><a href="GLOBAL_ENGLISH_THINKING_LAB_8_LIVE_WRITING_COACH.html">Global English Thinking Lab · Live Writing Coach</a></p>
+        <p class="sd">세계 이슈 소재로 8단계 글쓰기 코칭 시나리오를 직접 밟아보며 전·중·후 구조를 체감한다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c4)">
+        <p class="tag">4차시 심화 · 선택</p>
+        <p class="stitle"><a href="AIEDAP_English_WebApp_Innovation_Planner.html">AIEDAP English WebApp Innovation Planner</a></p>
+        <p class="sd">여기까지 겪은 도구들을 바탕으로 나만의 AI 융합 영어 WebApp을 7단계로 기획해본다.</p>
+      </li>
+      <li class="step" style="--gc:var(--c5)">
+        <p class="tag">5차시 실습</p>
+        <p class="stitle"><a href="Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html">Literary Lab</a> · <a href="https://irenechey820712-star.github.io/efl-reading-graph/" target="_blank" rel="noopener">EFL 리딩 그래프</a> 재방문</p>
+        <p class="sd">처음 쓴 두 도구로 돌아가 번역 전략(Literary Lab)과 정교화 결과(리딩 그래프)를 다시 살펴보며 내 모형을 다듬는다.</p>
+      </li>
+    </ol>
+  </div>
 
   <div class="grp" style="--gc:var(--c5)">
     <h2>강의 슬라이드 · 5차시</h2>
