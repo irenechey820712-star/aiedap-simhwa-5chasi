@@ -58,12 +58,32 @@
     width:1.9rem;height:1.9rem;border-radius:50%;background:var(--gc,var(--c1));color:#fff;
     display:flex;align-items:center;justify-content:center;font:700 .85rem/1 "IBM Plex Mono",monospace;
     box-shadow:0 0 0 3px var(--paper)}
+  .step .meta{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
   .step .tag{font:700 .68rem/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--gc,var(--c1))}
+  .step .time{font:600 .68rem/1 "IBM Plex Mono",monospace;color:var(--dim);
+    background:color-mix(in srgb,var(--gc,var(--c1)) 14%,transparent);padding:.2em .55em;border-radius:99px}
   .step .stitle{display:block;font-family:"Fraunces","Noto Serif KR",serif;font-weight:700;font-size:1.05rem;margin:.25rem 0 .3rem}
   .step .stitle a{color:inherit;text-decoration:none}
   .step .stitle a:hover{text-decoration:underline}
   .step .stitle .sep{color:var(--dim);font-weight:400;font-family:"Noto Sans KR",sans-serif;font-size:.85rem}
   .step .sd{color:var(--dim);font-size:.87rem;margin:0}
+  .step .out{font-size:.82rem;color:var(--ink);margin:.55rem 0 0;padding:.45rem .65rem;
+    background:color-mix(in srgb,var(--gc,var(--c1)) 9%,transparent);border-radius:6px}
+  .step .out b{color:var(--gc,var(--c1));font-weight:700}
+  .step .done-check{display:inline-flex;align-items:center;gap:.4rem;margin-top:.6rem;
+    font:600 .78rem/1 "IBM Plex Mono",monospace;color:var(--dim);cursor:pointer;user-select:none}
+  .step .done-check input{width:1.05rem;height:1.05rem;accent-color:var(--gc,var(--c1));cursor:pointer}
+  .step.done{opacity:.6}
+  .step.done::before{background:#3f9e6d}
+  .step.done .stitle{text-decoration:line-through}
+
+  .progress-wrap{display:flex;align-items:center;gap:.8rem;margin:0 0 1.4rem}
+  .progress-bar{flex:1;height:.5rem;background:var(--line);border-radius:99px;overflow:hidden}
+  .progress-fill{display:block;height:100%;width:0%;background:var(--c3);transition:width .25s}
+  .progress-label{font:700 .76rem/1 "IBM Plex Mono",monospace;color:var(--dim);white-space:nowrap}
+  .reset-btn{font:600 .72rem/1 "IBM Plex Mono",monospace;color:var(--dim);background:none;
+    border:1px solid var(--line);border-radius:99px;padding:.35em .8em;cursor:pointer;white-space:nowrap}
+  .reset-btn:hover{border-color:var(--dim);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -78,48 +98,70 @@
 
   <div class="grp" style="--gc:var(--c3)">
     <h2>추천 실습 순서</h2>
-    <ol class="steps">
+    <div class="progress-wrap">
+      <div class="progress-bar"><span class="progress-fill" id="stepFill"></span></div>
+      <span class="progress-label" id="stepLabel">0/8 완료</span>
+      <button type="button" class="reset-btn" id="stepReset">체크 초기화</button>
+    </div>
+    <ol class="steps" id="stepsList">
       <li class="step" style="--gc:var(--cR)">
-        <p class="tag">연수 전</p>
+        <div class="meta"><p class="tag">연수 전</p><span class="time">약 15분</span></div>
         <p class="stitle"><a href="https://irenechey820712-star.github.io/english-terminology-deck/" target="_blank" rel="noopener">AI × 영어교육 전문용어 덱</a> <span class="sep">· 새 창에서</span></p>
         <p class="sd">약 140개 용어를 먼저 훑어 공통 언어를 맞춘다. 이후 도구들에 나오는 용어(하네스·RAG·CoT 등)가 낯설지 않게.</p>
+        <p class="out"><b>산출물</b> — 낯선 용어 5개를 골라 뜻을 한 줄씩 적어두기</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c2)">
-        <p class="tag">1차시 실습</p>
+        <div class="meta"><p class="tag">1차시 실습</p><span class="time">약 25분</span></div>
         <p class="stitle"><a href="https://irenechey820712-star.github.io/efl-reading-graph/" target="_blank" rel="noopener">EFL 리딩 그래프</a> <span class="sep">· 새 창에서</span></p>
         <p class="sd">retrieve→grade→RETRY 루프를 직접 돌려 "체인이면 됐을까, 그래프가 필요했나"를 눈으로 확인한다.</p>
+        <p class="out"><b>산출물</b> — RETRY(재검색) 화살표가 켜진 화면 캡처 1장</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c4)">
-        <p class="tag">2차시 실습</p>
+        <div class="meta"><p class="tag">2차시 실습</p><span class="time">약 30분</span></div>
         <p class="stitle"><a href="Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html">Literary Style &amp; Emotion Spectrum Lab v2.6</a></p>
         <p class="sd">관통 시연 사례('영미문학 원문 가독성 향상 프로젝트')를 감정 곡선·QUICK PROFILE로 3축(이해/표현/성찰) 해부한다.</p>
+        <p class="out"><b>산출물</b> — 감정 곡선 스크린샷 + QUICK PROFILE 수치 메모</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c2)">
-        <p class="tag">3차시 실습</p>
+        <div class="meta"><p class="tag">3차시 실습</p><span class="time">약 25분</span></div>
         <p class="stitle"><a href="https://irenechey820712-star.github.io/english-teacher-harness-lab/" target="_blank" rel="noopener">English Teacher Harness Engineering + Distractor Lab</a> <span class="sep">· 새 창에서</span></p>
         <p class="sd">"프롬프트만" vs "하네스 적용"을 나란히 실행해 검증 게이트가 왜 필요한지 확인한다.</p>
+        <p class="out"><b>산출물</b> — BEFORE(프롬프트만) vs AFTER(하네스) 결과 비교 메모</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c4)">
-        <p class="tag">3~4차시 실습</p>
+        <div class="meta"><p class="tag">3~4차시 실습</p><span class="time">약 30분</span></div>
         <p class="stitle"><a href="Prompting_Thinking_Lab_Research.html">Prompting Thinking Lab Research+</a></p>
         <p class="sd">CoT · ToT · Least-to-Most · Decomposed 전략을 비교하며 AI 개입 지점을 정교화한다.</p>
+        <p class="out"><b>산출물</b> — 전략 2개 이상 비교 결과 캡처 + 어느 쪽이 나은지 한 줄 판단</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c4)">
-        <p class="tag">4차시 실습</p>
+        <div class="meta"><p class="tag">4차시 실습</p><span class="time">약 30분</span></div>
         <p class="stitle"><a href="GLOBAL_ENGLISH_THINKING_LAB_8_LIVE_WRITING_COACH.html">Global English Thinking Lab · Live Writing Coach</a></p>
         <p class="sd">세계 이슈 소재로 8단계 글쓰기 코칭 시나리오를 직접 밟아보며 전·중·후 구조를 체감한다.</p>
+        <p class="out"><b>산출물</b> — Draft 1 → Revision까지 진행한 결과물 1건</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c4)">
-        <p class="tag">4차시 심화 · 선택</p>
+        <div class="meta"><p class="tag">4차시 심화 · 선택</p><span class="time">약 40분</span></div>
         <p class="stitle"><a href="AIEDAP_English_WebApp_Innovation_Planner.html">AIEDAP English WebApp Innovation Planner</a></p>
         <p class="sd">여기까지 겪은 도구들을 바탕으로 나만의 AI 융합 영어 WebApp을 7단계로 기획해본다.</p>
+        <p class="out"><b>산출물</b> — Markdown 기획서 1부(Export)</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
       <li class="step" style="--gc:var(--c5)">
-        <p class="tag">5차시 실습</p>
+        <div class="meta"><p class="tag">5차시 실습</p><span class="time">약 20분</span></div>
         <p class="stitle"><a href="Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html">Literary Lab</a> · <a href="https://irenechey820712-star.github.io/efl-reading-graph/" target="_blank" rel="noopener">EFL 리딩 그래프</a> 재방문</p>
         <p class="sd">처음 쓴 두 도구로 돌아가 번역 전략(Literary Lab)과 정교화 결과(리딩 그래프)를 다시 살펴보며 내 모형을 다듬는다.</p>
+        <p class="out"><b>산출물</b> — 1차 결과와 비교한 변경점 3가지 메모</p>
+        <label class="done-check"><input type="checkbox" class="stepChk">완료로 표시</label>
       </li>
     </ol>
+    <p style="color:var(--dim);font-size:.78rem;margin:.6rem 0 0">시간은 대략적인 기준이며, 체크 상태는 이 브라우저에만 저장됩니다(다른 기기·브라우저와 공유되지 않음).</p>
   </div>
 
   <div class="grp" style="--gc:var(--c5)">
@@ -161,6 +203,11 @@
         <p class="d">세계 이슈(사진·뉴스·기후 데이터 등)를 소재로 <code>Source/Visual → Observation → Inference → Interpretation → Draft 1 → Revision → Reflection → Final Feedback</code> 8단계로 영어 글쓰기를 코칭. Visual-to-Verbal Lab · News Framing &amp; Bias Comparator · Global Issue Perspective Map · Climate Data Storytelling 모듈 포함. 기후 데이터는 World Bank API를 키 없이 직접 호출(제한 시 샘플 데이터로 대체).</p>
         <span class="go">열기 →</span>
       </a>
+      <a class="card" href="GLOBAL_ENGLISH_THINKING_LAB_8_GLOBAL_ISSUE_DROPDOWNS.html">
+        <p class="t">Global English Thinking Lab · Global Issue Dropdowns</p>
+        <p class="d">Live Writing Coach와 같은 8단계 구조에, 이슈·지표·국가를 직접 타이핑하지 않고 드롭다운으로 고르는 프리셋 버전. 뉴스 이슈 프리셋 · World Bank 지표/국가 선택 드롭다운으로 수업 준비 시간을 줄이고, 학생은 선택 후 바로 관찰·추론·초고 단계로 들어간다.</p>
+        <span class="go">열기 →</span>
+      </a>
     </div>
   </div>
 
@@ -197,5 +244,44 @@
     각 파일은 단일 HTML로 브라우저에서 바로 열립니다. 소스: <a href="https://github.com/irenechey820712-star/aiedap-simhwa-5chasi">github.com/irenechey820712-star/aiedap-simhwa-5chasi</a>
   </footer>
 </div>
+<script>
+(function(){
+  var KEY='aiedap-steps-done-v1';
+  var boxes=[].slice.call(document.querySelectorAll('.stepChk'));
+  var fill=document.getElementById('stepFill');
+  var label=document.getElementById('stepLabel');
+  var resetBtn=document.getElementById('stepReset');
+  function load(){
+    try{ var v=JSON.parse(localStorage.getItem(KEY)||'[]'); return Array.isArray(v)?v:[]; }
+    catch(e){ return []; }
+  }
+  function save(arr){
+    try{ localStorage.setItem(KEY, JSON.stringify(arr)); }catch(e){}
+  }
+  function render(){
+    var done=load(), count=0;
+    boxes.forEach(function(cb,i){
+      var checked = done.indexOf(i) !== -1;
+      cb.checked = checked;
+      var li = cb.closest('.step');
+      if(li) li.classList.toggle('done', checked);
+      if(checked) count++;
+    });
+    if(fill) fill.style.width = (boxes.length ? Math.round(count/boxes.length*100) : 0) + '%';
+    if(label) label.textContent = count + '/' + boxes.length + ' 완료';
+  }
+  boxes.forEach(function(cb,i){
+    cb.addEventListener('change', function(){
+      var done=load(), idx=done.indexOf(i);
+      if(cb.checked && idx===-1) done.push(i);
+      if(!cb.checked && idx!==-1) done.splice(idx,1);
+      save(done);
+      render();
+    });
+  });
+  if(resetBtn) resetBtn.addEventListener('click', function(){ save([]); render(); });
+  render();
+})();
+</script>
 </body>
 </html>
