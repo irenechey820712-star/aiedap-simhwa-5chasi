@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIEDAP 심화연수 5차시 · 실습 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Fraunces:opsz,wght@9..144,600;9..144,900&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --paper:#f2ecda; --card:#fbf8ef; --ink:#1e2b31; --dim:#54666c; --line:#d8d0ba;
+  --c1:#1d9bd1; --c2:#57ae5b; --c3:#e0a40c; --c4:#ee7a54; --c5:#e15c7f; --cR:#0e7c8b;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#141c20; --card:#1b262b; --ink:#eef1ea; --dim:#a9b6b8; --line:#2c3a3f;
+}}
+:root[data-theme="dark"]{
+  --paper:#141c20; --card:#1b262b; --ink:#eef1ea; --dim:#a9b6b8; --line:#2c3a3f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif}
+#deck{position:absolute;inset:0;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:clamp(1.2rem,4vw,3.5rem)}
+.slide.on{display:flex}
+.inner{width:min(76rem,94vw);max-width:100%}
+
+.eyebrow{display:flex;align-items:center;gap:.8rem;font:800 clamp(1.05rem,2vw,1.5rem)/1 "IBM Plex Mono",monospace;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--sec,var(--c1));margin:0 0 1.2rem}
+.eyebrow .dot{width:1.1rem;height:1.1rem;border-radius:50%;background:var(--sec,var(--c1));flex:none}
+.eyebrow .time{margin-left:auto;font-weight:700;color:var(--dim);background:color-mix(in srgb,var(--sec,var(--c1)) 16%,transparent);
+  padding:.25em .8em;border-radius:99px}
+
+h1.t{font-family:"Fraunces","Noto Serif KR",serif;font-weight:900;font-size:clamp(2.6rem,7vw,5.6rem);
+  line-height:1.05;margin:0 0 1rem;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
+p.sub{font-size:clamp(1.3rem,2.6vw,1.9rem);color:var(--dim);line-height:1.5;margin:0 0 1.6rem;max-width:60ch}
+
+.out{display:flex;gap:1.1rem;align-items:flex-start;background:var(--card);border:3px solid var(--ink);
+  border-radius:18px;padding:1.3rem 1.6rem;box-shadow:12px 12px 0 -3px color-mix(in srgb,var(--sec,var(--c1)) 35%,transparent);
+  margin-bottom:1.4rem}
+.out .k{font:800 clamp(1rem,1.8vw,1.3rem)/1.3 "IBM Plex Mono",monospace;color:var(--sec,var(--c1));white-space:nowrap;padding-top:.15em}
+.out .v{font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.5;color:var(--ink)}
+
+.url{display:inline-flex;align-items:center;gap:.6rem;font:700 clamp(1.1rem,2vw,1.5rem)/1 "IBM Plex Mono",monospace;
+  color:var(--sec,var(--c1));background:color-mix(in srgb,var(--sec,var(--c1)) 12%,transparent);
+  padding:.7em 1.1em;border-radius:12px;text-decoration:none;word-break:break-all}
+.url:hover{background:color-mix(in srgb,var(--sec,var(--c1)) 22%,transparent)}
+.url::after{content:"↗";font-weight:900}
+
+.stepno{position:absolute;right:clamp(1rem,4vw,3rem);top:clamp(1rem,3vw,2.4rem);
+  font:900 clamp(4rem,13vw,10rem)/1 "Fraunces","Noto Serif KR",serif;color:var(--sec,var(--c1));opacity:.16;
+  pointer-events:none;user-select:none}
+
+.title-slide .inner{text-align:center}
+.title-slide h1.t{font-size:clamp(2.8rem,8vw,6.2rem)}
+.title-slide .by{font-size:clamp(1.1rem,2vw,1.4rem);color:var(--dim);margin-top:1.6rem}
+.title-slide .meta{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;margin-top:1.8rem}
+.title-slide .meta span{font:700 clamp(.95rem,1.6vw,1.2rem)/1 "IBM Plex Mono",monospace;color:var(--ink);
+  background:var(--card);border:2px solid var(--ink);border-radius:99px;padding:.6em 1.2em}
+
+.end-slide .inner{text-align:center}
+.end-slide h1.t{font-size:clamp(2.4rem,6.5vw,4.6rem)}
+.end-list{display:flex;flex-direction:column;gap:.6rem;margin:1.6rem 0 0;text-align:left;
+  max-width:44rem;margin-inline:auto;font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink)}
+.end-list li{list-style:none}
+.end-list b{color:var(--sec,var(--c1))}
+
+/* 메뉴 / 진행 표시 */
+#bar{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 1.1rem;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(6px);border-top:1px solid var(--line);z-index:20}
+#dots{display:flex;gap:.4rem;overflow-x:auto;flex:1;padding:0 .8rem}
+#dots span{width:.55rem;height:.55rem;border-radius:50%;background:var(--line);flex:none;cursor:pointer}
+#dots span.on{background:var(--sec,var(--c1));width:1.6rem;border-radius:99px}
+#count{font:700 .8rem/1 "IBM Plex Mono",monospace;color:var(--dim);white-space:nowrap}
+#pdf{font:700 .78rem/1 "IBM Plex Mono",monospace;background:var(--ink);color:var(--paper);border:0;
+  border-radius:8px;padding:.55em 1em;cursor:pointer;margin-left:.7rem;white-space:nowrap}
+#pdf:hover{opacity:.85}
+#pdftip{position:fixed;left:50%;bottom:70px;transform:translateX(-50%) translateY(8px);opacity:0;
+  background:var(--ink);color:var(--paper);font-size:.82rem;padding:.6em 1em;border-radius:8px;
+  pointer-events:none;transition:opacity .2s,transform .2s;z-index:30}
+#pdftip.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.zone{position:fixed;top:0;bottom:56px;width:14%;z-index:10;cursor:pointer}
+.zone.l{left:0}.zone.r{right:0}
+
+@media print{
+  @page{ size:297mm 210mm; margin:8mm; }
+  html,body{overflow:visible;height:auto;background:#fff}
+  #bar,.zone,#pdftip{display:none!important}
+  #deck{position:static}
+  .slide{position:static!important;display:flex!important;width:281mm;height:194mm;overflow:hidden;
+    page-break-after:always;page-break-inside:avoid}
+  .slide:last-child{page-break-after:auto}
+  .stepno{opacity:.1}
+}
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<div class="zone l" aria-hidden="true"></div>
+<div class="zone r" aria-hidden="true"></div>
+<div id="bar">
+  <div id="dots"></div>
+  <div id="count">1 / 1</div>
+  <button id="pdf" type="button">PDF 저장</button>
+</div>
+<div id="pdftip">인쇄 대화상자에서 배경 그래픽을 켜주세요 · 방향: 가로</div>
+
+<script>
+const SEC = {
+  R:"--cR", s1:"--c1", s2:"--c2", s3:"--c3", s4:"--c4", s5:"--c5"
+};
+const S = [
+ {k:"title", eb:"AIEDAP 전문성 강화연수 · 심화 · 5차시", sec:"s1",
+  t:"실습 가이드",
+  sub:"8단계 · 약 3시간 15분 — 도구를 열기 전에 이 화면 하나만 보면 된다.",
+  by:"작성자 — 최시강 (아이린쌤 · 「아이린쌤의 데이터분석랩」 운영자 · 대구 학남고 영어교사)",
+  meta:["8 STEPS","약 3시간 15분","전 도구 링크 포함"]},
+
+ {k:"step", n:1, sec:"R", tag:"연수 전", time:"약 15분",
+  t:"AI × 영어교육 전문용어 덱",
+  sub:"약 140개 용어를 먼저 훑어 공통 언어를 맞춘다.",
+  out:"낯선 용어 5개를 골라 뜻을 한 줄씩 적어두기",
+  url:"irenechey820712-star.github.io/english-terminology-deck",
+  href:"https://irenechey820712-star.github.io/english-terminology-deck/"},
+
+ {k:"step", n:2, sec:"s2", tag:"1차시 실습", time:"약 25분",
+  t:"EFL 리딩 그래프",
+  sub:"retrieve→grade→RETRY 루프를 직접 돌려본다 — 체인이면 됐을까, 그래프가 필요했나.",
+  out:"RETRY(재검색) 화살표가 켜진 화면 캡처 1장",
+  url:"irenechey820712-star.github.io/efl-reading-graph",
+  href:"https://irenechey820712-star.github.io/efl-reading-graph/"},
+
+ {k:"step", n:3, sec:"s4", tag:"2차시 실습", time:"약 30분",
+  t:"Literary Style & Emotion Spectrum Lab v2.6",
+  sub:"관통 시연 사례를 감정 곡선·QUICK PROFILE로 3축(이해/표현/성찰) 해부한다.",
+  out:"감정 곡선 스크린샷 + QUICK PROFILE 수치 메모",
+  url:"(로컬 파일) Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html"},
+
+ {k:"step", n:4, sec:"s2", tag:"3차시 실습", time:"약 25분",
+  t:"English Teacher Harness Engineering + Distractor Lab",
+  sub:"프롬프트만 vs 하네스 적용을 나란히 실행해 검증 게이트가 왜 필요한지 확인한다.",
+  out:"BEFORE(프롬프트만) vs AFTER(하네스) 결과 비교 메모",
+  url:"irenechey820712-star.github.io/english-teacher-harness-lab",
+  href:"https://irenechey820712-star.github.io/english-teacher-harness-lab/"},
+
+ {k:"step", n:5, sec:"s4", tag:"3~4차시 실습", time:"약 30분",
+  t:"Prompting Thinking Lab Research+",
+  sub:"CoT · ToT · Least-to-Most · Decomposed 전략을 비교하며 AI 개입 지점을 정교화한다.",
+  out:"전략 2개 이상 비교 결과 캡처 + 어느 쪽이 나은지 한 줄 판단",
+  url:"(로컬 파일) Prompting_Thinking_Lab_Research.html"},
+
+ {k:"step", n:6, sec:"s4", tag:"4차시 실습", time:"약 30분",
+  t:"Global English Thinking Lab",
+  sub:"세계 이슈 소재로 8단계 글쓰기 코칭 시나리오를 직접 밟아본다 (Live Writing Coach · Data Dropdown Expanded 중 택1).",
+  out:"Draft 1 → Revision까지 진행한 결과물 1건",
+  url:"(로컬 파일) GLOBAL_ENGLISH_THINKING_LAB_8_*.html"},
+
+ {k:"step", n:7, sec:"s4", tag:"4차시 심화 · 선택", time:"약 40분",
+  t:"AIEDAP English WebApp Innovation Planner",
+  sub:"여기까지 겪은 도구들을 바탕으로 나만의 AI 융합 영어 WebApp을 7단계로 기획해본다.",
+  out:"Markdown 기획서 1부 (Export)",
+  url:"(로컬 파일) AIEDAP_English_WebApp_Innovation_Planner.html"},
+
+ {k:"step", n:8, sec:"s5", tag:"5차시 실습", time:"약 20분",
+  t:"Literary Lab · EFL 리딩 그래프 재방문",
+  sub:"처음 쓴 두 도구로 돌아가 번역 전략(Literary Lab)과 정교화 결과(리딩 그래프)를 다시 살펴본다.",
+  out:"1차 결과와 비교한 변경점 3가지 메모"},
+
+ {k:"end", sec:"R",
+  t:"여기까지가 실습 8단계",
+  sub:"산출물 8개가 곧 나만의 AI융합 수업 모형의 재료가 된다.",
+  list:[
+   "전체 도구 모음 · 실습 순서 원본 — <b>aiedap-simhwa-5chasi</b> 사이트",
+   "다음 — <b>5차시 성찰 세 질문</b>으로 돌아가 모형을 정교화한다",
+   "동반 문서 — 「AIEDAP_심화연수_5차시_실습프로그램.md」"
+  ]}
+];
+
+const deck = document.getElementById('deck');
+function render(){
+  S.forEach((sl,i)=>{
+    const el = document.createElement('section');
+    el.className = 'slide' + (sl.k==='title'?' title-slide':'') + (sl.k==='end'?' end-slide':'');
+    const secVar = SEC[sl.sec] || '--c1';
+    el.style.setProperty('--sec', 'var('+secVar+')');
+    let h = '<div class="inner">';
+
+    if(sl.k==='title'){
+      h += '<p class="eyebrow" style="justify-content:center"><span class="dot"></span>'+sl.eb+'</p>';
+      h += '<h1 class="t">'+sl.t+'</h1>';
+      h += '<p class="sub" style="margin-inline:auto;text-align:center">'+sl.sub+'</p>';
+      h += '<p class="by">'+sl.by+'</p>';
+      h += '<div class="meta">'+sl.meta.map(m=>'<span>'+m+'</span>').join('')+'</div>';
+    } else if(sl.k==='step'){
+      h += '<div class="stepno">'+String(sl.n).padStart(2,'0')+'</div>';
+      h += '<p class="eyebrow"><span class="dot"></span>STEP '+sl.n+' · '+sl.tag+'<span class="time">'+sl.time+'</span></p>';
+      h += '<h1 class="t">'+sl.t+'</h1>';
+      h += '<p class="sub">'+sl.sub+'</p>';
+      h += '<div class="out"><span class="k">산출물</span><span class="v">'+sl.out+'</span></div>';
+      if(sl.href) h += '<a class="url" href="'+sl.href+'" target="_blank" rel="noopener">'+sl.url+'</a>';
+      else if(sl.url) h += '<span class="url" style="cursor:default">'+sl.url+'</span>';
+    } else if(sl.k==='end'){
+      h += '<p class="eyebrow" style="justify-content:center"><span class="dot"></span>마무리</p>';
+      h += '<h1 class="t">'+sl.t+'</h1>';
+      h += '<p class="sub" style="margin-inline:auto;text-align:center">'+sl.sub+'</p>';
+      h += '<ul class="end-list">'+sl.list.map(x=>'<li>· '+x+'</li>').join('')+'</ul>';
+    }
+    h += '</div>';
+    el.innerHTML = h;
+    deck.appendChild(el);
+  });
+}
+render();
+
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0;
+const dotsEl = document.getElementById('dots');
+slides.forEach((s,i)=>{
+  const d = document.createElement('span');
+  d.addEventListener('click', ()=>go(i));
+  dotsEl.appendChild(d);
+});
+const dots = [...dotsEl.children];
+const countEl = document.getElementById('count');
+
+function go(i){
+  cur = Math.max(0, Math.min(slides.length-1, i));
+  slides.forEach((s,j)=>s.classList.toggle('on', j===cur));
+  dots.forEach((d,j)=>d.classList.toggle('on', j===cur));
+  countEl.textContent = (cur+1)+' / '+slides.length;
+  location.hash = String(cur+1);
+}
+function next(){ go(cur+1); }
+function prev(){ go(cur-1); }
+
+document.addEventListener('keydown', e=>{
+  if(e.target && (e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA')) return;
+  if(e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown'){ e.preventDefault(); next(); }
+  else if(e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); prev(); }
+  else if(e.key==='Home') go(0);
+  else if(e.key==='End') go(slides.length-1);
+  else if(e.key.toLowerCase()==='p'){ savePdf(); }
+});
+document.querySelector('.zone.l').addEventListener('click', prev);
+document.querySelector('.zone.r').addEventListener('click', next);
+
+let tStartX=0;
+document.addEventListener('touchstart', e=>{ tStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - tStartX;
+  if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); }
+}, {passive:true});
+
+const pdfBtn = document.getElementById('pdf');
+const pdftip = document.getElementById('pdftip');
+function savePdf(){
+  pdftip.classList.add('show');
+  setTimeout(()=>window.print(), 250);
+  setTimeout(()=>pdftip.classList.remove('show'), 3000);
+}
+pdfBtn.addEventListener('click', savePdf);
+
+const initial = parseInt(location.hash.replace('#',''),10);
+go(isNaN(initial) ? 0 : initial-1);
+</script>
+</body>
+</html>
