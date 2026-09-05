@@ -110,6 +110,18 @@
   .btn.ghost:hover{border-color:var(--dim)}
   .save-note{font-size:.78rem;color:var(--dim)}
 
+  .send-box{margin:0 0 2rem;padding:1.2rem 1.3rem;border-radius:12px;
+    background:linear-gradient(135deg,color-mix(in srgb,var(--wine) 10%,transparent),color-mix(in srgb,var(--gold) 10%,transparent));
+    border:1.5px dashed var(--wine)}
+  .send-box .sh{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.92rem;margin:0 0 .5rem}
+  .send-box .sh .ig{font-size:1.1rem}
+  .send-box p{margin:0 0 .8rem;font-size:.84rem;color:var(--dim)}
+  .send-box .sactions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+  .send-box a.igbtn{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;
+    background:var(--wine);color:#fff;font:700 .82rem/1 "Noto Sans KR",sans-serif;padding:.6em 1.1em;border-radius:99px}
+  .send-box a.igbtn:hover{filter:brightness(1.1)}
+  .send-box .copy-note{font-size:.78rem;color:var(--sage);font-weight:700}
+
   /* ---- mine view ---- */
   #mineView{display:none}
   #mineView.active{display:block}
@@ -165,6 +177,15 @@
         <button type="button" class="btn ghost" id="exportBtn">⭳ 텍스트로 내보내기</button>
         <button type="button" class="btn ghost" id="printBtn">🖨 인쇄</button>
         <button type="button" class="btn ghost" id="backBtn">← 돌아가기</button>
+      </div>
+      <div class="send-box">
+        <p class="sh"><span class="ig">📮</span> 작가님께 모아서 전하기</p>
+        <p>지금까지 쓴 감상을 전부 모아 복사한 뒤, 도서 출판사 <b>포르체(@porche_book)</b> 인스타그램 DM으로 보내보세요.</p>
+        <div class="sactions">
+          <button type="button" class="btn ghost" id="copyAllBtn">📋 전체 감상 복사하기</button>
+          <a class="igbtn" href="https://www.instagram.com/porche_book/" target="_blank" rel="noopener">Instagram @porche_book 열기 ↗</a>
+          <span class="copy-note" id="copyAllNote"></span>
+        </div>
       </div>
       <div id="mineList"></div>
     </section>
@@ -375,6 +396,17 @@
       '<div class="actions">' +
         '<button type="button" class="btn primary" data-save="' + d.day + '">감상 저장하기</button>' +
         '<span class="save-note" data-savenote></span>' +
+      '</div>' +
+      '<div class="send-box">' +
+        '<p class="sh"><span class="ig">📮</span> 작가님께 감상 전하기</p>' +
+        '<p>이 앱은 개인 학습용이라 작가님께 직접 전달되지 않습니다. 감상을 저자(조이스 박)님께 전하고 싶다면, ' +
+          '아래 버튼으로 오늘 쓴 감상을 복사해서 도서 출판사 <b>포르체(@porche_book)</b> 인스타그램 DM으로 보내보세요 — ' +
+          '출판사를 통해 저자님께 전달을 요청할 수 있습니다.</p>' +
+        '<div class="sactions">' +
+          '<button type="button" class="btn ghost" data-copyday="' + d.day + '">📋 오늘 감상 복사하기</button>' +
+          '<a class="igbtn" href="https://www.instagram.com/porche_book/" target="_blank" rel="noopener">Instagram @porche_book 열기 ↗</a>' +
+          '<span class="copy-note" data-copynote></span>' +
+        '</div>' +
       '</div>';
     poemViewsEl.appendChild(view);
   });
@@ -427,7 +459,52 @@
     if (m && POEMS[m[1]]) showPoem(m[1]);
   })();
 
+  function copyText(text, noteEl){
+    function ok(){ if (noteEl){ noteEl.textContent = "✓ 복사됨 — 이제 인스타그램 DM에 붙여넣으세요"; setTimeout(function(){ noteEl.textContent = ""; }, 3500); } }
+    function fail(){
+      // clipboard API 사용 불가 시 선택 가능한 textarea로 대체
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand("copy"); ok(); }
+      catch(e){ if (noteEl) noteEl.textContent = "복사에 실패했습니다 — 직접 선택해 복사해주세요"; }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, fail);
+    } else {
+      fail();
+    }
+  }
+
+  function formatOne(d, view){
+    var answers = {};
+    view.querySelectorAll("textarea[data-q]").forEach(function(ta){ answers[ta.dataset.q] = ta.value; });
+    var oneline = view.querySelector("[data-oneline]").value;
+    var lines = [
+      "[내가 사랑한 시옷들] 학생 감상",
+      "Day " + d.day + " · " + d.title,
+      d.partName + " · " + d.poet + " «" + d.work + "»",
+      ""
+    ];
+    if (oneline) lines.push("💬 한 줄 감상: " + oneline, "");
+    Object.keys(answers).sort().forEach(function(i){
+      if (answers[i]) lines.push("[" + STEP_LABELS[i] + "]", answers[i], "");
+    });
+    lines.push("— " + nameKey() + " 학생");
+    return lines.join("\n");
+  }
+
   document.body.addEventListener("click", function(e){
+    var copyBtn = e.target.closest("[data-copyday]");
+    if (copyBtn) {
+      var day2 = copyBtn.dataset.copyday;
+      var view2 = document.getElementById("poem-" + day2);
+      var d2 = TOC.find(function(x){ return x.day == day2; });
+      var note2 = view2.querySelector("[data-copynote]");
+      copyText(formatOne(d2, view2), note2);
+      return;
+    }
     var saveBtn = e.target.closest("[data-save]");
     if (saveBtn) {
       var day = saveBtn.dataset.save;
@@ -502,6 +579,25 @@
     window.scrollTo({top:0, behavior:"smooth"});
   });
   document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+  document.getElementById("copyAllBtn").addEventListener("click", function(){
+    var all = loadAll();
+    var key = nameKey();
+    var rec = all[key] || {};
+    var days = Object.keys(rec).map(Number).sort(function(a,b){ return a-b; });
+    if (!days.length) { copyText("", document.getElementById("copyAllNote")); document.getElementById("copyAllNote").textContent = "아직 저장한 감상이 없습니다"; return; }
+    var lines = ["[내가 사랑한 시옷들] " + key + "의 감상 모음", ""];
+    days.forEach(function(day){
+      var r = rec[day];
+      lines.push("Day " + r.day + " · " + r.title, r.partName + " · " + r.poet + " «" + r.work + "»");
+      if (r.oneline) lines.push("💬 한 줄 감상: " + r.oneline);
+      Object.keys(r.answers || {}).sort().forEach(function(i){
+        if (r.answers[i]) lines.push("[" + STEP_LABELS[i] + "] " + r.answers[i]);
+      });
+      lines.push("");
+    });
+    lines.push("— " + key + " 학생");
+    copyText(lines.join("\n"), document.getElementById("copyAllNote"));
+  });
   document.getElementById("exportBtn").addEventListener("click", function(){
     var all = loadAll();
     var key = nameKey();
