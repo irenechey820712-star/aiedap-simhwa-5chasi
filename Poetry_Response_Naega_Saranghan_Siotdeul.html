@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>내가 사랑한 시옷들 — 영미문학 감상 워크북</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,900&family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper:#faf6ee; --card:#fffdf8; --ink:#2a2320; --dim:#7a7166; --line:#e3d9c8;
+    --gold:#a9812f; --wine:#8a3b46; --sage:#5f7a5f; --sky:#3d6f8a;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#1c1815; --card:#241f1b; --ink:#f1ebe0; --dim:#b3a795; --line:#3a332b;
+    --gold:#d4ab5c; --wine:#d98a92; --sage:#8fb08f; --sky:#7fb3d4;
+  }}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.65}
+  .app{display:grid;grid-template-columns:19rem 1fr;min-height:100vh}
+  @media (max-width:920px){.app{grid-template-columns:1fr}}
+
+  /* ---- sidebar ---- */
+  .side{background:var(--card);border-right:1px solid var(--line);padding:1.6rem 1.3rem 3rem;
+    position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto}
+  @media (max-width:920px){.side{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--line)}}
+  .brand{font-family:"Fraunces",serif;font-weight:900;font-size:1.35rem;line-height:1.25;margin:0 0 .15rem}
+  .brand small{display:block;font-family:"Noto Sans KR",sans-serif;font-weight:500;font-size:.72rem;
+    letter-spacing:.06em;color:var(--dim);margin-top:.35rem}
+  .byline{font-size:.74rem;color:var(--dim);margin:.7rem 0 1.5rem;padding-bottom:1.3rem;border-bottom:1px dashed var(--line)}
+
+  .who{margin:0 0 1.5rem}
+  .who label{display:block;font:700 .68rem/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--gold);margin:0 0 .4rem}
+  .who input{width:100%;padding:.5rem .6rem;border:1.5px solid var(--line);border-radius:8px;
+    background:var(--paper);color:var(--ink);font:500 .92rem "Noto Sans KR",sans-serif}
+  .who input:focus{outline:2px solid var(--gold);outline-offset:1px}
+
+  .part-h{font:700 .68rem/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);margin:1.3rem 0 .5rem;display:flex;align-items:center;gap:.5rem}
+  .part-h .n{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--gold);color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;font-size:.68rem}
+  .daybtn{display:flex;align-items:baseline;gap:.5rem;width:100%;text-align:left;background:none;border:none;
+    padding:.42rem .5rem;border-radius:8px;cursor:pointer;color:var(--ink);font-family:inherit}
+  .daybtn:hover{background:color-mix(in srgb,var(--gold) 12%,transparent)}
+  .daybtn.active{background:color-mix(in srgb,var(--gold) 22%,transparent);font-weight:700}
+  .daybtn .dnum{font:700 .68rem/1 "IBM Plex Mono",monospace;color:var(--gold);flex:0 0 auto;min-width:2.6rem}
+  .daybtn .dtitle{font-size:.85rem;flex:1}
+  .daybtn.locked{opacity:.42;cursor:default}
+  .daybtn.locked:hover{background:none}
+  .daybtn .lock{font-size:.7rem;flex:0 0 auto}
+  .daybtn.done .dtitle::after{content:" ✓";color:var(--sage);font-weight:700}
+
+  .mine-link{display:block;margin-top:1.6rem;padding:.7rem .8rem;border:1.5px dashed var(--gold);border-radius:10px;
+    text-align:center;font:700 .82rem/1 "Noto Sans KR",sans-serif;color:var(--gold);background:none;
+    cursor:pointer;width:100%}
+  .mine-link:hover{background:color-mix(in srgb,var(--gold) 10%,transparent)}
+
+  /* ---- main ---- */
+  main{padding:clamp(1.4rem,4vw,3.2rem) clamp(1.2rem,4vw,4rem) 5rem;max-width:46rem}
+  .intro h1{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.2;margin:0 0 .8rem}
+  .intro p{color:var(--dim);font-size:1rem;max-width:52ch}
+  .intro .book-tag{display:inline-flex;align-items:center;gap:.5rem;margin:1.2rem 0 0;padding:.5rem .9rem;
+    background:var(--card);border:1px solid var(--line);border-radius:99px;font-size:.82rem;color:var(--dim)}
+
+  .poem-view{display:none}
+  .poem-view.active{display:block}
+  .p-eyebrow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;font:700 .72rem/1 "IBM Plex Mono",monospace;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin:0 0 .6rem}
+  .p-eyebrow .part-tag{color:var(--dim)}
+  .p-title{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.22;margin:0 0 .4rem}
+  .p-byline{color:var(--dim);font-size:.95rem;margin:0 0 1.6rem}
+  .p-byline b{color:var(--ink)}
+
+  .poem-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.8rem 2rem;margin:0 0 1.6rem;
+    box-shadow:6px 6px 0 -2px color-mix(in srgb,var(--gold) 20%,transparent)}
+  .poem-box .ptext{font-family:"EB Garamond",serif;font-size:1.28rem;line-height:1.85;white-space:pre-line;
+    font-style:italic;color:var(--ink)}
+  .poem-box .src{margin-top:1.3rem;padding-top:.9rem;border-top:1px dashed var(--line);font-size:.76rem;color:var(--dim)}
+
+  .vocab-h{font:700 .72rem/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--sky);margin:1.6rem 0 .6rem}
+  .vocab{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 2rem}
+  .vocab span{background:color-mix(in srgb,var(--sky) 12%,transparent);border:1px solid color-mix(in srgb,var(--sky) 30%,transparent);
+    color:var(--ink);padding:.3rem .7rem;border-radius:99px;font-size:.82rem}
+  .vocab span b{color:var(--sky)}
+
+  .q-block{margin:0 0 1.5rem;padding:1.2rem 1.3rem;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+  .q-block .qtag{display:inline-block;font:700 .68rem/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;background:var(--gc,var(--gold));padding:.25em .6em;border-radius:99px;margin:0 0 .5rem}
+  .q-block[data-step="1"]{--gc:var(--sky)}
+  .q-block[data-step="2"]{--gc:var(--wine)}
+  .q-block[data-step="3"]{--gc:var(--sage)}
+  .q-block p.qtext{margin:0 0 .7rem;font-weight:700;font-size:.98rem}
+  .q-block textarea{width:100%;min-height:5rem;padding:.7rem .8rem;border:1.5px solid var(--line);border-radius:8px;
+    background:var(--paper);color:var(--ink);font:400 .92rem/1.6 "Noto Sans KR",sans-serif;resize:vertical}
+  .q-block textarea:focus{outline:2px solid var(--gc,var(--gold));outline-offset:1px}
+
+  .oneline{margin:0 0 1.6rem}
+  .oneline label{display:block;font:700 .82rem/1 "Noto Sans KR",sans-serif;margin:0 0 .5rem}
+  .oneline input{width:100%;padding:.7rem .9rem;border:1.5px solid var(--gold);border-radius:10px;
+    background:var(--card);color:var(--ink);font:600 1rem "Fraunces",serif}
+
+  .actions{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;margin:0 0 1rem}
+  .btn{font:700 .84rem/1 "Noto Sans KR",sans-serif;padding:.65em 1.2em;border-radius:99px;border:none;cursor:pointer}
+  .btn.primary{background:var(--gold);color:#fff}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .btn.ghost{background:none;border:1.5px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--dim)}
+  .save-note{font-size:.78rem;color:var(--dim)}
+
+  /* ---- mine view ---- */
+  #mineView{display:none}
+  #mineView.active{display:block}
+  .mine-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.4rem;margin:0 0 1.1rem}
+  .mine-item h3{font-family:"Fraunces",serif;margin:0 0 .3rem;font-size:1.15rem}
+  .mine-item .meta{font-size:.78rem;color:var(--dim);margin:0 0 .7rem}
+  .mine-item .oneline-out{font-weight:700;margin:0 0 .6rem;padding:.5rem .7rem;background:color-mix(in srgb,var(--gold) 10%,transparent);border-radius:8px}
+  .mine-item dt{font:700 .72rem/1 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:.6rem 0 .2rem}
+  .mine-item dd{margin:0 0 .3rem;font-size:.92rem;white-space:pre-line}
+  .empty-mine{color:var(--dim);font-size:.92rem;padding:2rem 0;text-align:center}
+
+  @media print{
+    .side,.actions,.mine-link{display:none !important}
+    .app{display:block}
+    main{max-width:none;padding:0}
+    .poem-view{display:block !important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side">
+    <p class="brand">내가 사랑한 시옷들<small>영미문학 감상 워크북 · 조이스 박 저 「내가 사랑한 시옷들」 기반</small></p>
+    <p class="byline">기획 — 최시강 (학남고등학교) · AIEDAP 심화연수 5차시 연계</p>
+
+    <div class="who">
+      <label>내 이름</label>
+      <input type="text" id="studentName" placeholder="이름을 입력하세요" autocomplete="off">
+    </div>
+
+    <div id="dayNav"></div>
+
+    <button type="button" class="mine-link" id="mineBtn">📔 내 감상 모아보기</button>
+  </nav>
+
+  <main>
+    <section class="intro" id="introView">
+      <h1>시 한 편, 하루 한 편<br>내 언어로 다시 쓰기</h1>
+      <p>조이스 박의 「내가 사랑한 시옷들」은 30일 동안 영미시 30편을 하루 한 편씩 읽는 책입니다.
+        이 워크북은 그중 저작권이 만료되어 원문을 온전히 실을 수 있는 10편을 골라, 원문을 읽고
+        <b>관찰 → 해석 → 연결</b> 세 단계로 나만의 감상을 영어와 한국어로 남길 수 있도록 만들었습니다.</p>
+      <p>왼쪽 목차에서 시를 하나 선택해 시작하세요. 나머지 20편은 목차에 제목·시인만 표시되어 있으며,
+        원문은 책에서 직접 확인하시면 됩니다.</p>
+      <span class="book-tag">📖 조이스 박, 「내가 사랑한 시옷들」 — 전체 4부 30일 구성</span>
+    </section>
+
+    <div id="poemViews"></div>
+
+    <section id="mineView">
+      <div class="p-eyebrow"><span>내 감상 모아보기</span></div>
+      <h1 class="p-title" style="font-size:1.9rem">지금까지 쓴 감상문</h1>
+      <div class="actions">
+        <button type="button" class="btn ghost" id="exportBtn">⭳ 텍스트로 내보내기</button>
+        <button type="button" class="btn ghost" id="printBtn">🖨 인쇄</button>
+        <button type="button" class="btn ghost" id="backBtn">← 돌아가기</button>
+      </div>
+      <div id="mineList"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- data ----------
+  // toc: 책 전체 30일 목차 (제목/시인/작품명은 책 차례에 나온 사실 정보). fullText가 있는 항목만 원문·감상 활동이 열립니다.
+  var TOC = [
+    {part:1, partName:"1부 · 사랑의 언어", day:1,  title:"혼자인 것과 외로운 것", poet:"Sara Teasdale", work:"Alone"},
+    {part:1, partName:"1부 · 사랑의 언어", day:2,  title:"어긋난 별들의 사랑", poet:"Elizabeth Jennings", work:"One Flesh"},
+    {part:1, partName:"1부 · 사랑의 언어", day:3,  title:"나를 보되, 지나쳐 보시라", poet:"Pablo Neruda", work:"Don't Go Far Off"},
+    {part:1, partName:"1부 · 사랑의 언어", day:4,  title:"증명하는 사랑은 사랑이 아니다", poet:"Emily Dickinson", work:"That I did always love"},
+    {part:1, partName:"1부 · 사랑의 언어", day:5,  title:"사랑과 소유는 병립할 수 없다", poet:"Louise Glück", work:"The Mystery of Fidelity"},
+    {part:1, partName:"1부 · 사랑의 언어", day:6,  title:"사랑은 자칫 기만이 된다", poet:"Sylvia Plath", work:"Mad Girl's Love Song"},
+    {part:1, partName:"1부 · 사랑의 언어", day:7,  title:"세상에서 가장 큰 반어법", poet:"Elizabeth Bishop", work:"One Art"},
+    {part:1, partName:"1부 · 사랑의 언어", day:8,  title:"뱉지 못하는 사랑도 사랑이다", poet:"Sara Teasdale", work:"The Look"},
+    {part:1, partName:"1부 · 사랑의 언어", day:9,  title:"전적으로 사랑한다는 것은", poet:"E. E. Cummings", work:"since feeling is first"},
+    {part:1, partName:"1부 · 사랑의 언어", day:10, title:"살아간다는 것은 사랑한다는 것", poet:"Allen Ginsberg", work:"Song"},
+
+    {part:2, partName:"2부 · 존재의 언어", day:11, title:"내 안의 연약한 파랑새", poet:"Charles Bukowski", work:"Bluebird"},
+    {part:2, partName:"2부 · 존재의 언어", day:12, title:"화려할수록 짙어지는 고독", poet:"Ella Wheeler Wilcox", work:"Solitude"},
+    {part:2, partName:"2부 · 존재의 언어", day:13, title:"순간이 영원인 것처럼, 영원이 순간인 것처럼", poet:"William Blake", work:"Auguries of Innocence"},
+    {part:2, partName:"2부 · 존재의 언어", day:14, title:"본능과 이성의 변주", poet:"Edna St. Vincent Millay", work:"I, being born a woman and distressed"},
+    {part:2, partName:"2부 · 존재의 언어", day:15, title:"우리는 욕망으로 존재한다", poet:"Alice Walker", work:"Expect Nothing"},
+
+    {part:3, partName:"3부 · 삶의 언어", day:16, title:"오롯이 내 몫이다", poet:"Linda Pastan", work:"The Five Stages of Grief"},
+    {part:3, partName:"3부 · 삶의 언어", day:17, title:"모성이라는 겁박", poet:"Sharon Olds", work:"Fear of Myself"},
+    {part:3, partName:"3부 · 삶의 언어", day:18, title:"환상을 소비하는 사람들", poet:"Anne Sexton", work:"Cinderella"},
+    {part:3, partName:"3부 · 삶의 언어", day:19, title:"개체 발생은 계통 발생을 반복한다", poet:"Adrienne Rich", work:"From a Survivor"},
+    {part:3, partName:"3부 · 삶의 언어", day:20, title:"연결은 축복인가 저주인가", poet:"John Donne", work:"No Man Is An Island (Meditation XVII)"},
+    {part:3, partName:"3부 · 삶의 언어", day:21, title:"삶은 흐르는 물이다", poet:"Amy Lowell", work:"Petals"},
+    {part:3, partName:"3부 · 삶의 언어", day:22, title:"꿈, 그 가능성과 비현실성", poet:"Langston Hughes", work:"Harlem (A Dream Deferred)"},
+    {part:3, partName:"3부 · 삶의 언어", day:23, title:"누구든 돌아오시라", poet:"Robert Frost", work:"Stopping by Woods on a Snowy Evening"},
+    {part:3, partName:"3부 · 삶의 언어", day:24, title:"살아 보이는 것", poet:"Sarojini Naidu", work:"Life"},
+    {part:3, partName:"3부 · 삶의 언어", day:25, title:"감정은 삶의 흔적이다", poet:"Edna St. Vincent Millay", work:"What lips my lips have kissed"},
+
+    {part:4, partName:"4부 · 남은 언어", day:26, title:"삶의 재고를 조사하다", poet:"Dorothy Parker", work:"Inventory"},
+    {part:4, partName:"4부 · 남은 언어", day:27, title:"사람은 숲에 거하는 존재가 아니다", poet:"Dylan Thomas", work:"And death shall have no dominion"},
+    {part:4, partName:"4부 · 남은 언어", day:28, title:"가면은 눈빛을 감추지 못한다", poet:"Paul Laurence Dunbar", work:"We Wear the Mask"},
+    {part:4, partName:"4부 · 남은 언어", day:29, title:"자유와 추락의 관계", poet:"Maya Angelou", work:"I Know Why the Caged Bird Sings"},
+    {part:4, partName:"4부 · 남은 언어", day:30, title:"사랑이라는 축복", poet:"Anne Michaels", work:"Miner's Pond (excerpt)"}
+  ];
+
+  // fullText: 저작권 만료(1929년 이전 발표 등)가 확인된 10편만 원문 전체 수록.
+  var POEMS = {
+    1: {
+      fullText: "I am alone, in spite of love,\nIn spite of all I take and give—\nIn spite of all your tenderness,\nSometimes I am not glad to live.\n\nI am alone, as though I stood\nOn the highest peak of the tired gray world,\nAbout me only swirling snow,\nAbove me, endless space unfurled;\nWith earth hidden and heaven hidden,\nAnd only my own spirit's pride\nTo keep me from the peace of those\nWho are not lonely, having died.",
+      src: "Sara Teasdale, «Flame and Shadow» (1920) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["tenderness","다정함, 애틋함"],["swirl","소용돌이치다"],["unfurl","펼쳐지다"],["spirit's pride","영혼의 자존심"],["peace","안식"]],
+      q: [
+        "화자가 “혼자”라고 느끼는 순간은 시 속에서 어떻게 그려지나요? 가장 인상적인 한 구절을 찾아 옮겨 적어보세요.",
+        "“사랑에도 불구하고(in spite of love)” 여전히 혼자라는 말은 무슨 뜻일까요? 화자에게 사랑과 고독은 어떤 관계인가요?",
+        "사랑받고 있다고 느끼면서도 마음 한구석이 혼자였던 나의 경험이 있다면 적어보세요."
+      ]
+    },
+    4: {
+      fullText: "That I did always love\nI bring thee Proof\nThat till I loved\nI never lived—Enough—\n\nThat I shall love alway—\nI argue thee\nThat love is life—\nAnd life hath Immortality—\n\nThis—dost thou doubt—Sweet—\nThen have I\nNothing to show\nBut Calvary—",
+      src: "Emily Dickinson, 시 549번 (1863년경 작) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["proof","증거"],["immortality","불멸"],["doubt","의심하다"],["Calvary","갈보리 (예수가 못박힌 언덕, 희생의 상징)"]],
+      q: [
+        "화자는 자신의 사랑을 증명하기 위해 각 연에서 무엇을 근거로 제시하나요?",
+        "마지막 연에서 화자가 “Calvary(갈보리)”밖에 보여줄 게 없다고 말한 이유는 무엇일까요?",
+        "누군가에게(또는 나 자신에게) 사랑을 “증명”해야 한다고 느낀 순간이 있었나요? 그 증명은 무엇이었나요?"
+      ]
+    },
+    9: {
+      fullText: "since feeling is first\nwho pays any attention\nto the syntax of things\nwill never wholly kiss you;\n\nwholly to be a fool\nwhile Spring is in the world\n\nmy blood approves,\nand kisses are a better fate\nthan wisdom\nlady i swear by all flowers. Don't cry\n– the best gesture of my brain is less than\nyour eyelids' flutter which says\n\nwe are for each other; then\nlaugh, leaning back in my arms\nfor life's not a paragraph\n\nAnd death i think is no parenthesis",
+      src: "E. E. Cummings, «is 5» (1926) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["syntax","구문, 문법 구조"],["wholly","완전히"],["fool","바보"],["gesture","몸짓, 표현"],["parenthesis","괄호"]],
+      q: [
+        "이 시는 문법과 구두점을 의도적으로 무시합니다. 어떤 부분에서 그것을 가장 뚜렷하게 느낄 수 있나요?",
+        "“삶은 문단이 아니고, 죽음은 괄호가 아니다(life's not a paragraph / And death i think is no parenthesis)”는 무슨 뜻일까요?",
+        "논리(문법)보다 감정이 먼저 앞섰던 나의 순간을 떠올려 적어보세요."
+      ]
+    },
+    12: {
+      fullText: "Laugh, and the world laughs with you;\nWeep, and you weep alone;\nFor the sad old earth must borrow its mirth,\nBut has trouble enough of its own.\nSing, and the hills will answer;\nSigh, it is lost on the air;\nThe echoes bound to a joyful sound,\nBut shrink from voicing care.\n\nRejoice, and men will seek you;\nGrieve, and they turn and go;\nThey want full measure of all your pleasure,\nBut they do not need your woe.\nBe glad, and your friends are many;\nBe sad, and you lose them all;\nThere are none to decline your nectar'd wine,\nBut alone you must drink life's gall.\n\nFeast, and your halls are crowded;\nFast, and the world goes by.\nSucceed and give, and it helps you live,\nBut no man can help you die.\nThere is room in the halls of pleasure\nFor a long and lordly train,\nBut one by one we must all file on\nThrough the narrow aisles of pain.",
+      src: "Ella Wheeler Wilcox, «Solitude» (1883) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["mirth","즐거움, 흥"],["echo","메아리"],["nectar'd wine","달콤한 술 (기쁨의 비유)"],["gall","쓴 것 (고통의 비유)"],["aisle","통로"]],
+      q: [
+        "웃음과 울음, 기쁨과 슬픔에 대해 세상(타인)이 보이는 반응이 어떻게 다른지 시에서 찾아 정리해보세요.",
+        "“웃어라, 그러면 세상이 함께 웃는다. 울어라, 그러면 너 혼자 운다”는 어떤 진실을 말하고 있을까요?",
+        "기쁨은 나누기 쉬웠지만 슬픔은 나누기 어려웠던 경험이 있나요?"
+      ]
+    },
+    13: {
+      fullText: "To see a world in a grain of sand\nAnd a heaven in a wild flower,\nHold infinity in the palm of your hand\nAnd eternity in an hour.",
+      src: "William Blake, «Auguries of Innocence» 서두 4행 (1863년 사후 출판, 원작 1803년경) · 저작권 만료(퍼블릭 도메인) · 전체 132행 중 가장 유명한 첫 연",
+      vocab: [["grain of sand","모래알"],["infinity","무한"],["palm","손바닥"],["eternity","영원"]],
+      q: [
+        "시인은 아주 작은 것(모래알, 들꽃)과 아주 큰 것(무한, 영원)을 어떻게 나란히 연결하고 있나요?",
+        "“손바닥 안에 무한을 담는다”는 표현은 무엇을 말하려는 걸까요?",
+        "작고 사소한 것에서 크고 깊은 의미를 느낀 나의 순간이 있다면 적어보세요."
+      ]
+    },
+    20: {
+      fullText: "No man is an island, entire of itself; every man is a piece of the continent, a part of the main.\n\nIf a clod be washed away by the sea, Europe is the less, as well as if a promontory were, as well as if a manor of thy friend's or of thine own were.\n\nAny man's death diminishes me, because I am involved in mankind; and therefore never send to know for whom the bell tolls; it tolls for thee.",
+      src: "John Donne, «Devotions upon Emergent Occasions», Meditation XVII (1624) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["continent","대륙"],["clod","흙덩이"],["promontory","곶(바다로 뻗은 땅)"],["diminish","줄어들게 하다"],["toll","(종을) 울리다"]],
+      q: [
+        "인간을 “섬”이 아니라 “대륙의 한 조각”에 비유한 이유를 시(산문)에서 찾아보세요.",
+        "“누구의 죽음도 나를 줄어들게 한다”는 말은 무슨 의미일까요?",
+        "나와 상관없어 보였던 다른 사람의 일이 결국 나와 연결되어 있다고 느낀 경험이 있나요?"
+      ]
+    },
+    21: {
+      fullText: "Life is a stream\nOn which we strew\nPetal by petal the flower of our heart;\nThe end lost in dream,\nThey float past our view,\nWe only watch their glad, early start.\n\nFreighted with hope,\nCrimsoned with joy,\nWe scatter the leaves of our opening rose;\nTheir widening scope,\nTheir distant employ,\nWe never shall know.\n\nAnd the stream as it flows\nSweeps them away,\nEach one is gone\nEver beyond into infinite ways.\n\nWe alone stay\nWhile years hurry on,\nThe flower fared forth, though its fragrance still stays.",
+      src: "Amy Lowell, «A Dome of Many-Coloured Glass» (1912) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["strew","흩뿌리다"],["freighted","가득 실린"],["crimsoned","진홍빛으로 물든"],["fare forth","떠나가다"],["fragrance","향기"]],
+      q: [
+        "화자는 인생을 무엇에 비유하고 있나요? “꽃잎”은 무엇을 상징할까요?",
+        "꽃잎은 흘러가 버려도 “향기는 남는다(its fragrance still stays)”는 말은 무슨 뜻일까요?",
+        "지나가 버렸지만 여운이 남아있는 나의 경험이 있다면 적어보세요."
+      ]
+    },
+    23: {
+      fullText: "Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow.\n\nMy little horse must think it queer\nTo stop without a farmhouse near\nBetween the woods and frozen lake\nThe darkest evening of the year.\n\nHe gives his harness bells a shake\nTo ask if there is some mistake.\nThe only other sound's the sweep\nOf easy wind and downy flake.\n\nThe woods are lovely, dark and deep,\nBut I have promises to keep,\nAnd miles to go before I sleep,\nAnd miles to go before I sleep.",
+      src: "Robert Frost, «New Hampshire» (1923) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["harness bells","말 목에 단 방울"],["downy flake","솜털 같은 눈송이"],["promises to keep","지켜야 할 약속"]],
+      q: [
+        "화자는 왜 눈 내리는 숲 앞에 멈춰 섰을까요? 무엇이 그를 다시 길을 떠나게 하나요?",
+        "마지막 두 줄이 토씨 하나 없이 그대로 반복되는 이유는 무엇일까요?",
+        "“아름답지만, 가야 할 길이 있어서” 무언가를 포기했던 나의 순간이 있나요?"
+      ]
+    },
+    26: {
+      fullText: "Four be the things I am wiser to know:\nIdleness, sorrow, a friend, and a foe.\n\nFour be the things I'd been better without:\nLove, curiosity, freckles, and doubt.\n\nThree be the things I shall never attain:\nEnvy, content, and sufficient champagne.\n\nThree be the things I shall have till I die:\nLaughter and hope and a sock in the eye.",
+      src: "Dorothy Parker, «Enough Rope» (1926) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["idleness","게으름"],["foe","적"],["curiosity","호기심"],["attain","이르다, 도달하다"],["sufficient","충분한"]],
+      q: [
+        "화자가 “알아서 더 지혜로워지는 것”과 “차라리 없었으면 좋았을 것”을 각각 정리해보세요.",
+        "“사랑”과 “의심”이 같은 줄에 나란히 놓인 이유는 무엇일까요?",
+        "나에게도 있으면 좋지만 동시에 힘든 것이 있나요? (예: 사랑, 호기심, 꿈)"
+      ]
+    },
+    28: {
+      fullText: "We wear the mask that grins and lies,\nIt hides our cheeks and shades our eyes,—\nThis debt we pay to human guile;\nWith torn and bleeding hearts we smile,\nAnd mouth with myriad subtleties.\n\nWhy should the world be over-wise,\nIn counting all our tears and sighs?\nNay, let them only see us, while\n        We wear the mask.\n\nWe smile, but, O great Christ, our cries\nTo thee from tortured souls arise.\nWe sing, but oh the clay is vile\nBeneath our feet, and long the mile;\nBut let the world dream otherwise,\n        We wear the mask!",
+      src: "Paul Laurence Dunbar, «Lyrics of Lowly Life» (1896) · 저작권 만료(퍼블릭 도메인)",
+      vocab: [["guile","교활함, 술수"],["subtlety","미묘함"],["over-wise","지나치게 아는 체하는"],["tortured","고통받는"],["vile","비천한"]],
+      q: [
+        "“가면”은 무엇을 감추고 있나요? 시에서 근거가 되는 구절을 찾아보세요.",
+        "화자는 왜 세상에게 진짜 마음을 보여주지 않고 가면을 쓴다고 했을까요?",
+        "겉으로는 웃었지만 속으로는 다른 감정을 숨겼던 나의 경험이 있나요?"
+      ]
+    }
+  };
+
+  var STEP_LABELS = ["관찰 — 시 속에서 찾기", "해석 — 의미 생각해보기", "연결 — 내 삶과 잇기"];
+  var LS_KEY = "siotdeul-responses-v1";
+
+  // ---------- render sidebar nav ----------
+  var nav = document.getElementById("dayNav");
+  var parts = {};
+  TOC.forEach(function(d){ (parts[d.part] = parts[d.part] || []).push(d); });
+  Object.keys(parts).sort().forEach(function(pk){
+    var arr = parts[pk];
+    var h = document.createElement("p");
+    h.className = "part-h";
+    h.innerHTML = '<span class="n">' + pk + '</span>' + arr[0].partName.split(" · ")[1];
+    nav.appendChild(h);
+    arr.forEach(function(d){
+      var has = !!POEMS[d.day];
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "daybtn" + (has ? "" : " locked");
+      btn.dataset.day = d.day;
+      btn.innerHTML = '<span class="dnum">Day ' + d.day + '</span><span class="dtitle">' + d.title + '</span>' +
+        (has ? "" : '<span class="lock">🔒</span>');
+      if (has) btn.addEventListener("click", function(){ showPoem(d.day); });
+      nav.appendChild(btn);
+    });
+  });
+
+  // ---------- render poem views ----------
+  var poemViewsEl = document.getElementById("poemViews");
+  TOC.forEach(function(d){
+    var p = POEMS[d.day];
+    if (!p) return;
+    var view = document.createElement("section");
+    view.className = "poem-view";
+    view.id = "poem-" + d.day;
+
+    var vocabHtml = p.vocab.map(function(v){ return '<span><b>' + v[0] + '</b> ' + v[1] + '</span>'; }).join("");
+    var qHtml = p.q.map(function(qt, i){
+      return '<div class="q-block" data-step="' + (i+1) + '">' +
+        '<span class="qtag">STEP ' + (i+1) + ' · ' + STEP_LABELS[i].split(" — ")[0] + '</span>' +
+        '<p class="qtext">' + qt + '</p>' +
+        '<textarea data-q="' + i + '" placeholder="여기에 자유롭게 적어보세요..."></textarea>' +
+      '</div>';
+    }).join("");
+
+    view.innerHTML =
+      '<div class="p-eyebrow"><span>Day ' + d.day + '</span><span class="part-tag">' + d.partName + '</span></div>' +
+      '<h1 class="p-title">' + d.title + '</h1>' +
+      '<p class="p-byline"><b>' + d.poet + '</b> · «' + d.work + '»</p>' +
+      '<div class="poem-box"><div class="ptext">' + p.fullText.replace(/&/g,"&amp;").replace(/</g,"&lt;") + '</div>' +
+        '<div class="src">' + p.src + '</div></div>' +
+      '<p class="vocab-h">핵심 어휘</p>' +
+      '<div class="vocab">' + vocabHtml + '</div>' +
+      qHtml +
+      '<div class="oneline"><label>💬 오늘의 한 줄 감상</label>' +
+        '<input type="text" data-oneline placeholder="이 시를 한 문장으로 정리한다면?"></div>' +
+      '<div class="actions">' +
+        '<button type="button" class="btn primary" data-save="' + d.day + '">감상 저장하기</button>' +
+        '<span class="save-note" data-savenote></span>' +
+      '</div>';
+    poemViewsEl.appendChild(view);
+  });
+
+  // ---------- storage ----------
+  function loadAll(){
+    try { var v = JSON.parse(localStorage.getItem(LS_KEY) || "{}"); return (v && typeof v === "object") ? v : {}; }
+    catch(e){ return {}; }
+  }
+  function saveAll(obj){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(obj)); } catch(e){}
+  }
+  function nameKey(){
+    var n = (document.getElementById("studentName").value || "익명").trim();
+    return n || "익명";
+  }
+
+  function fillFromStorage(day){
+    var all = loadAll();
+    var rec = (all[nameKey()] || {})[day];
+    var view = document.getElementById("poem-" + day);
+    if (!view) return;
+    view.querySelectorAll("textarea[data-q]").forEach(function(ta){
+      ta.value = rec ? (rec.answers[ta.dataset.q] || "") : "";
+    });
+    var ol = view.querySelector("[data-oneline]");
+    if (ol) ol.value = rec ? (rec.oneline || "") : "";
+    markDone(day, !!rec);
+  }
+
+  function markDone(day, done){
+    var btn = nav.querySelector('.daybtn[data-day="' + day + '"]');
+    if (btn) btn.classList.toggle("done", done);
+  }
+
+  // ---------- nav between views ----------
+  function showPoem(day){
+    document.getElementById("introView").style.display = "none";
+    document.getElementById("mineView").classList.remove("active");
+    document.querySelectorAll(".poem-view").forEach(function(v){ v.classList.remove("active"); });
+    document.getElementById("poem-" + day).classList.add("active");
+    nav.querySelectorAll(".daybtn").forEach(function(b){ b.classList.toggle("active", b.dataset.day == day); });
+    fillFromStorage(day);
+    if (location.hash !== "#day-" + day) history.replaceState(null, "", "#day-" + day);
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  (function initFromHash(){
+    var m = /^#day-(\d+)$/.exec(location.hash);
+    if (m && POEMS[m[1]]) showPoem(m[1]);
+  })();
+
+  document.body.addEventListener("click", function(e){
+    var saveBtn = e.target.closest("[data-save]");
+    if (saveBtn) {
+      var day = saveBtn.dataset.save;
+      var view = document.getElementById("poem-" + day);
+      var answers = {};
+      view.querySelectorAll("textarea[data-q]").forEach(function(ta){ answers[ta.dataset.q] = ta.value; });
+      var oneline = view.querySelector("[data-oneline]").value;
+      var d = TOC.find(function(x){ return x.day == day; });
+      var all = loadAll();
+      var key = nameKey();
+      all[key] = all[key] || {};
+      all[key][day] = {
+        day: Number(day), title: d.title, poet: d.poet, work: d.work, partName: d.partName,
+        answers: answers, oneline: oneline, savedAt: new Date().toISOString()
+      };
+      saveAll(all);
+      markDone(day, true);
+      var note = view.querySelector("[data-savenote]");
+      note.textContent = "✓ 저장됨 (" + key + ")";
+      setTimeout(function(){ note.textContent = ""; }, 2500);
+    }
+  });
+
+  document.getElementById("studentName").addEventListener("change", function(){
+    var active = nav.querySelector(".daybtn.active");
+    if (active) fillFromStorage(active.dataset.day);
+    renderMine();
+  });
+
+  // ---------- mine view ----------
+  var mineBtn = document.getElementById("mineBtn");
+  var backBtn = document.getElementById("backBtn");
+  var mineView = document.getElementById("mineView");
+  var mineList = document.getElementById("mineList");
+
+  function renderMine(){
+    var all = loadAll();
+    var rec = all[nameKey()] || {};
+    var days = Object.keys(rec).map(Number).sort(function(a,b){ return a-b; });
+    if (!days.length) {
+      mineList.innerHTML = '<p class="empty-mine">아직 저장한 감상이 없습니다. 왼쪽 목차에서 시를 골라 감상을 남겨보세요.</p>';
+      return;
+    }
+    mineList.innerHTML = days.map(function(day){
+      var r = rec[day];
+      var stepsHtml = r.answers && Object.keys(r.answers).length
+        ? Object.keys(r.answers).sort().map(function(i){
+            return r.answers[i] ? ('<dt>' + STEP_LABELS[i] + '</dt><dd>' + escapeHtml(r.answers[i]) + '</dd>') : "";
+          }).join("")
+        : "";
+      return '<div class="mine-item">' +
+        '<h3>Day ' + r.day + ' · ' + escapeHtml(r.title) + '</h3>' +
+        '<p class="meta">' + escapeHtml(r.partName) + ' · ' + escapeHtml(r.poet) + ' «' + escapeHtml(r.work) + '»</p>' +
+        (r.oneline ? '<p class="oneline-out">“' + escapeHtml(r.oneline) + '”</p>' : "") +
+        '<dl>' + stepsHtml + '</dl>' +
+      '</div>';
+    }).join("");
+  }
+  function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  mineBtn.addEventListener("click", function(){
+    document.getElementById("introView").style.display = "none";
+    document.querySelectorAll(".poem-view").forEach(function(v){ v.classList.remove("active"); });
+    nav.querySelectorAll(".daybtn").forEach(function(b){ b.classList.remove("active"); });
+    renderMine();
+    mineView.classList.add("active");
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+  backBtn.addEventListener("click", function(){
+    mineView.classList.remove("active");
+    document.getElementById("introView").style.display = "";
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var all = loadAll();
+    var key = nameKey();
+    var rec = all[key] || {};
+    var days = Object.keys(rec).map(Number).sort(function(a,b){ return a-b; });
+    var lines = ["내가 사랑한 시옷들 — " + key + "의 감상 모음", "=".repeat(40), ""];
+    days.forEach(function(day){
+      var r = rec[day];
+      lines.push("Day " + r.day + " · " + r.title);
+      lines.push(r.partName + " · " + r.poet + " «" + r.work + "»");
+      if (r.oneline) lines.push("한 줄 감상: " + r.oneline);
+      Object.keys(r.answers || {}).sort().forEach(function(i){
+        if (r.answers[i]) lines.push("[" + STEP_LABELS[i] + "] " + r.answers[i]);
+      });
+      lines.push("");
+    });
+    var blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "시옷들_감상_" + key + ".txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  });
+
+  // restore student name
+  try {
+    var savedName = localStorage.getItem("siotdeul-name");
+    if (savedName) document.getElementById("studentName").value = savedName;
+  } catch(e){}
+  document.getElementById("studentName").addEventListener("input", function(){
+    try { localStorage.setItem("siotdeul-name", this.value); } catch(e){}
+  });
+
+  // mark any already-saved days as done on load
+  (function(){
+    var all = loadAll();
+    var rec = all[nameKey()] || {};
+    Object.keys(rec).forEach(function(day){ markDone(day, true); });
+  })();
+})();
+</script>
+</body>
+</html>
