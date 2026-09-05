@@ -24,7 +24,7 @@ body{background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-
 #deck{position:absolute;inset:0;overflow:hidden}
 .slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:clamp(1.2rem,4vw,3.5rem)}
 .slide.on{display:flex}
-.inner{width:min(76rem,94vw);max-width:100%}
+.inner{width:min(76rem,94vw);max-width:100%;max-height:94vh;overflow-y:auto;padding-right:.3rem}
 
 .eyebrow{display:flex;align-items:center;gap:.8rem;font:800 clamp(1.05rem,2vw,1.5rem)/1 "IBM Plex Mono",monospace;
   letter-spacing:.06em;text-transform:uppercase;color:var(--sec,var(--c1));margin:0 0 1.2rem}
@@ -32,15 +32,22 @@ body{background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",system-
 .eyebrow .time{margin-left:auto;font-weight:700;color:var(--dim);background:color-mix(in srgb,var(--sec,var(--c1)) 16%,transparent);
   padding:.25em .8em;border-radius:99px}
 
-h1.t{font-family:"Fraunces","Noto Serif KR",serif;font-weight:900;font-size:clamp(2.6rem,7vw,5.6rem);
-  line-height:1.05;margin:0 0 1rem;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
-p.sub{font-size:clamp(1.3rem,2.6vw,1.9rem);color:var(--dim);line-height:1.5;margin:0 0 1.6rem;max-width:60ch}
+h1.t{font-family:"Fraunces","Noto Serif KR",serif;font-weight:900;font-size:clamp(2.3rem,6vw,4.8rem);
+  line-height:1.06;margin:0 0 .9rem;letter-spacing:-.015em;text-wrap:balance;color:var(--ink)}
+p.sub{font-size:clamp(1.2rem,2.3vw,1.65rem);color:var(--dim);line-height:1.5;margin:0 0 1.3rem;max-width:64ch}
 
 .out{display:flex;gap:1.1rem;align-items:flex-start;background:var(--card);border:3px solid var(--ink);
-  border-radius:18px;padding:1.3rem 1.6rem;box-shadow:12px 12px 0 -3px color-mix(in srgb,var(--sec,var(--c1)) 35%,transparent);
-  margin-bottom:1.4rem}
-.out .k{font:800 clamp(1rem,1.8vw,1.3rem)/1.3 "IBM Plex Mono",monospace;color:var(--sec,var(--c1));white-space:nowrap;padding-top:.15em}
-.out .v{font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.5;color:var(--ink)}
+  border-radius:18px;padding:1.1rem 1.5rem;box-shadow:10px 10px 0 -3px color-mix(in srgb,var(--sec,var(--c1)) 35%,transparent);
+  margin-bottom:1.1rem}
+.out .k{font:800 clamp(.92rem,1.6vw,1.15rem)/1.3 "IBM Plex Mono",monospace;color:var(--sec,var(--c1));white-space:nowrap;padding-top:.15em;min-width:5.4em}
+.out .v{font-size:clamp(1.1rem,2vw,1.45rem);line-height:1.5;color:var(--ink)}
+
+.term,.purpose{display:flex;gap:1.1rem;align-items:flex-start;border-radius:14px;padding:1rem 1.4rem;margin-bottom:1.1rem}
+.term{background:color-mix(in srgb,var(--sec,var(--c1)) 10%,var(--paper));border:2px dashed color-mix(in srgb,var(--sec,var(--c1)) 55%,var(--ink))}
+.purpose{background:color-mix(in srgb,var(--sec,var(--c1)) 16%,var(--paper));border:2px solid var(--sec,var(--c1))}
+.term .k,.purpose .k{font:800 clamp(.92rem,1.6vw,1.15rem)/1.3 "IBM Plex Mono",monospace;color:var(--sec,var(--c1));white-space:nowrap;padding-top:.15em;min-width:5.4em}
+.term .v,.purpose .v{font-size:clamp(1.05rem,1.9vw,1.35rem);line-height:1.55;color:var(--ink)}
+.term .v b, .purpose .v b{color:var(--sec,var(--c1))}
 
 .url{display:inline-flex;align-items:center;gap:.6rem;font:700 clamp(1.1rem,2vw,1.5rem)/1 "IBM Plex Mono",monospace;
   color:var(--sec,var(--c1));background:color-mix(in srgb,var(--sec,var(--c1)) 12%,transparent);
@@ -122,6 +129,8 @@ const S = [
  {k:"step", n:1, sec:"R", tag:"연수 전", time:"약 15분",
   t:"AI × 영어교육 전문용어 덱",
   sub:"약 140개 용어를 먼저 훑어 공통 언어를 맞춘다.",
+  term:"용어 사전(Terminology Deck) — 프롬프트 엔지니어링·하네스·RAG·LLM 평가 등 14개 범주로 묶은 슬라이드형 사전. 이후 도구들에서 설명 없이 등장하는 말들이 여기 다 있다.",
+  purpose:"도구를 만지기 전에 <b>같은 단어를 같은 뜻</b>으로 쓰기 위해서다. 용어가 안 맞으면 이후 협업·발표·질의응답에서 혼선이 생긴다.",
   out:"낯선 용어 5개를 골라 뜻을 한 줄씩 적어두기",
   url:"irenechey820712-star.github.io/english-terminology-deck",
   href:"https://irenechey820712-star.github.io/english-terminology-deck/"},
@@ -129,6 +138,8 @@ const S = [
  {k:"step", n:2, sec:"s2", tag:"1차시 실습", time:"약 25분",
   t:"EFL 리딩 그래프",
   sub:"retrieve→grade→RETRY 루프를 직접 돌려본다 — 체인이면 됐을까, 그래프가 필요했나.",
+  term:"체인(Chain) vs 그래프(Graph) — 체인은 <b>한 방향으로만</b> 흐르는 처리 순서, 그래프는 결과가 부족하면 <b>이전 단계로 되돌아가는(RETRY)</b> 순환 구조다. retrieve(근거 찾기)→generate(답 생성)→grade(근거 평가)→(RETRY)→finalize.",
+  purpose:"학생 독해 지도를 '한 번에 답하기'가 아니라 '근거가 부족하면 다시 찾기'로 설계하려는 교사를 위한 것. AI가 근거 없는 정답을 스스로 걸러내는 과정을 직접 눈으로 확인한다.",
   out:"RETRY(재검색) 화살표가 켜진 화면 캡처 1장",
   url:"irenechey820712-star.github.io/efl-reading-graph",
   href:"https://irenechey820712-star.github.io/efl-reading-graph/"},
@@ -136,12 +147,16 @@ const S = [
  {k:"step", n:3, sec:"s4", tag:"2차시 실습", time:"약 30분",
   t:"Literary Style & Emotion Spectrum Lab v2.6",
   sub:"관통 시연 사례를 감정 곡선·QUICK PROFILE로 3축(이해/표현/성찰) 해부한다.",
+  term:"FRE(Flesch Reading Ease) — 영어 문장의 가독성을 0~100 점수로 나타내는 지표(높을수록 쉬운 문장). 감정 스펙트럼(Emotion Spectrum) — 문장별 감정 극성을 Cold~Warm 5단계로 시각화한 것.",
+  purpose:"영미문학 원문을 학생 눈높이로 <b>패러프레이징</b>(번역·요약과는 다름)하는 수업에서, 재작성이 실제로 쉬워졌는지 감이 아니라 수치(Delta_FRE)로 확인하기 위함.",
   out:"감정 곡선 스크린샷 + QUICK PROFILE 수치 메모",
   url:"(로컬 파일) Literary_Style_Emotion_Spectrum_Lab_v2_6_Translation_Lab.html"},
 
  {k:"step", n:4, sec:"s2", tag:"3차시 실습", time:"약 25분",
   t:"English Teacher Harness Engineering + Distractor Lab",
   sub:"프롬프트만 vs 하네스 적용을 나란히 실행해 검증 게이트가 왜 필요한지 확인한다.",
+  term:"하네스(Harness) — 프롬프트 하나만 던지는 게 아니라 <b>검증·재시도·품질 게이트</b>를 두른 안전장치 세트. 디스트랙터(Distractor) — 객관식 오답 선택지. 좋은 오답은 특정 <b>오개념</b>을 겨냥해 설계된다.",
+  purpose:"'프롬프트만 잘 쓰면 된다'는 생각이 왜 위험한지 직접 확인하고, 수능형 오답을 아무렇게나 만들지 않고 <b>오개념 진단 도구</b>로 설계하는 법을 익히기 위함.",
   out:"BEFORE(프롬프트만) vs AFTER(하네스) 결과 비교 메모",
   url:"irenechey820712-star.github.io/english-teacher-harness-lab",
   href:"https://irenechey820712-star.github.io/english-teacher-harness-lab/"},
@@ -149,24 +164,32 @@ const S = [
  {k:"step", n:5, sec:"s4", tag:"3~4차시 실습", time:"약 30분",
   t:"Prompting Thinking Lab Research+",
   sub:"CoT · ToT · Least-to-Most · Decomposed 전략을 비교하며 AI 개입 지점을 정교화한다.",
+  term:"CoT(Chain-of-Thought) — AI에게 '단계별로 생각해봐'라고 요구해 <b>풀이 과정을 드러내게</b> 하는 기법. ToT(Tree-of-Thought) — 여러 풀이 <b>후보를 동시에 펼쳐놓고 비교·역추적</b>하는 기법.",
+  purpose:"AI에게 무엇을 어떻게 요청하느냐(프롬프트 전략)가 결과 품질을 얼마나 바꾸는지, 학생 질문 생성·독해 지도에 그대로 적용해보기 위함.",
   out:"전략 2개 이상 비교 결과 캡처 + 어느 쪽이 나은지 한 줄 판단",
   url:"(로컬 파일) Prompting_Thinking_Lab_Research.html"},
 
  {k:"step", n:6, sec:"s4", tag:"4차시 실습", time:"약 30분",
   t:"Global English Thinking Lab",
   sub:"세계 이슈 소재로 8단계 글쓰기 코칭 시나리오를 직접 밟아본다 (Live Writing Coach · Data Dropdown Expanded 중 택1).",
+  term:"관찰(Observation) vs 추론(Inference) — 관찰은 자료에 <b>보이는 사실</b>, 추론은 그 사실에서 <b>이끌어낸 해석</b>이다. 이 구분을 흐리는 것이 비판적 읽기·쓰기에서 가장 흔한 오류다.",
+  purpose:"세계 이슈를 소재로 다루되, 학생이 사실과 의견을 뒤섞지 않고 <b>근거 기반</b>으로 영어 글을 쓰도록 코칭하는 8단계 시나리오를 교사가 먼저 체험하기 위함.",
   out:"Draft 1 → Revision까지 진행한 결과물 1건",
   url:"(로컬 파일) GLOBAL_ENGLISH_THINKING_LAB_8_*.html"},
 
  {k:"step", n:7, sec:"s4", tag:"4차시 심화 · 선택", time:"약 40분",
   t:"AIEDAP English WebApp Innovation Planner",
   sub:"여기까지 겪은 도구들을 바탕으로 나만의 AI 융합 영어 WebApp을 7단계로 기획해본다.",
+  term:"MVP(Minimum Viable Product) — 처음부터 완벽한 도구를 만들지 않고 <b>핵심 기능만 갖춘 최소 버전</b>으로 먼저 검증한다는 개념. 이 위저드는 'Plan first, build later'(만들기 전에 먼저 기획하라) 원칙을 따른다.",
+  purpose:"'이 도구를 어떻게 쓸까'에서 한 걸음 나아가, <b>내 수업에 필요한 도구를 어떻게 설계할까</b>를 교사 스스로 기획해보기 위함.",
   out:"Markdown 기획서 1부 (Export)",
   url:"(로컬 파일) AIEDAP_English_WebApp_Innovation_Planner.html"},
 
  {k:"step", n:8, sec:"s5", tag:"5차시 실습", time:"약 20분",
   t:"Literary Lab · EFL 리딩 그래프 재방문",
   sub:"처음 쓴 두 도구로 돌아가 번역 전략(Literary Lab)과 정교화 결과(리딩 그래프)를 다시 살펴본다.",
+  term:"정교화(Refinement) — 처음 만든 모형을 '완성본'이 아니라 <b>'버전 1'</b>로 보고, 실습에서 나온 데이터를 근거로 다시 고치는 과정. 형성적 성찰(Formative Reflection)이라고도 한다.",
+  purpose:"1·2차시에 쓴 도구를 5차시에 다시 열어, 처음 만든 내 모형이 실습을 거치며 <b>무엇이 달라졌는지</b> 스스로 비교·검증하기 위함.",
   out:"1차 결과와 비교한 변경점 3가지 메모"},
 
  {k:"end", sec:"R",
@@ -199,6 +222,8 @@ function render(){
       h += '<p class="eyebrow"><span class="dot"></span>STEP '+sl.n+' · '+sl.tag+'<span class="time">'+sl.time+'</span></p>';
       h += '<h1 class="t">'+sl.t+'</h1>';
       h += '<p class="sub">'+sl.sub+'</p>';
+      if(sl.term) h += '<div class="term"><span class="k">핵심 용어</span><span class="v">'+sl.term+'</span></div>';
+      if(sl.purpose) h += '<div class="purpose"><span class="k">활용 목적</span><span class="v">'+sl.purpose+'</span></div>';
       h += '<div class="out"><span class="k">산출물</span><span class="v">'+sl.out+'</span></div>';
       if(sl.href) h += '<a class="url" href="'+sl.href+'" target="_blank" rel="noopener">'+sl.url+'</a>';
       else if(sl.url) h += '<span class="url" style="cursor:default">'+sl.url+'</span>';
