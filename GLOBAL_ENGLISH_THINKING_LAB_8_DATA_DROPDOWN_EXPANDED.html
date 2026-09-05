@@ -441,6 +441,11 @@ svg{width:100%;height:100%}
 }
 
 </style>
+<style>
+#indicator optgroup,#country optgroup{font-weight:800}
+#indicatorPrompt{line-height:1.55}
+</style>
+
 </head>
 <body>
 <header class="top">
@@ -1061,16 +1066,64 @@ svg{width:100%;height:100%}
   <div class="grid">
     <div class="panel">
       <h3>① Choose data</h3>
-      <label>Indicator</label>
+      <label>Data category / Indicator</label>
       <select id="indicator">
-        <option value="EN.ATM.CO2E.PC">CO₂ emissions (metric tons per capita)</option>
-        <option value="EG.FEC.RNEW.ZS">Renewable energy consumption (% of total final energy consumption)</option>
-        <option value="SE.SEC.ENRR">School enrollment, secondary (% gross)</option>
-        <option value="SP.URB.TOTL.IN.ZS">Urban population (% of total)</option>
+        <optgroup label="🌍 Climate · Environment">
+          <option value="EN.ATM.CO2E.PC">CO₂ emissions · metric tons per capita</option>
+          <option value="EG.FEC.RNEW.ZS">Renewable energy consumption · % of total energy</option>
+          <option value="AG.LND.FRST.ZS">Forest area · % of land area</option>
+          <option value="EG.ELC.ACCS.ZS">Access to electricity · % of population</option>
+        </optgroup>
+        <optgroup label="🎓 Education">
+          <option value="SE.PRM.ENRR">Primary school enrollment · % gross</option>
+          <option value="SE.SEC.ENRR">Secondary school enrollment · % gross</option>
+          <option value="SE.TER.ENRR">Tertiary school enrollment · % gross</option>
+        </optgroup>
+        <optgroup label="👥 Population · Society">
+          <option value="SP.POP.TOTL">Total population</option>
+          <option value="SP.URB.TOTL.IN.ZS">Urban population · % of total</option>
+          <option value="SP.POP.0014.TO.ZS">Population ages 0–14 · % of total</option>
+          <option value="SP.POP.65UP.TO.ZS">Population ages 65+ · % of total</option>
+        </optgroup>
+        <optgroup label="💰 Economy · Work">
+          <option value="NY.GDP.PCAP.CD">GDP per capita · current US$</option>
+          <option value="NY.GDP.MKTP.CD">GDP · current US$</option>
+          <option value="FP.CPI.TOTL.ZG">Inflation · consumer prices, annual %</option>
+          <option value="SL.UEM.TOTL.ZS">Unemployment · % of labor force</option>
+        </optgroup>
+        <optgroup label="❤️ Health · Well-being">
+          <option value="SP.DYN.LE00.IN">Life expectancy at birth · years</option>
+          <option value="SH.XPD.CHEX.GD.ZS">Current health expenditure · % of GDP</option>
+        </optgroup>
+        <optgroup label="💻 Digital Society">
+          <option value="IT.NET.USER.ZS">Individuals using the Internet · % of population</option>
+          <option value="IT.CEL.SETS.P2">Mobile cellular subscriptions · per 100 people</option>
+        </optgroup>
       </select>
-      <label>Country</label>
+      <div id="indicatorPrompt" class="note" style="margin-top:9px">
+        <b>DATA QUESTION:</b> How has this indicator changed over time, and what can the data <i>not</i> prove?
+      </div>
+      <label>Country / Economy</label>
       <select id="country">
-        <option value="KOR">Korea, Rep.</option><option value="BGD">Bangladesh</option><option value="USA">United States</option><option value="GBR">United Kingdom</option><option value="JPN">Japan</option><option value="IND">India</option>
+        <optgroup label="Asia">
+          <option value="KOR">Korea, Rep.</option><option value="BGD">Bangladesh</option>
+          <option value="JPN">Japan</option><option value="CHN">China</option>
+          <option value="IND">India</option><option value="IDN">Indonesia</option>
+          <option value="VNM">Vietnam</option><option value="SGP">Singapore</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="GBR">United Kingdom</option><option value="DEU">Germany</option>
+          <option value="FRA">France</option><option value="SWE">Sweden</option>
+        </optgroup>
+        <optgroup label="Americas">
+          <option value="USA">United States</option><option value="CAN">Canada</option>
+          <option value="BRA">Brazil</option><option value="MEX">Mexico</option>
+        </optgroup>
+        <optgroup label="Africa · Middle East · Oceania">
+          <option value="ZAF">South Africa</option><option value="KEN">Kenya</option>
+          <option value="SAU">Saudi Arabia</option><option value="AUS">Australia</option>
+        </optgroup>
+        <optgroup label="Global"><option value="WLD">World</option></optgroup>
       </select>
       <div class="toolbar"><button id="loadWB" class="accent">LOAD WORLD BANK DATA</button><button id="sampleData">USE SAMPLE</button></div>
       <div id="dataStatus" class="mini">World Bank API는 키 없이 호출됩니다. 네트워크가 제한되면 Sample을 사용하세요.</div>
@@ -2559,5 +2612,39 @@ if(searchIssueNews){
 }
 
 </script>
+
+<script id="dataPromptEnhancer">
+(function(){
+const prompts={
+"EN.ATM.CO2E.PC":"How have per-capita CO₂ emissions changed over time? What does the graph not explain about causes?",
+"EG.FEC.RNEW.ZS":"How has renewable energy use changed? What policy causes would require additional evidence?",
+"AG.LND.FRST.ZS":"Is forest area increasing or decreasing? What does this percentage not reveal about forest quality?",
+"EG.ELC.ACCS.ZS":"How has electricity access changed? Which groups may be hidden by a national average?",
+"SE.PRM.ENRR":"What trend appears in primary enrollment? Does enrollment alone prove learning quality?",
+"SE.SEC.ENRR":"How has secondary enrollment changed? What additional evidence is needed to discuss educational opportunity?",
+"SE.TER.ENRR":"What does tertiary enrollment suggest about access to higher education?",
+"SP.POP.TOTL":"How has population changed? What consequences cannot be inferred from population size alone?",
+"SP.URB.TOTL.IN.ZS":"How quickly is the population becoming urban? Does urbanization itself prove development?",
+"SP.POP.0014.TO.ZS":"How is the share of children changing? What might this imply for future education needs?",
+"SP.POP.65UP.TO.ZS":"How is the older population changing? What might this imply for welfare or the labor market?",
+"NY.GDP.PCAP.CD":"How has GDP per capita changed? Why does it not directly measure equality or well-being?",
+"NY.GDP.MKTP.CD":"How has the size of the economy changed? What does total GDP fail to show about living standards?",
+"FP.CPI.TOTL.ZG":"When did inflation rise or fall most sharply? What evidence is needed to explain the cause?",
+"SL.UEM.TOTL.ZS":"How has unemployment changed? What groups or job-quality issues may the overall rate hide?",
+"SP.DYN.LE00.IN":"How has life expectancy changed? What factors would need separate evidence?",
+"SH.XPD.CHEX.GD.ZS":"How has health spending changed? Does higher spending necessarily mean better outcomes?",
+"IT.NET.USER.ZS":"How rapidly has Internet use expanded? What digital divide may remain hidden?",
+"IT.CEL.SETS.P2":"How have mobile subscriptions changed? Why can subscriptions exceed 100 per 100 people?"
+};
+const el=document.getElementById('indicator');
+const box=document.getElementById('indicatorPrompt');
+function update(){
+  if(!el||!box)return;
+  box.innerHTML='<b>DATA QUESTION:</b> '+(prompts[el.value]||'How has this indicator changed over time, and what can the data not prove?');
+}
+if(el){el.addEventListener('change',update);update();}
+})();
+</script>
+
 </body>
 </html>
