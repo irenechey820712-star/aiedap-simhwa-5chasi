@@ -226,8 +226,8 @@
         <span class="go">열기 →</span>
       </a>
       <a class="card" href="Around_the_World_Literary_Journey_Lab_PRO.html">
-        <p class="t">80일간의 세계일주 — Literary Journey Lab (PRO · 65 stops)</p>
-        <p class="d">Jules Verne 「80일간의 세계일주」(Gutenberg #103) 기반. <b>65개 정차·통과 지점</b>(현대 지명 + 원작 지명 병기) 지도 + Fogg·Passepartout·Fix·Aouda <b>4인물 경로</b> + <b>감정 변화 그래프(Chart.js, 4인 비교)</b> + 지역·교통수단 필터 + 지점별 원문 passage + 학생 근거노트(Observation→Evidence→Interpretation→Question, localStorage 저장). Literary Lab Missions 6개(SPACE·TIME·CHARACTER·EMOTION·NAME·TGV). ▶ Journey 자동 재생.</p>
+        <p class="t">80일간의 세계일주 — Interactive Journey Dashboard (정독판)</p>
+        <p class="d">Jules Verne 「80일간의 세계일주」(Gutenberg #103, Towle 번역·공개) 기반. <b>지도 → 원문 → 판단</b>을 한 흐름으로: 각 정차 지점마다 <b>원문 passage</b>를 붙이고 <b>Close Reading·문학 탐구 질문</b>으로 정독. 「180° 자오선 읽기」·「Medicine Bow 읽기」 심화 리딩, ▶ 자동 여정 재생, 지점별 <b>학생 근거 메모</b>(localStorage), 「Could Fogg Really Do It?」 실현가능성 검토 + 최종 자기언어화.</p>
         <span class="go">열기 →</span>
       </a>
       <a class="card" href="Around_the_World_Literary_Journey_Lab_PRO_MissionAnswers.html">
@@ -235,14 +235,9 @@
         <p class="d">위 앱의 가벼운 버전 — 32개 핵심 지점, 80일 타임라인 재생 + 일정 손익 표시 + 긴장도 곡선 SVG, 미션 7개 + <b>모범답안(교사용, 접힘)</b>. 동반 데이터: <a href="data_Around_the_World_journey.csv">80일 여정 CSV</a> · <a href="data_Odyssey_journey.csv">오디세이 여정 CSV</a> (My Maps·kepler.gl 임포트용).</p>
         <span class="go">열기 →</span>
       </a>
-      <a class="card" href="Around_the_World_80_Days_Journey_Dashboard_DEEP_READING.html">
-        <p class="t">80일간의 세계일주 — Journey Dashboard (정독판)</p>
-        <p class="d">지도 → 원문 → 판단을 한 흐름으로. 각 정차 지점마다 <b>Towle 번역(공개) 원문 passage</b>를 붙이고 <b>Close Reading·문학 탐구 질문</b>으로 정독. 「180° 자오선 읽기」·「Medicine Bow 읽기」 심화 리딩, 지점별 <b>학생 근거 메모</b>(localStorage), 「Could Fogg Really Do It?」 실현가능성 검토 + 최종 자기언어화. Literary Journey Lab PRO와 짝을 이루는 <b>깊게 읽기</b> 버전.</p>
-        <span class="go">열기 →</span>
-      </a>
       <a class="card" href="Movie_Review_Corpus_Lab.html">
         <p class="t">🎬 Movie Review Corpus Lab</p>
-        <p class="d">영화 리뷰를 데이터로 읽는 클릭형 실습실 — <code>빈도 → 상대빈도 차이 → 워드클라우드 → KWIC 원문 검증 → 4단계 자기언어화</code>. <b>조별 분산 버전</b>: 링크에 <code>?group=A</code>~<code>?group=F</code>를 붙이면 각 조가 <code>data/imdb_group_X.csv</code>(조당 2,000개 = 긍정 1,000 + 부정 1,000, 서로 겹치지 않음, <b>영화 제목 포함</b>)만 내려받습니다. 「🧑‍🏫 강사용 6개 조 비교」 버튼으로 6개 조를 한 번에 로드. CSV 직접 업로드는 비상용. 조별 CSV는 <code>build_imdb50k.py</code> → <code>build_group_shards.py</code>로 생성. 6개 영화 수업용 샘플(각 긍/부정 5+5) 내장. LDS2026(서울대 언어데이터과학) NSMC 감정분석 방법론과 직접 연결. 전부 브라우저 내 처리 · 학습 기록 TXT 저장.</p>
+        <p class="d">영화 리뷰를 데이터로 읽는 클릭형 실습실 — <code>빈도 → 상대빈도 차이 → 워드클라우드 → KWIC 원문 검증 → 4단계 자기언어화</code>. <b>조별 분산 버전</b>: 링크에 <code>?group=A</code>~<code>?group=F</code>를 붙이면 각 조가 <code>data/imdb_group_X.csv</code>(조당 2,000개 = 긍정 1,000 + 부정 1,000, 서로 겹치지 않음, <b>영화 제목 포함</b>)만 내려받습니다. 「🧑‍🏫 강사용 6개 조 비교」 버튼으로 6개 조를 한 번에 로드. 각 리뷰에 <b>영화 제목</b> + <b>대중적 영화 태그(Titanic·Scarface·The Bourne Ultimatum 등)</b> 포함 — 데이터 표를 유명 영화로 좁혀 보기 + <b>「리뷰로 영화 맞히기」 퀴즈(10문항)</b>. CSV 직접 업로드는 비상용. 조별 CSV는 <code>build_group_shards.py</code>로 생성. LDS2026(서울대 언어데이터과학) NSMC 감정분석 방법론과 직접 연결. 전부 브라우저 내 처리 · 학습 기록 TXT 저장.</p>
         <span class="go">열기 →</span>
       </a>
     </div>

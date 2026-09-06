@@ -1,7 +1,7 @@
-group,rows,positive,negative,distinct_movies,file
-A,2000,1000,1000,1561,imdb_group_A.csv
-B,2000,1000,1000,1538,imdb_group_B.csv
-C,2000,1000,1000,1553,imdb_group_C.csv
-D,2000,1000,1000,1536,imdb_group_D.csv
-E,2000,1000,1000,1551,imdb_group_E.csv
-F,2000,1000,1000,1510,imdb_group_F.csv
+group,rows,positive,negative,distinct_movies,famous_rows,famous_movies,file
+A,2000,1000,1000,1512,60,16,imdb_group_A.csv
+B,2000,1000,1000,1501,60,16,imdb_group_B.csv
+C,2000,1000,1000,1514,60,14,imdb_group_C.csv
+D,2000,1000,1000,1536,60,14,imdb_group_D.csv
+E,2000,1000,1000,1543,59,14,imdb_group_E.csv
+F,2000,1000,1000,1514,59,15,imdb_group_F.csv
