@@ -38,40 +38,46 @@ label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
 .foot{color:var(--muted);font-size:12px;text-align:center;padding:24px}
 a{color:var(--accent2)}
 .kpi{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-right:8px;font-size:13px}
+
+.topnav{position:sticky;top:0;z-index:50;background:rgba(17,21,27,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:900px;margin:auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:12px 20px}
+.brand{font-weight:800;letter-spacing:-.5px;font-size:17px;white-space:nowrap}
+.nav-links{display:flex;gap:14px;font-size:13px}
+.nav-links a{color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.nav-groups{display:flex;align-items:center;gap:6px;margin-left:auto}
+.gbtn{border:1px solid var(--line);background:#20242d;color:var(--muted);border-radius:999px;padding:6px 12px;font-weight:800;font-size:13px;cursor:pointer}
+.gbtn.active{background:var(--accent);color:#111;border-color:var(--accent)}
+.gbtn:hover:not(.active){color:var(--text);border-color:var(--accent2)}
+.upload{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+.upload:hover{color:var(--text)}
+.statusbar{max-width:900px;margin:auto;padding:12px 20px 0;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px}
+@media(max-width:640px){.nav-groups{margin-left:0;width:100%;flex-wrap:wrap}}
 </style>
 </head>
 <body>
-<header>
-  <h1>🎮 Movie Review Quiz</h1>
-  <p>대중적인 영화의 리뷰를 <b>제목이 가려진</b> 상태로 읽고, 어떤 영화인지 4개 보기 중에서 고릅니다.
-     <a href="Movie_Review_Corpus_Lab.html">← Movie Review Corpus Lab</a>과 같은 조별 데이터(<code>?group=A~F</code>)를 씁니다.</p>
-</header>
+<nav class="topnav">
+  <div class="nav-inner">
+    <span class="brand">🎮 Movie Review Quiz</span>
+    <span class="nav-links">
+      <a href="index.html">실습 허브</a>
+      <a href="Movie_Review_Corpus_Lab.html">Corpus Lab</a>
+    </span>
+    <span class="nav-groups" id="navGroups"><span class="small">조 선택</span></span>
+    <label class="upload" for="fileInput">CSV 업로드<input id="fileInput" type="file" accept=".csv,.txt" hidden></label>
+  </div>
+</nav>
+<div class="statusbar">
+  <span id="status">위 메뉴에서 조(A~F)를 선택하세요.</span>
+  <span id="stats"></span>
+  <span id="best" class="small"></span>
+</div>
 
 <div class="wrap">
-  <section class="card">
-    <h2>1. 데이터 불러오기</h2>
-    <div class="controls">
-      <div>
-        <label>조 선택</label>
-        <select id="groupSelect">
-          <option value="A">A조</option><option value="B">B조</option><option value="C">C조</option>
-          <option value="D">D조</option><option value="E">E조</option><option value="F">F조</option>
-        </select>
-      </div>
-      <button id="loadBtn" class="blue">이 조 데이터 불러오기</button>
-      <label class="secondary" style="border-radius:12px;padding:11px 14px;cursor:pointer">CSV 직접 업로드
-        <input id="fileInput" type="file" accept=".csv,.txt" hidden>
-      </label>
-    </div>
-    <div id="status" class="callout" style="margin-top:12px">조를 선택하고 “불러오기”를 누르세요.</div>
-    <div id="stats" style="margin-top:10px"></div>
-  </section>
-
   <section class="card" id="quizCard">
-    <h2>2. 퀴즈</h2>
+    <p class="small" style="margin-top:0">대중적인 영화의 리뷰를 <b>제목이 ■■■로 가려진</b> 상태로 읽고, 어떤 영화인지 4개 보기 중에서 고릅니다. Corpus Lab과 같은 조별 데이터를 씁니다.</p>
     <div class="controls">
       <button id="startBtn" disabled>퀴즈 시작 (10문항)</button>
-      <span id="best" class="small"></span>
     </div>
     <div id="quizBody" style="display:none;margin-top:14px">
       <div id="progress" class="small" style="margin-bottom:6px"></div>
@@ -98,7 +104,21 @@ a{color:var(--accent2)}
   const $ = id => document.getElementById(id);
   const GROUPS = ["A","B","C","D","E","F"];
   const groupFile = g => `data/imdb_group_${g}.csv`;
-  let rows = [], quiz = null;
+  let rows = [], quiz = null, selectedGroup = "A";
+
+  function buildNavGroups(){
+    const box = $("navGroups");
+    GROUPS.forEach(g=>{
+      const b = document.createElement("button");
+      b.className = "gbtn"; b.dataset.g = g; b.textContent = g;
+      b.addEventListener("click", ()=>loadGroup(g));
+      box.appendChild(b);
+    });
+  }
+  function setActiveGroup(g){
+    selectedGroup = g;
+    document.querySelectorAll(".gbtn").forEach(b=>b.classList.toggle("active", b.dataset.g === g));
+  }
 
   function urlGroup(){
     const g = (new URLSearchParams(location.search).get("group")||"").trim().toUpperCase();
@@ -188,8 +208,9 @@ a{color:var(--accent2)}
   }
 
   async function loadGroup(g){
+    setActiveGroup(g);
     $("status").innerHTML = `<b>${g}조</b> 데이터를 불러오는 중...`;
-    $("groupSelect").value = g;
+    $("stats").innerHTML = "";
     try{
       const res = await fetch(groupFile(g), {cache:"no-store"});
       if(!res.ok) throw new Error("HTTP "+res.status);
@@ -206,7 +227,7 @@ a{color:var(--accent2)}
     }
   }
 
-  function currentGroup(){ return $("groupSelect").value; }
+  function currentGroup(){ return selectedGroup; }
 
   function startQuiz(){
     const by = {};
@@ -282,11 +303,9 @@ a{color:var(--accent2)}
     showBest(g);
   }
 
-  $("loadBtn").addEventListener("click", ()=>loadGroup(currentGroup()));
   $("startBtn").addEventListener("click", startQuiz);
   $("nextBtn").addEventListener("click", ()=>{ quiz.i++; render(); });
   $("restartBtn").addEventListener("click", startQuiz);
-  $("groupSelect").addEventListener("change", ()=>{ showBest(currentGroup()); });
   $("fileInput").addEventListener("change", async e=>{
     const f = e.target.files[0]; if(!f) return;
     try{
@@ -297,9 +316,11 @@ a{color:var(--accent2)}
     }catch(err){ alert(err.message); }
   });
 
-  const g0 = urlGroup();
-  if(g0){ $("groupSelect").value = g0; loadGroup(g0); }
-  else showBest(currentGroup());
+  buildNavGroups();
+  const g0 = urlGroup() || "A";
+  setActiveGroup(g0);
+  if(urlGroup()) loadGroup(g0);
+  else { showBest(g0); $("status").textContent = "위 메뉴에서 조(A~F)를 선택하세요."; }
 })();
 </script>
 </body>
