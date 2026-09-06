@@ -57,5 +57,5 @@ python build_group_shards.py .        # ./data/ 아래에 생성
   The Italian Job, Dirty Dancing, Inglourious Basterds, 2001: A Space Odyssey,
   The Shining, Crash, Oldboy, National Treasure, The Matrix Reloaded 등)
 - 앱에서 쓰이는 곳:
-  - **데이터 표** — 유명 영화 칩으로 좁혀 보기
-  - **MOVIE QUIZ** — 제목이 가려진 리뷰를 읽고 4지선다로 영화 맞히기 (10문항)
+  - **Movie Review Corpus Lab** — 데이터 표를 유명 영화 칩으로 좁혀 보기, RECOMMEND 섹션(추천 신호어 → 영화 TOP 15)
+  - **Movie_Review_Quiz.html** (별도 페이지) — 제목이 ■■■로 가려진 리뷰를 읽고 4지선다로 영화 맞히기 (10문항, 조별 최고점수 저장)

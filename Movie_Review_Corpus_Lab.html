@@ -234,26 +234,28 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     </section>
   </div>
 
-  <section id="quizSection" class="card" style="margin-top:16px">
-    <h2>6. MOVIE QUIZ · 리뷰로 영화 맞히기</h2>
+  <section id="recoSection" class="card" style="margin-top:16px">
+    <h2>6. RECOMMEND · 영화 추천 마이닝</h2>
     <p class="small">
-      대중적인 영화의 리뷰를 <b>제목이 가려진</b> 상태로 읽고, 어떤 영화인지 4개 보기 중에서 고릅니다.
-      현재 불러온 조 데이터의 <b>유명 영화(famous)</b>만 출제됩니다.
+      리뷰에 자주 나오는 <b>추천·호평 신호어</b>(<code>recommend</code>, <code>must see</code>, <code>masterpiece</code> …)와
+      <b>감독·연출 언급어</b>(<code>director</code>, <code>direction</code> …)를 골라, 이 조 데이터가 실제로 미는 영화를 순위로 만듭니다.
     </p>
-    <div class="controls">
-      <button id="quizStartBtn" class="blue">퀴즈 시작 (10문항)</button>
-      <span id="quizScore" class="small"></span>
-    </div>
-    <div id="quizBody" style="display:none;margin-top:12px">
-      <div id="quizProgress" class="small" style="margin-bottom:6px"></div>
-      <div id="quizReview" class="callout" style="margin:8px 0;max-height:300px;overflow:auto;line-height:1.65"></div>
-      <div id="quizChoices" class="split"></div>
-      <div id="quizFeedback" style="margin-top:10px;font-size:14px"></div>
-      <div class="controls" style="margin-top:10px">
-        <button id="quizNextBtn" class="secondary" style="display:none">다음 문제 →</button>
-        <button id="quizRestartBtn" class="secondary" style="display:none">새 퀴즈</button>
+    <div class="split">
+      <div>
+        <h3 style="margin:6px 0">추천·호평 신호어 빈도</h3>
+        <div id="recoCueChart" class="chart"></div>
+        <div id="recoDirMeta" class="small" style="margin-top:8px"></div>
+      </div>
+      <div>
+        <h3 style="margin:6px 0">이 데이터가 추천하는 영화 TOP 15</h3>
+        <div id="recoList" style="max-height:460px;overflow:auto"></div>
       </div>
     </div>
+    <p class="small" style="margin-top:10px">
+      🎮 리뷰만 보고 영화를 맞히는 <b>Movie Review Quiz</b>는 별도 페이지로 분리했습니다 →
+      <a href="Movie_Review_Quiz.html" style="color:var(--accent2)"><b>Movie_Review_Quiz.html 열기</b></a>
+      (같은 <code>?group=</code> 파라미터 사용)
+    </p>
   </section>
 
   <section id="teacherCompareSection" class="card" style="margin-top:16px;display:none">
@@ -278,7 +280,6 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
   let rows = [];
   let corpusCache = null;
   let movieFilter = "all";
-  let quiz = null;
   const hfResume = { train: new Set(), test: new Set() };
   const GROUPS = ["A","B","C","D","E","F"];
   const GROUP_SIZE = 2000;
@@ -317,7 +318,6 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       rows = parsed;
       corpusCache = null;
       movieFilter = "all";
-      quiz = null;
       $("groupState").textContent = "READY";
       $("groupState").style.color = "var(--pos)";
       $("loadStatus").innerHTML =
@@ -730,96 +730,76 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     $("posKpi").textContent=rows.filter(r=>r.sentiment==="positive").length.toLocaleString();
     $("negKpi").textContent=rows.filter(r=>r.sentiment==="negative").length.toLocaleString();
     renderMovieChips(); renderTable(); analyze();
-    resetQuizUI();
+    mineRecommendations();
   }
 
-  // ---- MOVIE QUIZ ----
-  function famousByMovie(){
-    const by={};
-    rows.forEach(r=>{ if(r.famous){ (by[r.movie]=by[r.movie]||[]).push(r); } });
-    return by;
+  // ---- RECOMMEND MINING ----
+  const RECO_CUES = [
+    "highly recommend","would recommend","i recommend","recommend it","recommend this",
+    "recommended","must see","must-see","must watch","must-watch","don't miss","do not miss",
+    "worth watching","worth a watch","worth seeing","a masterpiece","masterpiece","a gem",
+    "hidden gem","one of the best","one of my favorite","one of my favourite","my favorite film",
+    "my favourite film","instant classic","absolutely brilliant","truly brilliant","brilliant film",
+    "unforgettable","see this film","see this movie","a must"
+  ];
+  const DIR_CUES = ["directed by","direction","director","directorial","filmmaker","cinematography"];
+
+  function firstSentenceAround(review, cue){
+    const lc = review.toLowerCase();
+    const at = lc.indexOf(cue);
+    if(at < 0) return "";
+    let s = review.lastIndexOf(".", at); s = s < 0 ? 0 : s + 1;
+    let e = review.indexOf(".", at + cue.length); e = e < 0 ? review.length : e + 1;
+    return review.slice(s, e).trim().replace(/\s+/g," ");
   }
-  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-  const TITLE_SKIP=new Set(["the","a","an","of","and","in","on","to","part","vol","for","with"]);
-  function maskTitle(text, movie){
-    const base=movie.replace(/\s*\(\d{4}\)\s*$/,"").trim();
-    const variants=new Set([base, base.replace(/^The\s+/i,"")]);
-    if(base.includes(":")) base.split(":").forEach(p=>{ p=p.trim(); if(p.length>3) variants.add(p); });
-    // 제목의 개별 특징 단어(4자 이상)도 가림
-    base.split(/[^A-Za-z0-9']+/).forEach(w=>{
-      if(w.length>=4 && !TITLE_SKIP.has(w.toLowerCase())) variants.add(w);
+
+  function mineRecommendations(){
+    if(!rows.length){ $("recoCueChart").innerHTML=""; $("recoList").innerHTML=""; $("recoDirMeta").textContent=""; return; }
+    const cueHits = new Map(RECO_CUES.map(c=>[c,0]));
+    const perMovie = new Map();
+    let dirReviews = 0;
+
+    rows.forEach(r=>{
+      const t = r.review.toLowerCase();
+      const m = perMovie.get(r.movie) || {reco:0,total:0,pos:0,neg:0,cues:new Set(),sample:""};
+      m.total++; if(r.sentiment==="positive") m.pos++; else m.neg++;
+      if(DIR_CUES.some(c=>t.includes(c))) dirReviews++;
+      const matched = RECO_CUES.filter(c=>t.includes(c));
+      matched.forEach(c=>cueHits.set(c, cueHits.get(c)+1));
+      if(matched.length && r.sentiment==="positive"){
+        m.reco++;
+        matched.forEach(c=>m.cues.add(c));
+        if(!m.sample) m.sample = firstSentenceAround(r.review, matched[0]);
+      }
+      perMovie.set(r.movie, m);
     });
-    let masked=text;
-    [...variants].sort((a,b)=>b.length-a.length).forEach(v=>{
-      if(v.length<3) return;
-      const re=new RegExp("\\b"+v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b","ig");
-      masked=masked.replace(re,"■■■");
+
+    const cueArr = [...cueHits.entries()].filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,18);
+    renderChart($("recoCueChart"), cueArr, "diffb");
+    $("recoDirMeta").innerHTML = `🎬 감독·연출 언급 리뷰: <b>${dirReviews.toLocaleString()}개</b> ` +
+      `<span class="small">(${DIR_CUES.join(", ")})</span>`;
+
+    const ranked = [...perMovie.entries()]
+      .filter(([,v])=>v.reco>=2)
+      .sort((a,b)=> b[1].reco - a[1].reco || (b[1].pos/b[1].total)-(a[1].pos/a[1].total))
+      .slice(0,15);
+
+    $("recoList").innerHTML = ranked.length ? ranked.map(([mv,v],i)=>`
+      <div class="kwicItem reco-row" data-movie="${esc(mv)}" style="cursor:pointer">
+        <b>${i+1}. ${esc(mv)}</b>
+        <span class="small">· 추천 신호 리뷰 ${v.reco}개 / 이 조 리뷰 ${v.total}개 · <span class="pos">긍정 ${v.pos}</span> <span class="neg">부정 ${v.neg}</span></span><br>
+        <span class="small">신호어: ${[...v.cues].slice(0,7).map(esc).join(" · ")}</span><br>
+        <span class="small" style="color:var(--text)">“${esc((v.sample||"").slice(0,240))}”</span>
+      </div>`).join("")
+      : '<div class="small">추천 신호어가 2회 이상 나온 영화가 아직 없습니다. 조 데이터를 불러오세요.</div>';
+
+    document.querySelectorAll(".reco-row").forEach(el=>{
+      el.addEventListener("click",()=>{
+        movieFilter = el.dataset.movie;
+        renderMovieChips(); renderTable();
+        $("reviewBody").scrollIntoView({behavior:"smooth",block:"center"});
+      });
     });
-    return masked;
-  }
-  function resetQuizUI(){
-    quiz=null;
-    $("quizBody").style.display="none";
-    $("quizScore").textContent="";
-    const by=famousByMovie();
-    const n=Object.keys(by).length;
-    $("quizStartBtn").disabled = n<4;
-    $("quizStartBtn").textContent = n<4 ? "유명 영화 데이터 부족 (조 데이터를 불러오세요)" : "퀴즈 시작 (10문항)";
-  }
-  function startQuiz(){
-    const by=famousByMovie();
-    const movies=Object.keys(by);
-    if(movies.length<4){ alert("퀴즈를 낼 유명 영화가 4편 이상 필요합니다."); return; }
-    const order=shuffle([...movies]);
-    const qs=[];
-    for(let i=0;i<10;i++){
-      const correct=order[i%order.length];
-      const r=by[correct][Math.floor(Math.random()*by[correct].length)];
-      const distract=shuffle(movies.filter(m=>m!==correct)).slice(0,3);
-      qs.push({review:r.review, sentiment:r.sentiment, correct, choices:shuffle([correct,...distract])});
-    }
-    quiz={qs,i:0,score:0,answered:false};
-    $("quizBody").style.display="block";
-    $("quizRestartBtn").style.display="none";
-    renderQuiz();
-    $("quizSection").scrollIntoView({behavior:"smooth",block:"start"});
-  }
-  function renderQuiz(){
-    const q=quiz.qs[quiz.i];
-    quiz.answered=false;
-    $("quizProgress").textContent=`${quiz.i+1} / ${quiz.qs.length} 문항 · 현재 점수 ${quiz.score}`;
-    $("quizReview").innerHTML=`<span class="badge ${q.sentiment==="positive"?"p":"n"}">${q.sentiment}</span>`+esc(maskTitle(q.review,q.correct));
-    const box=$("quizChoices"); box.innerHTML="";
-    q.choices.forEach(c=>{
-      const b=document.createElement("button");
-      b.className="secondary"; b.style.textAlign="left"; b.style.width="100%";
-      b.textContent=c.replace(/\s*\(\d{4}\)\s*$/,"");
-      b.addEventListener("click",()=>answerQuiz(c,b));
-      box.appendChild(b);
-    });
-    $("quizFeedback").textContent="";
-    $("quizNextBtn").style.display="none";
-  }
-  function answerQuiz(choice,btn){
-    if(quiz.answered) return;
-    quiz.answered=true;
-    const q=quiz.qs[quiz.i];
-    [...$("quizChoices").children].forEach(b=>{
-      b.disabled=true;
-      const bt=b.textContent;
-      if(bt===q.correct.replace(/\s*\(\d{4}\)\s*$/,"")) b.style.background="var(--pos)", b.style.color="#111";
-      else if(b===btn) b.style.background="var(--neg)", b.style.color="#111";
-    });
-    if(choice===q.correct){ quiz.score++; $("quizFeedback").innerHTML=`<b class="pos">정답!</b> — ${esc(q.correct)}`; }
-    else $("quizFeedback").innerHTML=`<b class="neg">오답</b> — 정답은 <b>${esc(q.correct)}</b>`;
-    $("quizProgress").textContent=`${quiz.i+1} / ${quiz.qs.length} 문항 · 현재 점수 ${quiz.score}`;
-    if(quiz.i<quiz.qs.length-1){
-      $("quizNextBtn").style.display="inline-block";
-    }else{
-      $("quizFeedback").innerHTML+=`<br><br><b>퀴즈 종료 · 최종 점수 ${quiz.score} / ${quiz.qs.length}</b>`;
-      $("quizScore").textContent=`최근 점수: ${quiz.score}/${quiz.qs.length}`;
-      $("quizRestartBtn").style.display="inline-block";
-    }
   }
 
   $("resetBtn").addEventListener("click",()=>{rows=[];corpusCache=null;hfResume.train.clear();hfResume.test.clear();$("totalKpi").textContent=$("posKpi").textContent=$("negKpi").textContent=$("vocabKpi").textContent="0";["posChart","negChart","diffChart","posCloud","negCloud","kwicList","reviewBody"].forEach(id=>$(id).innerHTML="");$("loadStatus").textContent="현재: 데이터 없음";$("progressWrap").style.display="none";});
@@ -832,9 +812,6 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
   $("kwicBtn").addEventListener("click",runKwic);
   $("filterSent").addEventListener("change",renderTable);
   $("tableSearch").addEventListener("input",renderTable);
-  $("quizStartBtn").addEventListener("click",startQuiz);
-  $("quizNextBtn").addEventListener("click",()=>{ quiz.i++; renderQuiz(); });
-  $("quizRestartBtn").addEventListener("click",startQuiz);
   $("fileInput").addEventListener("change",async e=>{
     const f=e.target.files[0]; if(!f) return;
     try{
