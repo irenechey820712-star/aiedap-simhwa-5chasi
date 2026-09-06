@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movie Review Corpus Lab</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --card:#20242d; --text:#f5f7fb; --muted:#aeb6c7;
+  --line:#303643; --pos:#7ee787; --neg:#ff7b72; --accent:#c7ff4a; --accent2:#7aa2ff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{padding:28px 24px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#11151b,#171b23)}
+header h1{margin:0;font-size:clamp(28px,5vw,48px);letter-spacing:-1.5px}
+header p{color:var(--muted);margin:8px 0 0;max-width:900px}
+.wrap{max-width:1200px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+.card h2,.card h3{margin-top:0}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button,.btn,select,input,textarea{font:inherit}
+button,.btn{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:#111;font-weight:800;cursor:pointer}
+button.secondary{background:#2a3040;color:var(--text);border:1px solid var(--line)}
+button.blue{background:var(--accent2);color:white}
+input[type=file]{max-width:100%}
+select,input[type=number],input[type=text],textarea{width:100%;background:#11151b;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:11px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px}
+.kpi b{display:block;font-size:24px}.kpi span{font-size:12px;color:var(--muted)}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.tab{background:#252b36;color:var(--muted)}
+.tab.active{background:var(--accent);color:#111}
+.panel{display:none}.panel.active{display:block}
+.chart{display:flex;flex-direction:column;gap:7px}
+.row{display:grid;grid-template-columns:120px 1fr 70px;gap:8px;align-items:center}
+.word{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
+.barbg{height:18px;background:#11151b;border-radius:999px;overflow:hidden}
+.bar{height:100%;border-radius:999px}
+.bar.posb{background:var(--pos)} .bar.negb{background:var(--neg)} .bar.diffb{background:var(--accent2)}
+.count{text-align:right;font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted)}
+.kwicItem{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.55}
+.kwicItem mark{background:#ffef92;color:#111;padding:1px 3px;border-radius:4px}
+.badge{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:800;margin-right:6px}
+.badge.p{background:rgba(126,231,135,.15);color:var(--pos)} .badge.n{background:rgba(255,123,114,.15);color:var(--neg)}
+.tablewrap{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:13px}
+th{position:sticky;top:0;background:#1d222b;z-index:2}
+.small{font-size:12px;color:var(--muted)}
+.callout{border-left:4px solid var(--accent);padding:10px 12px;background:#141922;border-radius:8px}
+.cloud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;min-height:210px;padding:14px;background:#11151b;border-radius:14px}
+.cloud span{line-height:1;cursor:pointer;transition:.15s}
+.cloud span:hover{transform:scale(1.08)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.split{grid-template-columns:1fr}}
+.footer{color:var(--muted);font-size:12px;padding:24px;text-align:center}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎬 Movie Review Corpus Lab</h1>
+  <p>영화 리뷰를 데이터로 읽는 클릭형 실습실 · 빈도 → 비교 → KWIC → 근거 검증 → 자기언어화</p>
+</header>
+
+<div class="wrap">
+  <section class="card">
+    <h2>1. DATA · 리뷰 데이터 불러오기</h2>
+    <div class="split" style="margin-bottom:10px">
+      <div>
+        <label>영화별 샘플 선택</label>
+        <select id="movieSelect">
+          <option value="all">전체 영화 샘플</option>
+          <option value="The Shawshank Redemption">The Shawshank Redemption</option>
+          <option value="Titanic">Titanic</option>
+          <option value="The Dark Knight">The Dark Knight</option>
+          <option value="La La Land">La La Land</option>
+          <option value="Parasite">Parasite</option>
+          <option value="Avatar">Avatar</option>
+        </select>
+      </div>
+      <div>
+        <label>샘플 구성</label>
+        <div class="callout" style="padding:9px 11px">각 영화당 <b>10개 리뷰</b> · 긍정 5 + 부정 5</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="sampleBtn">선택 영화 샘플 불러오기</button>
+      <button id="imdb50kBtn" class="blue">🌐 Stanford IMDb 50,000 불러오기</button>
+      <label class="btn secondary" for="fileInput">CSV/TXT 업로드</label>
+      <input id="fileInput" type="file" accept=".csv,.tsv,.txt" hidden>
+      <button id="resetBtn" class="secondary">초기화</button>
+    </div>
+    <p class="small">권장 열: <b>movie</b> + <b>review/text/document</b> + <b>label/sentiment/rating</b>. 샘플 문장은 수업용 예시입니다. <b>Stanford IMDb 50,000</b> 버튼은 인터넷 연결 시 Hugging Face의 Stanford IMDb Parquet 미러에서 train 25,000 + test 25,000을 직접 읽습니다.</p>
+    <div id="loadStatus" class="callout" style="margin-top:10px" aria-live="polite">현재: 수업용 샘플 데이터</div>
+    <div id="progressWrap" style="display:none;margin-top:10px">
+      <div class="barbg" style="height:12px"><div id="loadProgress" class="bar diffb" style="width:0%"></div></div>
+      <div id="progressText" class="small" style="margin-top:6px">준비 중...</div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b id="totalKpi">0</b><span>전체 리뷰</span></div>
+      <div class="kpi"><b id="posKpi" class="pos">0</b><span>Positive</span></div>
+      <div class="kpi"><b id="negKpi" class="neg">0</b><span>Negative</span></div>
+      <div class="kpi"><b id="vocabKpi">0</b><span>고유 단어</span></div>
+    </div>
+  </section>
+
+  <div class="grid" style="margin-top:16px">
+    <section class="card">
+      <h2>2. ANALYZE · 빈도 분석</h2>
+      <div class="split">
+        <div>
+          <label>Top N</label>
+          <input id="topN" type="number" min="5" max="50" value="20">
+        </div>
+        <div>
+          <label>최소 단어 길이</label>
+          <input id="minLen" type="number" min="1" max="10" value="3">
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <label>추가 불용어 (쉼표로 구분)</label>
+        <input id="customStop" type="text" placeholder="movie, film, really">
+      </div>
+      <div class="controls" style="margin-top:10px">
+        <button id="analyzeBtn" class="blue">분석 실행</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="freq">TOP WORDS</button>
+        <button class="tab" data-tab="diff">DIFFERENCE</button>
+        <button class="tab" data-tab="cloud">WORD CLOUD</button>
+      </div>
+
+      <div id="freq" class="panel active">
+        <div class="split">
+          <div>
+            <h3 class="pos">Positive</h3>
+            <div id="posChart" class="chart"></div>
+          </div>
+          <div>
+            <h3 class="neg">Negative</h3>
+            <div id="negChart" class="chart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="diff" class="panel">
+        <p class="small">단순 빈도가 아니라, 두 집단의 상대빈도 차이를 이용해 어느 쪽을 더 특징짓는지 봅니다.</p>
+        <div id="diffChart" class="chart"></div>
+      </div>
+
+      <div id="cloud" class="panel">
+        <div class="split">
+          <div>
+            <h3 class="pos">Positive Cloud</h3>
+            <div id="posCloud" class="cloud"></div>
+          </div>
+          <div>
+            <h3 class="neg">Negative Cloud</h3>
+            <div id="negCloud" class="cloud"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. VERIFY · KWIC 원문 검증</h2>
+      <label>검증할 단어</label>
+      <input id="keyword" type="text" placeholder="excellent / boring / story">
+      <div class="controls" style="margin-top:10px">
+        <button id="kwicBtn">KWIC 찾기</button>
+      </div>
+      <div id="kwicMeta" class="small" style="margin:10px 0"></div>
+      <div id="kwicList"></div>
+    </section>
+  </div>
+
+  <div class="grid" style="margin-top:16px">
+    <section class="card">
+      <h2>4. DATA TABLE · 실제 리뷰 확인</h2>
+      <div class="controls" style="margin-bottom:10px">
+        <select id="filterSent" style="max-width:210px">
+          <option value="all">전체</option>
+          <option value="positive">Positive만</option>
+          <option value="negative">Negative만</option>
+        </select>
+        <input id="tableSearch" type="text" placeholder="리뷰 안에서 검색" style="max-width:320px">
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>#</th><th>Movie</th><th>Sentiment</th><th>Review</th></tr></thead>
+          <tbody id="reviewBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5. INTERPRET · 학생 해석</h2>
+      <div class="callout">
+        <b>분석 원칙</b><br>
+        “많이 나온 단어”가 곧 “감정을 구별하는 단어”는 아닙니다. 반드시 KWIC로 실제 문맥을 확인하세요.
+      </div>
+      <hr>
+      <label>① 분석 전 예상</label>
+      <textarea id="hypothesis" rows="3" placeholder="I predict that positive reviews will use..."></textarea>
+      <label style="margin-top:10px">② 데이터에서 발견한 패턴</label>
+      <textarea id="pattern" rows="4" placeholder="The data suggest that..."></textarea>
+      <label style="margin-top:10px">③ KWIC 근거</label>
+      <textarea id="evidence" rows="4" placeholder="After checking the original reviews..."></textarea>
+      <label style="margin-top:10px">④ 최종 자기언어화</label>
+      <textarea id="finalInterp" rows="5" placeholder="Therefore, I would interpret..."></textarea>
+      <div class="controls" style="margin-top:10px">
+        <button id="exportBtn" class="blue">학습 기록 TXT 저장</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="footer">Movie Review Corpus Lab · Stanford Large Movie Review Dataset (Maas et al., 2011) · 분석 결과는 브라우저 내부에서 처리</div>
+
+<script>
+(() => {
+  const STOP = new Set(("a,an,the,and,or,but,if,then,than,to,of,in,on,for,with,at,by,from,up,about,into,over,after,before,is,am,are,was,were,be,been,being,have,has,had,do,does,did,can,could,will,would,should,may,might,must,i,you,he,she,it,we,they,me,him,her,us,them,my,your,his,its,our,their,this,that,these,those,as,not,no,so,too,very,just,there,here,what,which,who,whom,when,where,why,how,all,any,both,each,few,more,most,other,some,such,only,own,same,again,further,once").split(","));
+  let rows = [];
+  let corpusCache = null;
+  const HF_TRAIN = "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/main/plain_text/train-00000-of-00001.parquet";
+  const HF_TEST  = "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/main/plain_text/test-00000-of-00001.parquet";
+
+  const sample = [
+    ["The Shawshank Redemption","A deeply moving story about hope, friendship, and endurance. The performances are excellent.",1],
+    ["The Shawshank Redemption","The emotional payoff is powerful and the final scenes are unforgettable.",1],
+    ["The Shawshank Redemption","Beautifully written, patient, and inspiring without feeling sentimental.",1],
+    ["The Shawshank Redemption","Outstanding acting and a strong sense of humanity make this film memorable.",1],
+    ["The Shawshank Redemption","A thoughtful and rewarding movie with one of the most satisfying endings.",1],
+    ["The Shawshank Redemption","The pacing felt extremely slow and several scenes seemed unnecessarily long.",0],
+    ["The Shawshank Redemption","I understand why people admire it, but I found the story predictable and overpraised.",0],
+    ["The Shawshank Redemption","The film is competent, yet emotionally distant and too deliberate for my taste.",0],
+    ["The Shawshank Redemption","A long runtime and repetitive prison scenes made the experience tiring.",0],
+    ["The Shawshank Redemption","The message about hope is clear, but the movie feels too polished and manipulative.",0],
+
+    ["Titanic","A sweeping romance with spectacular visuals and an emotionally powerful ending.",1],
+    ["Titanic","The chemistry between the leads is charming and the disaster sequence is incredibly immersive.",1],
+    ["Titanic","Beautiful music, memorable characters, and a heartbreaking final act.",1],
+    ["Titanic","The film balances romance and spectacle remarkably well.",1],
+    ["Titanic","A grand, emotional movie that still feels visually impressive.",1],
+    ["Titanic","The romance feels clichéd and the dialogue is often overly dramatic.",0],
+    ["Titanic","The visual effects are strong, but the characters are too simple and predictable.",0],
+    ["Titanic","I found the first half slow and the love story unconvincing.",0],
+    ["Titanic","The movie relies too much on melodrama and obvious emotional manipulation.",0],
+    ["Titanic","Too long, too sentimental, and not subtle enough for me.",0],
+
+    ["The Dark Knight","A tense, intelligent superhero film with an unforgettable villain.",1],
+    ["The Dark Knight","The performances are excellent and the moral conflicts make the story unusually compelling.",1],
+    ["The Dark Knight","Dark, thrilling, and sharply written with impressive action sequences.",1],
+    ["The Dark Knight","The villain is terrifying and charismatic, creating constant tension.",1],
+    ["The Dark Knight","A sophisticated blockbuster that combines action with serious ethical questions.",1],
+    ["The Dark Knight","The story is overcrowded and some plot turns feel unnecessarily complicated.",0],
+    ["The Dark Knight","I found the tone exhausting and the constant seriousness became repetitive.",0],
+    ["The Dark Knight","The action is impressive, but the dialogue can feel heavy and unnatural.",0],
+    ["The Dark Knight","Several characters are underdeveloped because the movie tries to do too much.",0],
+    ["The Dark Knight","The film is stylish, but its moral debates are less profound than they appear.",0],
+
+    ["La La Land","A colorful, romantic musical with beautiful cinematography and memorable songs.",1],
+    ["La La Land","The chemistry is charming and the bittersweet ending is emotionally effective.",1],
+    ["La La Land","Visually elegant, playful, and full of energy.",1],
+    ["La La Land","The music is wonderful and the final montage is especially moving.",1],
+    ["La La Land","A stylish celebration of ambition, love, and artistic dreams.",1],
+    ["La La Land","The songs are pleasant, but the story feels thin and predictable.",0],
+    ["La La Land","I never fully believed the romance, and the characters felt emotionally distant.",0],
+    ["La La Land","The movie is beautiful to look at but surprisingly shallow.",0],
+    ["La La Land","The musical numbers interrupt the story instead of deepening it.",0],
+    ["La La Land","The ending is clever, yet the overall film feels overhyped and self-conscious.",0],
+
+    ["Parasite","A brilliant blend of dark comedy, suspense, and social commentary.",1],
+    ["Parasite","The shift in tone is masterful and the performances are uniformly excellent.",1],
+    ["Parasite","Smart, unpredictable, and visually precise from beginning to end.",1],
+    ["Parasite","The film turns class conflict into a gripping and disturbing story.",1],
+    ["Parasite","Inventive storytelling and sharp symbolism make it unforgettable.",1],
+    ["Parasite","The second half becomes too violent and loses the subtlety of the opening.",0],
+    ["Parasite","The symbolism felt obvious and the class message was too heavily emphasized.",0],
+    ["Parasite","I admired the craft, but I did not connect emotionally with the characters.",0],
+    ["Parasite","The tonal changes were interesting but sometimes felt abrupt and distracting.",0],
+    ["Parasite","The ending is memorable, though the film's message felt less nuanced than expected.",0],
+
+    ["Avatar","A visually stunning science-fiction adventure with an immersive world.",1],
+    ["Avatar","The landscapes are breathtaking and the action is exciting throughout.",1],
+    ["Avatar","A technically impressive film with beautiful production design and strong spectacle.",1],
+    ["Avatar","The world-building is imaginative and the visual effects remain remarkable.",1],
+    ["Avatar","An entertaining blockbuster that creates a vivid and memorable environment.",1],
+    ["Avatar","The visuals are amazing, but the story is extremely familiar and predictable.",0],
+    ["Avatar","The characters are flat and the dialogue is often simplistic.",0],
+    ["Avatar","A beautiful technical achievement with a surprisingly weak screenplay.",0],
+    ["Avatar","The movie feels too long and relies heavily on spectacle instead of character depth.",0],
+    ["Avatar","Impressive effects cannot hide the clichéd plot and obvious message.",0]
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  function normalizeSentiment(v){
+    const s = String(v).trim().toLowerCase();
+    if(["1","pos","positive","p","true"].includes(s)) return "positive";
+    if(["0","neg","negative","n","false"].includes(s)) return "negative";
+    const n = Number(s);
+    if(Number.isFinite(n)){
+      if(n >= 7) return "positive";
+      if(n <= 4) return "negative";
+    }
+    return null;
+  }
+
+  function loadSample(){
+    const selected = $("movieSelect").value;
+    const chosen = selected === "all" ? sample : sample.filter(x => x[0] === selected);
+    rows = chosen.map((x,i)=>({
+      id:i+1,
+      movie:x[0],
+      review:x[1],
+      sentiment:x[2]===1?"positive":"negative"
+    }));
+    corpusCache = null;
+    $("loadStatus").textContent = selected === "all" ? "현재: 영화별 수업용 샘플 전체" : "현재: " + selected + " 수업용 샘플";
+    refresh();
+  }
+
+
+  function setProgress(pct, text){
+    $("progressWrap").style.display = "block";
+    $("loadProgress").style.width = Math.max(0,Math.min(100,pct)) + "%";
+    $("progressText").textContent = text;
+  }
+
+  async function loadStanford50k(){
+    const btn = $("imdb50kBtn");
+    btn.disabled = true;
+    btn.textContent = "불러오는 중...";
+    $("loadStatus").textContent = "Stanford IMDb 50,000개 리뷰를 불러오는 중입니다. 분석은 브라우저 안에서 수행됩니다.";
+    setProgress(5, "Parquet 리더 준비 중...");
+
+    try{
+      const mod = await import("https://cdn.jsdelivr.net/npm/hyparquet/src/hyparquet.min.js");
+      const { asyncBufferFromUrl, parquetReadObjects } = mod;
+
+      setProgress(15, "Train 25,000 다운로드/해석 중...");
+      const trainFile = await asyncBufferFromUrl({url: HF_TRAIN});
+      const train = await parquetReadObjects({
+        file: trainFile,
+        columns: ["text","label"]
+      });
+
+      setProgress(52, "Test 25,000 다운로드/해석 중...");
+      const testFile = await asyncBufferFromUrl({url: HF_TEST});
+      const test = await parquetReadObjects({
+        file: testFile,
+        columns: ["text","label"]
+      });
+
+      setProgress(82, "50,000개 리뷰를 앱 데이터로 변환 중...");
+      const combined = train.concat(test);
+      rows = combined.map((r,i)=>({
+        id:i+1,
+        movie:"Stanford IMDb",
+        review:String(r.text ?? ""),
+        sentiment:Number(r.label) === 1 ? "positive" : "negative"
+      })).filter(r=>r.review);
+
+      corpusCache = null;
+      setProgress(92, "빈도 분석 준비 중...");
+      refresh();
+
+      const pos = rows.filter(r=>r.sentiment==="positive").length;
+      const neg = rows.filter(r=>r.sentiment==="negative").length;
+      setProgress(100, `완료 · ${rows.length.toLocaleString()}개 (Positive ${pos.toLocaleString()} / Negative ${neg.toLocaleString()})`);
+      $("loadStatus").innerHTML = `<b>Stanford IMDb labeled corpus 로드 완료</b> · Train 25,000 + Test 25,000 = ${rows.length.toLocaleString()} reviews`;
+    }catch(err){
+      console.error(err);
+      $("loadStatus").innerHTML = "<b>불러오기 실패</b> · 네트워크/CORS 또는 외부 CDN 차단 여부를 확인하세요. 수업용 샘플과 CSV 업로드 기능은 계속 사용할 수 있습니다.";
+      setProgress(0, "오류: " + (err?.message || String(err)));
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "🌐 Stanford IMDb 50,000 불러오기";
+    }
+  }
+
+  function detectDelimiter(text){
+    const first = text.split(/\r?\n/)[0] || "";
+    const tabs = (first.match(/\t/g)||[]).length;
+    const commas = (first.match(/,/g)||[]).length;
+    return tabs > commas ? "\t" : ",";
+  }
+
+  function parseDelimited(text){
+    const delim = detectDelimiter(text);
+    const lines = text.replace(/\r/g,"").split("\n").filter(x=>x.trim());
+    if(!lines.length) return [];
+    function parseLine(line){
+      const out=[]; let cur="", q=false;
+      for(let i=0;i<line.length;i++){
+        const c=line[i];
+        if(c === '"'){
+          if(q && line[i+1] === '"'){cur+='"'; i++;}
+          else q=!q;
+        }else if(c===delim && !q){out.push(cur);cur="";}
+        else cur+=c;
+      }
+      out.push(cur); return out;
+    }
+    const header = parseLine(lines[0]).map(x=>x.trim().toLowerCase());
+    const movieIdx = header.findIndex(x=>["movie","title","film"].includes(x));
+    const reviewIdx = header.findIndex(x=>["review","text","document","content","comment"].includes(x));
+    const labelIdx = header.findIndex(x=>["label","sentiment","rating","score"].includes(x));
+    if(reviewIdx < 0 || labelIdx < 0) throw new Error("review/text/document 열과 label/sentiment/rating 열을 찾지 못했습니다.");
+    const out=[];
+    for(let i=1;i<lines.length;i++){
+      const vals=parseLine(lines[i]);
+      const review=(vals[reviewIdx]||"").trim();
+      const sentiment=normalizeSentiment(vals[labelIdx]);
+      const movie=movieIdx >= 0 ? (vals[movieIdx]||"Uploaded Movie").trim() : "Uploaded Movie";
+      if(review && sentiment) out.push({id:out.length+1,movie,review,sentiment});
+    }
+    return out;
+  }
+
+  function tokenize(text){
+    return (text.toLowerCase().match(/[a-z][a-z'-]*/g)||[]).map(w=>w.replace(/^'+|'+$/g,""));
+  }
+
+  function getStop(){
+    const s=new Set(STOP);
+    $("customStop").value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean).forEach(x=>s.add(x));
+    return s;
+  }
+
+  function freqFor(sent){
+    const minLen=Math.max(1,Number($("minLen").value)||3);
+    const stop=getStop();
+    const cacheKey = minLen + "|" + [...stop].sort().join(",");
+    if(!corpusCache || corpusCache.key !== cacheKey){
+      const posMap=new Map(), negMap=new Map();
+      let posTotal=0, negTotal=0;
+      rows.forEach(r=>{
+        const target = r.sentiment==="positive" ? posMap : negMap;
+        tokenize(r.review).forEach(w=>{
+          if(w.length>=minLen && !stop.has(w)){
+            target.set(w,(target.get(w)||0)+1);
+            if(r.sentiment==="positive") posTotal++; else negTotal++;
+          }
+        });
+      });
+      corpusCache={key:cacheKey,pos:{map:posMap,total:posTotal},neg:{map:negMap,total:negTotal}};
+    }
+    return sent==="positive" ? corpusCache.pos : corpusCache.neg;
+  }
+
+  function sortMap(map,n){
+    return [...map.entries()].sort((a,b)=>b[1]-a[1]).slice(0,n);
+  }
+
+  function renderChart(el, items, type){
+    el.innerHTML="";
+    const max=Math.max(1,...items.map(x=>Math.abs(x[1])));
+    items.forEach(([w,c])=>{
+      const row=document.createElement("div"); row.className="row";
+      const word=document.createElement("div"); word.className="word"; word.textContent=w; word.title=w;
+      const bg=document.createElement("div"); bg.className="barbg";
+      const bar=document.createElement("div"); bar.className="bar "+type; bar.style.width=(Math.abs(c)/max*100)+"%";
+      bg.appendChild(bar);
+      const count=document.createElement("div"); count.className="count"; count.textContent=Number.isInteger(c)?c:c.toFixed(3);
+      row.append(word,bg,count); el.appendChild(row);
+      row.addEventListener("click",()=>{$("keyword").value=w; runKwic();});
+    });
+  }
+
+  function renderCloud(el, items, kind){
+    el.innerHTML="";
+    const max=Math.max(1,...items.map(x=>x[1]));
+    const min=Math.min(...items.map(x=>x[1]),1);
+    items.forEach(([w,c])=>{
+      const s=document.createElement("span");
+      const scale=(c-min)/(max-min||1);
+      s.style.fontSize=(14+scale*28)+"px";
+      s.style.color=kind==="positive"?"var(--pos)":"var(--neg)";
+      s.textContent=w; s.title=`${w}: ${c}`;
+      s.addEventListener("click",()=>{$("keyword").value=w;runKwic();});
+      el.appendChild(s);
+    });
+  }
+
+  function analyze(){
+    if(!rows.length){alert("먼저 샘플 또는 파일을 불러오세요.");return;}
+    const topN=Math.min(50,Math.max(5,Number($("topN").value)||20));
+    const p=freqFor("positive"), n=freqFor("negative");
+    const pi=sortMap(p.map,topN), ni=sortMap(n.map,topN);
+    renderChart($("posChart"),pi,"posb");
+    renderChart($("negChart"),ni,"negb");
+    renderCloud($("posCloud"),pi,"positive");
+    renderCloud($("negCloud"),ni,"negative");
+
+    const vocab=new Set([...p.map.keys(),...n.map.keys()]);
+    const diffs=[];
+    vocab.forEach(w=>{
+      const pr=(p.map.get(w)||0)/(p.total||1);
+      const nr=(n.map.get(w)||0)/(n.total||1);
+      const d=pr-nr;
+      if(Math.abs(d)>0) diffs.push([w,d]);
+    });
+    diffs.sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+    const top=diffs.slice(0,topN).map(([w,d])=>[`${d>0?"＋ POS":"− NEG"} · ${w}`,Math.abs(d)]);
+    renderChart($("diffChart"),top,"diffb");
+    $("vocabKpi").textContent=vocab.size.toLocaleString();
+  }
+
+  function runKwic(){
+    const kw=$("keyword").value.trim();
+    const box=$("kwicList"); box.innerHTML="";
+    if(!kw){$("kwicMeta").textContent="검증할 단어를 입력하세요.";return;}
+    const re=new RegExp(`\\b(${kw.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})\\b`,"ig");
+    const matches=rows.filter(r=>re.test(r.review)).slice(0,30);
+    $("kwicMeta").textContent=`"${kw}" 포함 리뷰 ${matches.length}개 표시`;
+    matches.forEach(r=>{
+      const div=document.createElement("div"); div.className="kwicItem";
+      const badge=`<span class="badge ${r.sentiment==="positive"?"p":"n"}">${r.sentiment}</span>`;
+      const movie=`<span class="small"><b>${(r.movie||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</b></span><br>`;
+      const safe=r.review.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])).replace(re,"<mark>$1</mark>");
+      div.innerHTML=movie+badge+safe; box.appendChild(div);
+    });
+    if(!matches.length) box.innerHTML='<div class="small">해당 단어가 포함된 리뷰가 없습니다.</div>';
+  }
+
+  function renderTable(){
+    const sent=$("filterSent").value;
+    const q=$("tableSearch").value.trim().toLowerCase();
+    const list=rows.filter(r=>(sent==="all"||r.sentiment===sent)&&(!q||r.review.toLowerCase().includes(q))).slice(0,500);
+    $("reviewBody").innerHTML=list.map((r,i)=>`<tr><td>${i+1}</td><td>${(r.movie||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</td><td><span class="badge ${r.sentiment==="positive"?"p":"n"}">${r.sentiment}</span></td><td>${r.review.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))}</td></tr>`).join("");
+  }
+
+  function refresh(){
+    $("totalKpi").textContent=rows.length.toLocaleString();
+    $("posKpi").textContent=rows.filter(r=>r.sentiment==="positive").length.toLocaleString();
+    $("negKpi").textContent=rows.filter(r=>r.sentiment==="negative").length.toLocaleString();
+    renderTable(); analyze();
+  }
+
+  $("sampleBtn").addEventListener("click",loadSample);
+  $("resetBtn").addEventListener("click",()=>{rows=[];corpusCache=null;$("totalKpi").textContent=$("posKpi").textContent=$("negKpi").textContent=$("vocabKpi").textContent="0";["posChart","negChart","diffChart","posCloud","negCloud","kwicList","reviewBody"].forEach(id=>$(id).innerHTML="");$("loadStatus").textContent="현재: 데이터 없음";$("progressWrap").style.display="none";});
+  $("analyzeBtn").addEventListener("click",()=>{ corpusCache=null; analyze(); });
+  $("imdb50kBtn").addEventListener("click",loadStanford50k);
+  $("kwicBtn").addEventListener("click",runKwic);
+  $("filterSent").addEventListener("change",renderTable);
+  $("tableSearch").addEventListener("input",renderTable);
+  $("fileInput").addEventListener("change",async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    try{
+      const text=await f.text();
+      rows=parseDelimited(text);
+      if(!rows.length) throw new Error("읽을 수 있는 Positive/Negative 리뷰가 없습니다.");
+      corpusCache = null;
+      $("loadStatus").textContent = "현재: 업로드한 파일 · " + rows.length.toLocaleString() + "개 리뷰";
+      refresh();
+    }catch(err){alert(err.message);}
+  });
+
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+      btn.classList.add("active"); $(btn.dataset.tab).classList.add("active");
+    });
+  });
+
+  $("exportBtn").addEventListener("click",()=>{
+    const txt=[
+      "MOVIE REVIEW CORPUS LAB · LEARNING LOG",
+      "",
+      "[1] Hypothesis",
+      $("hypothesis").value,
+      "",
+      "[2] Pattern from Data",
+      $("pattern").value,
+      "",
+      "[3] KWIC Evidence",
+      $("evidence").value,
+      "",
+      "[4] Final Interpretation",
+      $("finalInterp").value
+    ].join("\n");
+    const blob=new Blob([txt],{type:"text/plain;charset=utf-8"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="movie_review_corpus_lab_log.txt";
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  });
+
+  loadSample();
+})();
+</script>
+</body>
+</html>
