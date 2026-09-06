@@ -96,7 +96,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       <input id="fileInput" type="file" accept=".csv,.tsv,.txt" hidden>
       <button id="resetBtn" class="secondary">초기화</button>
     </div>
-    <p class="small">권장 열: <b>movie</b> + <b>review/text/document</b> + <b>label/sentiment/rating</b>. 샘플 문장은 수업용 예시입니다. <b>Stanford IMDb 50,000</b> 버튼은 인터넷 연결 시 Hugging Face의 Stanford IMDb Parquet 미러에서 train 25,000 + test 25,000을 직접 읽습니다.</p>
+    <p class="small">권장 열: <b>movie</b> + <b>review/text/document</b> + <b>label/sentiment/rating</b>. 샘플 문장은 수업용 예시입니다. <b>Stanford IMDb 50,000</b> 버튼은 인터넷 연결 시 Hugging Face Dataset Viewer API에서 train 25,000 + test 25,000을 JSON으로 직접 읽습니다. 외부 Parquet/CDN 라이브러리는 사용하지 않습니다.</p>
     <div id="loadStatus" class="callout" style="margin-top:10px" aria-live="polite">현재: 수업용 샘플 데이터</div>
     <div id="progressWrap" style="display:none;margin-top:10px">
       <div class="barbg" style="height:12px"><div id="loadProgress" class="bar diffb" style="width:0%"></div></div>
@@ -229,8 +229,9 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
   const STOP = new Set(("a,an,the,and,or,but,if,then,than,to,of,in,on,for,with,at,by,from,up,about,into,over,after,before,is,am,are,was,were,be,been,being,have,has,had,do,does,did,can,could,will,would,should,may,might,must,i,you,he,she,it,we,they,me,him,her,us,them,my,your,his,its,our,their,this,that,these,those,as,not,no,so,too,very,just,there,here,what,which,who,whom,when,where,why,how,all,any,both,each,few,more,most,other,some,such,only,own,same,again,further,once").split(","));
   let rows = [];
   let corpusCache = null;
-  const HF_TRAIN = "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/main/plain_text/train-00000-of-00001.parquet";
-  const HF_TEST  = "https://huggingface.co/datasets/stanfordnlp/imdb/resolve/main/plain_text/test-00000-of-00001.parquet";
+  const HF_ROWS_API = "https://datasets-server.huggingface.co/rows";
+  const HF_DATASET = "stanfordnlp/imdb";
+  const HF_CONFIG = "plain_text";
 
   const sample = [
     ["The Shawshank Redemption","A deeply moving story about hope, friendship, and endurance. The performances are excellent.",1],
@@ -335,52 +336,99 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     $("progressText").textContent = text;
   }
 
+  async function fetchRowsSlice(split, offset, length=100, attempt=1){
+    const url = `${HF_ROWS_API}?dataset=${encodeURIComponent(HF_DATASET)}&config=${encodeURIComponent(HF_CONFIG)}&split=${encodeURIComponent(split)}&offset=${offset}&length=${length}`;
+    try{
+      const res = await fetch(url, {cache:"no-store"});
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if(!Array.isArray(json.rows)) throw new Error("rows 응답 형식 오류");
+      return json.rows.map(x => x.row);
+    }catch(err){
+      if(attempt < 3){
+        await new Promise(r=>setTimeout(r, 700 * attempt));
+        return fetchRowsSlice(split, offset, length, attempt+1);
+      }
+      throw new Error(`${split} offset ${offset}: ${err.message}`);
+    }
+  }
+
+  async function fetchSplit25k(split, progressStart, progressEnd){
+    const offsets = [];
+    for(let offset=0; offset<25000; offset+=100) offsets.push(offset);
+
+    const out = new Array(25000);
+    let completed = 0;
+    const concurrency = 12;
+    let cursor = 0;
+
+    async function worker(){
+      while(true){
+        const idx = cursor++;
+        if(idx >= offsets.length) return;
+        const offset = offsets[idx];
+        const slice = await fetchRowsSlice(split, offset, 100);
+        for(let j=0;j<slice.length;j++){
+          out[offset+j] = slice[j];
+        }
+        completed++;
+        const ratio = completed / offsets.length;
+        const pct = progressStart + (progressEnd-progressStart)*ratio;
+        setProgress(pct, `${split} ${Math.min(25000, completed*100).toLocaleString()} / 25,000 불러오는 중...`);
+      }
+    }
+
+    await Promise.all(Array.from({length:concurrency}, ()=>worker()));
+    return out.filter(Boolean);
+  }
+
+  async function testHuggingFaceConnection(){
+    const url = `${HF_ROWS_API}?dataset=${encodeURIComponent(HF_DATASET)}&config=${encodeURIComponent(HF_CONFIG)}&split=train&offset=0&length=1`;
+    const res = await fetch(url, {cache:"no-store"});
+    if(!res.ok) throw new Error(`Dataset API HTTP ${res.status}`);
+    const j = await res.json();
+    if(!j.rows || !j.rows.length) throw new Error("Dataset API 응답 없음");
+    return true;
+  }
+
   async function loadStanford50k(){
     const btn = $("imdb50kBtn");
     btn.disabled = true;
     btn.textContent = "불러오는 중...";
-    $("loadStatus").textContent = "Stanford IMDb 50,000개 리뷰를 불러오는 중입니다. 분석은 브라우저 안에서 수행됩니다.";
-    setProgress(5, "Parquet 리더 준비 중...");
+    $("loadStatus").textContent = "Hugging Face Dataset Viewer API 연결을 확인하고 있습니다.";
+    setProgress(2, "연결 테스트 중...");
 
     try{
-      const mod = await import("https://cdn.jsdelivr.net/npm/hyparquet/src/hyparquet.min.js");
-      const { asyncBufferFromUrl, parquetReadObjects } = mod;
+      await testHuggingFaceConnection();
+      setProgress(5, "연결 성공 · Train 25,000 준비 중...");
 
-      setProgress(15, "Train 25,000 다운로드/해석 중...");
-      const trainFile = await asyncBufferFromUrl({url: HF_TRAIN});
-      const train = await parquetReadObjects({
-        file: trainFile,
-        columns: ["text","label"]
-      });
+      const train = await fetchSplit25k("train", 5, 48);
 
-      setProgress(52, "Test 25,000 다운로드/해석 중...");
-      const testFile = await asyncBufferFromUrl({url: HF_TEST});
-      const test = await parquetReadObjects({
-        file: testFile,
-        columns: ["text","label"]
-      });
+      setProgress(50, "Train 완료 · Test 25,000 준비 중...");
+      const test = await fetchSplit25k("test", 50, 93);
 
-      setProgress(82, "50,000개 리뷰를 앱 데이터로 변환 중...");
+      setProgress(94, "50,000개 리뷰를 앱 데이터로 변환 중...");
       const combined = train.concat(test);
+
       rows = combined.map((r,i)=>({
         id:i+1,
         movie:"Stanford IMDb",
         review:String(r.text ?? ""),
         sentiment:Number(r.label) === 1 ? "positive" : "negative"
-      })).filter(r=>r.review);
+      })).filter(r=>r.review && (r.sentiment==="positive" || r.sentiment==="negative"));
 
       corpusCache = null;
-      setProgress(92, "빈도 분석 준비 중...");
+      setProgress(96, "빈도 분석 중...");
       refresh();
 
       const pos = rows.filter(r=>r.sentiment==="positive").length;
       const neg = rows.filter(r=>r.sentiment==="negative").length;
       setProgress(100, `완료 · ${rows.length.toLocaleString()}개 (Positive ${pos.toLocaleString()} / Negative ${neg.toLocaleString()})`);
-      $("loadStatus").innerHTML = `<b>Stanford IMDb labeled corpus 로드 완료</b> · Train 25,000 + Test 25,000 = ${rows.length.toLocaleString()} reviews`;
+      $("loadStatus").innerHTML = `<b>Stanford IMDb 로드 완료</b> · ${rows.length.toLocaleString()} reviews · Positive ${pos.toLocaleString()} / Negative ${neg.toLocaleString()}`;
     }catch(err){
       console.error(err);
-      $("loadStatus").innerHTML = "<b>불러오기 실패</b> · 네트워크/CORS 또는 외부 CDN 차단 여부를 확인하세요. 수업용 샘플과 CSV 업로드 기능은 계속 사용할 수 있습니다.";
-      setProgress(0, "오류: " + (err?.message || String(err)));
+      $("loadStatus").innerHTML = `<b>불러오기 실패</b> · ${String(err.message || err)}<br><span class="small">이 버전은 외부 Parquet/CDN을 사용하지 않고 Hugging Face Dataset Viewer API만 호출합니다. 이 오류가 계속되면 현재 네트워크가 datasets-server.huggingface.co 자체를 차단하는 것입니다.</span>`;
+      setProgress(0, "연결 실패");
     }finally{
       btn.disabled = false;
       btn.textContent = "🌐 Stanford IMDb 50,000 불러오기";
