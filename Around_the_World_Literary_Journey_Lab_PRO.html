@@ -174,6 +174,71 @@ button.ghost{border:1px solid var(--line);background:white;color:var(--navy);bor
 .source-note.context{color:#8a5d20;background:#fff7e3;border-radius:7px;padding:5px 6px}
 #stopReadingPanel.prompt-card{padding:0;border-left:0;background:transparent}
 
+/* Historical Context Lab */
+.history-lab{padding:18px;background:linear-gradient(180deg,#F7FAFB,#FFF8E7);min-height:calc(100vh - 140px)}
+.history-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:14px}
+.history-head h2{margin:4px 0 7px}.history-intro{max-width:980px;color:var(--muted);font-size:12px;line-height:1.65}
+.history-timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.history-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:0 4px 14px rgba(13,43,69,.05);position:relative;overflow:hidden}
+.history-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold)}
+.history-card.transport::before{background:var(--coral)}.history-card.network::before{background:var(--aqua)}.history-card.time::before{background:#7E6CCB}.history-card.empire::before{background:#B46A3C}
+.history-year{font-family:Georgia,serif;font-size:27px;font-weight:800;color:var(--navy)}
+.history-event{font-weight:900;font-size:15px;margin:3px 0 6px}.history-desc{font-size:11px;line-height:1.62;color:var(--muted)}
+.history-link{margin-top:9px;background:#F4F8FA;border-radius:9px;padding:8px 9px;font-size:11px;line-height:1.5}.history-link b{color:var(--navy)}
+.history-q{margin-top:9px;border-top:1px dashed var(--line);padding-top:9px;font-size:11px;font-weight:800;line-height:1.5}
+.history-card textarea{min-height:76px;margin-top:7px;font-size:11px}.history-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.history-actions button{border:1px solid var(--line);background:white;color:var(--navy);border-radius:8px;padding:6px 8px;font-size:10px;font-weight:800;cursor:pointer}.history-actions button.answer{background:var(--navy);color:white;border-color:var(--navy)}
+.history-answer{display:none;margin-top:7px;background:#102A43;color:#F7F3E5;border-radius:9px;padding:9px;font-size:11px;line-height:1.55}.history-answer.open{display:block}.history-answer b{color:#FFF0A8}
+.history-synthesis{margin-top:14px;background:white;border:1px solid var(--line);border-radius:15px;padding:14px}.history-synthesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.history-synthesis textarea{min-height:120px}
+.source-strip{margin-top:14px;padding:10px 12px;border:1px solid #EADCB5;background:var(--paper);border-radius:11px;font-size:10px;line-height:1.55;color:var(--muted)}.source-strip a{color:var(--navy);font-weight:800}
+@media(max-width:1050px){.history-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.history-timeline,.history-synthesis-grid{grid-template-columns:1fr}}
+
+
+
+/* Behind the Journey Lab */
+.behind-lab{padding:18px;background:linear-gradient(180deg,#F7FAFB,#F5F1E6);min-height:calc(100vh - 140px)}
+.behind-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:14px}
+.behind-head h2{margin:4px 0 7px}.behind-intro{max-width:1000px;color:var(--muted);font-size:12px;line-height:1.68}
+.behind-callout{background:#102A43;color:#F7F3E5;border-radius:14px;padding:13px 15px;margin:10px 0 14px;line-height:1.6;font-size:12px}.behind-callout b{color:#FFF0A8}
+.behind-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.behind-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:0 4px 14px rgba(13,43,69,.05);position:relative;overflow:hidden}
+.behind-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:#B46A3C}
+.behind-card.trade::before{background:var(--gold)}.behind-card.military::before{background:var(--coral)}.behind-card.admin::before{background:var(--aqua)}.behind-card.labour::before{background:#7E6CCB}.behind-card.voice::before{background:#517A52}
+.behind-tag{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#8A5D20}.behind-title{font-family:Georgia,serif;font-size:20px;font-weight:800;color:var(--navy);margin:3px 0 7px}
+.behind-desc{font-size:11px;line-height:1.65;color:var(--muted)}.behind-evidence{margin-top:9px;background:#FFF8E7;border:1px solid #EADCB5;border-radius:9px;padding:9px;font-size:11px;line-height:1.55}.behind-evidence b{color:var(--navy)}
+.behind-question{margin-top:9px;border-top:1px dashed var(--line);padding-top:9px;font-size:11px;font-weight:800;line-height:1.55}.behind-card textarea{min-height:78px;margin-top:7px;font-size:11px}
+.behind-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.behind-actions button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:8px;padding:6px 8px;font-size:10px;font-weight:800;cursor:pointer}.behind-actions button.answer{background:var(--navy);color:#fff;border-color:var(--navy)}
+.behind-answer{display:none;margin-top:7px;background:#102A43;color:#F7F3E5;border-radius:9px;padding:9px;font-size:11px;line-height:1.58}.behind-answer.open{display:block}.behind-answer b{color:#FFF0A8}
+.behind-synthesis{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px}.behind-synthesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.behind-synthesis textarea{min-height:130px}
+.behind-source{margin-top:14px;padding:10px 12px;border:1px solid #EADCB5;background:var(--paper);border-radius:11px;font-size:10px;line-height:1.6;color:var(--muted)}.behind-source a{color:var(--navy);font-weight:800}
+.match-intro{margin-top:6px;background:#F4F8FA;border:1px solid var(--line);border-radius:10px;padding:10px 11px;font-size:11px;line-height:1.55;color:var(--muted)}
+.match-board{display:grid;grid-template-columns:minmax(0,1fr) 1.15fr minmax(0,1fr);gap:12px;margin-top:12px;align-items:start}
+.match-col{background:#FBFCFD;border:1px solid var(--line);border-radius:14px;padding:12px}
+.match-heading{font-size:11px;font-weight:900;color:var(--navy);letter-spacing:.03em;margin-bottom:8px}
+.icon-bank{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.icon-card{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);border-radius:12px;background:white;cursor:pointer;transition:.16s;min-height:62px}
+.icon-card:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(13,43,69,.06)}
+.icon-card.selected{border-color:var(--aqua);box-shadow:0 0 0 2px rgba(42,183,180,.14);background:#F2FCFB}
+.icon-card .emoji{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:#FFF8E7;border:1px solid #F0E1B8;flex:0 0 auto}
+.icon-card .icon-copy b{display:block;font-size:13px;color:var(--navy)}
+.icon-card .icon-copy span{display:block;font-size:10px;color:var(--muted);line-height:1.35;margin-top:2px}
+.match-center{background:linear-gradient(180deg,#fff,#F8FBFB);border:1px solid var(--line);border-radius:14px;padding:12px}
+.match-status{font-size:11px;line-height:1.5;background:#102A43;color:#F6F1E3;border-radius:10px;padding:9px 10px}.match-status b{color:#FFF0A8}
+.match-list{margin-top:10px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.match-empty{padding:16px 12px;border:1px dashed var(--line);border-radius:12px;background:#FCFDFC;color:var(--muted);font-size:11px;line-height:1.55;text-align:center}
+.match-link{border:1px solid var(--line);border-radius:12px;padding:10px;background:white}
+.match-link-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.match-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:800}.match-pill.visible{background:#EDF8F7;color:#126462}.match-pill.invisible{background:#FFF2F0;color:#A04034}
+.match-arrow{font-size:14px;color:var(--gold);font-weight:900}
+.match-link input{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font-size:11px;margin:5px 0 7px}
+.match-mini-actions{display:flex;justify-content:flex-end}.match-mini-actions button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:8px;padding:5px 8px;font-size:10px;font-weight:800;cursor:pointer}
+.match-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.match-actions button{border:1px solid var(--line);background:white;color:var(--navy);border-radius:9px;padding:7px 9px;font-size:11px;font-weight:800;cursor:pointer}
+.match-reflection-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.match-reflection-grid textarea{min-height:125px}
+@media(max-width:1100px){.match-board{grid-template-columns:1fr}.match-center{order:3}.match-reflection-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.behind-grid,.behind-synthesis-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -194,6 +259,8 @@ button.ghost{border:1px solid var(--line);background:white;color:var(--navy);bor
 <div class="tabs-top">
   <button id="tabJourney" class="active" onclick="switchMainView('journey')">🗺 Journey Dashboard</button>
   <button id="tabFeas" onclick="switchMainView('feas')">⚙️ Could Fogg Really Do It?</button>
+  <button id="tabHistory" onclick="switchMainView('history')">🏛 Historical Context · 1870s World</button>
+  <button id="tabBehind" onclick="switchMainView('behind')">🕸 Behind the Journey · 보이지 않는 연결망</button>
 </div>
 
 <div id="journeyView" class="view active">
@@ -563,9 +630,245 @@ One limitation of my judgment is..."></textarea>
 </div>
 
 
+<div id="historyView" class="view">
+<section class="history-lab">
+  <div class="history-head">
+    <div><div class="label">Historical Context · 1860s–1880s</div><h2>Fogg가 여행한 세계는 어떻게 막 연결되고 있었을까?</h2>
+    <div class="history-intro">『80일간의 세계 일주』가 출간된 1872년은 세계가 갑자기 작아진 시기였습니다. 학생은 아래 역사적 사건을 단순 암기하지 않고 <b>“이 사건이 Fogg의 경로·시간표·위험을 어떻게 바꾸었는가?”</b>라는 질문으로 작품과 연결합니다. 먼저 자신의 추론을 쓰고, 예시 답안을 확인한 뒤 여정 지도나 원문으로 되돌아가 근거를 보완하세요.</div></div>
+    <div class="badge" style="background:var(--navy);color:white;border:0">HISTORY → ROUTE → EVIDENCE</div>
+  </div>
+  <div class="history-timeline">
+
+    <article class="history-card transport"><div class="history-year">1869</div><div class="history-event">수에즈 운하 개통 · Suez Canal</div>
+      <div class="history-desc">1869년 11월 17일 수에즈 운하가 공식 개통되면서 지중해와 홍해가 직접 연결되었습니다. 유럽에서 인도·동아시아로 가는 선박은 아프리카 남단을 크게 우회하지 않고 수에즈를 통과할 수 있게 되었습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> London → Brindisi → Suez → Bombay 구간이 단순한 모험적 항해가 아니라 정기 증기선 네트워크의 일부가 됩니다. Fogg의 80일 계산이 가능해지는 핵심 인프라 중 하나입니다.</div>
+      <div class="history-q">생각하기 · 수에즈 운하가 1872년에 아직 없었다면 Fogg의 80일 계획은 얼마나 달라졌을까?</div><textarea id="histThink1" placeholder="경로·거리·환승 관점에서 먼저 추론해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(1,this)">답안 보기</button><button onclick="saveHistThink(1)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer1"><b>예시 답안</b><br>수에즈 운하가 없다면 유럽–인도 항로는 희망봉 쪽 장거리 우회에 훨씬 더 의존했을 것이다. 따라서 Fogg가 사용하는 유럽–인도 구간의 시간 압축이 크게 약해져 80일 일정 자체가 훨씬 비현실적이 된다. 즉 운하는 배경이 아니라 세계를 ‘시간표로 계산 가능한 공간’으로 바꾼 장치다.</div>
+    </article>
+
+    <article class="history-card transport"><div class="history-year">1869</div><div class="history-event">미국 대륙횡단철도 완성 · First Transcontinental Railroad</div>
+      <div class="history-desc">1869년 5월 10일 Promontory Summit에서 Union Pacific과 Central Pacific이 연결되어 미국 대륙을 철도로 횡단하는 길이 현실화되었습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> Fogg의 San Francisco → New York 이동은 이 새로운 철도 연결망을 전제로 합니다. 소설 출간 불과 3년 전 완성된 최신 인프라가 plot engine으로 들어온 셈입니다.</div>
+      <div class="history-q">생각하기 · 베른은 왜 ‘오래된 교통수단’보다 막 완성된 철도망을 이야기의 중심에 두었을까?</div><textarea id="histThink2" placeholder="기술의 새로움과 독자의 기대를 연결해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(2,this)">답안 보기</button><button onclick="saveHistThink(2)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer2"><b>예시 답안</b><br>대륙횡단철도는 당시 독자에게 ‘세계가 실제로 좁아지고 있다’는 감각을 주는 최신 기술이었다. 베른은 이미 익숙한 여행이 아니라 새 기술이 인간의 시간 감각과 공간 감각을 얼마나 바꾸는지 실험할 수 있었다.</div>
+    </article>
+
+    <article class="history-card transport"><div class="history-year">1871</div><div class="history-event">몽세니 터널 개통 · Mont Cenis / Fréjus Rail Tunnel</div>
+      <div class="history-desc">알프스를 관통하는 철도 터널이 1871년에 개통되면서 프랑스와 이탈리아 사이 철도 이동이 크게 개선되었습니다. 작품의 유럽 초반부는 이런 철도 인프라 확장의 역사적 분위기와 맞닿아 있습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> London에서 Brindisi까지 빠르게 남하한 뒤 수에즈행 증기선으로 갈아타는 ‘rail + steamship’ 결합이 가능해집니다.</div>
+      <div class="history-q">생각하기 · 알프스가 ‘장벽’에서 ‘시간표 속 통과 구간’으로 바뀌면 여행 서사는 어떻게 달라질까?</div><textarea id="histThink3" placeholder="자연지형과 기술의 관계를 적어 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(3,this)">답안 보기</button><button onclick="saveHistThink(3)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer3"><b>예시 답안</b><br>산맥이 더 이상 장기간 우회해야 할 절대적 장애물이 아니라 터널과 철도로 계산 가능한 구간이 된다. 이 변화는 모험의 초점을 ‘자연을 극복하는 여행’에서 ‘연결을 놓치지 않는 여행’으로 이동시킨다.</div>
+    </article>
+
+    <article class="history-card network"><div class="history-year">19C</div><div class="history-event">증기선과 정기 항로 · Steamship Networks</div>
+      <div class="history-desc">19세기 증기선의 확산은 바람에 대한 의존을 줄이고 항해 시간을 상대적으로 예측 가능하게 만들었습니다. 항구 간 정기 운항과 철도 환승이 결합하면서 장거리 이동은 점차 ‘일정표’의 문제가 됩니다.</div>
+      <div class="history-link"><b>작품 연결:</b> Mongolia, Rangoon, General Grant 같은 선박은 단순한 배가 아니라 다음 연결편을 잡기 위한 시간표의 노드입니다. 폭풍이나 출항 지연이 곧 서사적 위기가 됩니다.</div>
+      <div class="history-q">생각하기 · 범선 시대의 위험과 증기선·시간표 시대의 위험은 무엇이 다를까?</div><textarea id="histThink4" placeholder="자연 위험 vs 연결망 위험으로 비교해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(4,this)">답안 보기</button><button onclick="saveHistThink(4)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer4"><b>예시 답안</b><br>범선 시대에는 바람·계절·해류 같은 자연 변수가 지배적이었다면, 정기 증기선 시대에는 환승 실패·출항 시각·항구 연결 같은 네트워크 리스크가 커진다. 기술은 위험을 없애지 않고 위험의 형태를 바꾼다.</div>
+    </article>
+
+    <article class="history-card network"><div class="history-year">1860s</div><div class="history-event">전신망의 확대 · Telegraph & Information Speed</div>
+      <div class="history-desc">철도와 해저전신망이 확장되면서 사람보다 정보가 더 빨리 이동하는 근대적 세계가 형성되었습니다. 교통·금융·뉴스·시간표의 조정 능력도 함께 커졌습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> Fogg의 여행은 몸의 이동 속도만 다루지 않습니다. Fix의 추적과 국제적 정보 전달을 생각하면 ‘정보가 여행자를 앞질러 가는 세계’도 중요한 배경입니다.</div>
+      <div class="history-q">생각하기 · 정보가 사람보다 먼저 도착할 수 있다는 사실은 추격 서사에 어떤 효과를 만들까?</div><textarea id="histThink5" placeholder="Fix와 Fogg의 관계를 떠올려 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(5,this)">답안 보기</button><button onclick="saveHistThink(5)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer5"><b>예시 답안</b><br>여행자는 계속 이동하지만 체포 요청이나 소식은 전신으로 앞서 전달될 수 있다. 그래서 세계가 연결될수록 Fogg가 자유로워지는 동시에 Fix의 추적망도 더 촘촘해지는 역설이 생긴다.</div>
+    </article>
+
+    <article class="history-card time"><div class="history-year">1883</div><div class="history-event">표준 철도시간의 도입 · Standard Railway Time</div>
+      <div class="history-desc">중요한 비판적 포인트입니다. 북미 철도가 표준 철도시간을 채택한 것은 1883년으로, 작품의 1872년보다 뒤입니다. 당시에는 지역별 태양시와 철도회사별 시간이 공존해 오늘날보다 시간 계산이 복잡했습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> Fogg의 ‘분 단위 정확성’을 현대의 통일된 time-zone 시스템과 동일하게 이해하면 안 됩니다. 오히려 작품은 표준화가 진행 중이던 시대의 시간 강박을 극적으로 보여줍니다.</div>
+      <div class="history-q">생각하기 · 표준시가 완전히 정착되지 않은 세계에서 ‘정확한 시간표’는 기술일까, 믿음일까?</div><textarea id="histThink6" placeholder="작품의 시간 정확성을 비판적으로 검토해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(6,this)">답안 보기</button><button onclick="saveHistThink(6)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer6"><b>예시 답안</b><br>둘 다라고 볼 수 있다. 정밀 시계와 철도 시간표는 실제 기술적 성취였지만, 지역 시간이 완전히 통일된 것은 아니었다. 따라서 Fogg의 계산은 근대가 세계를 하나의 시계처럼 만들 수 있다는 강한 믿음까지 상징한다.</div>
+    </article>
+
+    <article class="history-card empire"><div class="history-year">1870s</div><div class="history-event">제국·항구·식민 교통망 · Imperial Infrastructure</div>
+      <div class="history-desc">Fogg의 경로는 당시 영국 및 유럽 제국의 무역·군사·행정 네트워크와 겹칩니다. Bombay, Calcutta, Hong Kong 같은 항구는 단순 관광지가 아니라 제국적 이동망의 핵심 노드였습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> ‘세계가 연결되었다’는 서술 뒤에는 누가 철도와 항구를 만들었고, 누구의 필요를 위해 연결했는가라는 질문이 남습니다.</div>
+      <div class="history-q">생각하기 · Fogg에게 편리한 세계 교통망은 현지인들에게도 같은 의미의 ‘진보’였을까?</div><textarea id="histThink7" placeholder="편리함·권력·식민주의의 관계를 생각해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(7,this)">답안 보기</button><button onclick="saveHistThink(7)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer7"><b>예시 답안</b><br>반드시 그렇지는 않다. 철도·항구는 이동과 교역을 확대했지만 식민 통치, 자원 이동, 군사적 통제와도 연결되었다. 따라서 작품의 ‘속도와 진보’를 읽을 때 누구의 이동이 쉬워졌는지 함께 묻는 것이 필요하다.</div>
+    </article>
+
+    <article class="history-card time"><div class="history-year">1872</div><div class="history-event">베른의 현재 · A World Newly Connected</div>
+      <div class="history-desc">소설은 먼 미래의 기술을 상상하기보다, 막 현실이 된 철도·운하·증기선의 연결을 극단까지 밀어붙입니다. 그래서 80일 세계일주는 ‘SF적 공상’과 ‘당대 최신 교통 데이터’ 사이에 놓여 있습니다.</div>
+      <div class="history-link"><b>작품 연결:</b> 핵심 질문은 “가능한가?”만이 아니라 “왜 하필 1872년 무렵에 이런 이야기가 상상될 수 있었는가?”입니다.</div>
+      <div class="history-q">생각하기 · 이 작품을 오늘날로 옮긴다면 어떤 기술이 19세기의 철도·증기선 역할을 할까?</div><textarea id="histThink8" placeholder="항공·GPS·실시간 예약·AI 등과 비교해 보세요."></textarea>
+      <div class="history-actions"><button class="answer" onclick="toggleHistAnswer(8,this)">답안 보기</button><button onclick="saveHistThink(8)">생각 저장</button></div>
+      <div class="history-answer" id="histAnswer8"><b>예시 답안</b><br>오늘날에는 항공 네트워크, GPS, 실시간 예약·결제, 모바일 통신이 비슷한 역할을 한다. 중요한 점은 개별 기술보다 여러 시스템이 연결되어 세계를 ‘즉시 계산 가능한 네트워크’로 만든다는 것이다.</div>
+    </article>
+  </div>
+
+  <div class="history-synthesis">
+    <div class="label">Synthesis · 역사와 문학 연결하기</div><h3 style="margin:5px 0 9px">1872년의 세계가 아니었다면 이 소설은 가능했을까?</h3>
+    <div class="history-synthesis-grid"><div><b style="font-size:11px">Evidence Builder</b><textarea id="histEvidence" placeholder="① 역사적 사건 2개 선택
+② 작품 속 경로/사건과 연결
+③ ‘이 기술이 없었다면…’ 반사실적 추론
+④ 한계 또는 반론"></textarea></div><div><b style="font-size:11px">Final Claim · 자기언어화</b><textarea id="histFinal" placeholder="Around the World in Eighty Days could be imagined in 1872 because...
+The most important historical change was...
+However, the novel also hides / simplifies..."></textarea></div></div>
+    <div class="actions"><button class="primary" onclick="saveHistorySynthesis()">종합 판단 저장</button><button class="ghost" onclick="clearHistoryLab()">전체 지우기</button></div>
+  </div>
+
+  <div class="source-strip"><b>교사용 역사 검증 메모:</b> Suez Canal Authority — 운하 공식 개통 1869-11-17 · U.S. National Park Service — First Transcontinental Railroad 연결 1869-05-10 · Library of Congress — 북미 Standard Railway Time 채택 1883-11-18. 수업에서는 역사 사실 자체와 소설의 허구적 사건을 구분해 사용하세요. <a href="https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/CanalHistory.aspx" target="_blank" rel="noopener">Suez source ↗</a> · <a href="https://www.nps.gov/gosp/learn/historyculture/index.htm" target="_blank" rel="noopener">Railroad source ↗</a> · <a href="https://www.loc.gov/item/today-in-history/november-18/" target="_blank" rel="noopener">Time source ↗</a></div>
+</section>
+</div>
+
+
+<div id="behindView" class="view">
+<section class="behind-lab">
+  <div class="behind-head">
+    <div><div class="label">Behind the Journey · Empire, Infrastructure & Invisible Networks</div>
+      <h2>Fogg가 달린 길은 누구를 위해 만들어진 길이었을까?</h2>
+      <div class="behind-intro">Fogg의 여정은 철도·증기선·운하가 만든 ‘연결된 세계’를 보여 주지만, 그 연결망은 진공 속에서 만들어진 것이 아닙니다. Bombay, Calcutta, Hong Kong, Suez 같은 지점은 당시 영국 및 유럽 제국의 <b>무역·군사·행정·우편·정보 네트워크</b>와 겹쳤습니다. 이 섹션에서는 ‘기술의 진보’만 보지 않고 <b>누가 건설했고, 누가 통제했고, 누구의 이동을 우선했으며, 누가 그 비용을 부담했는가</b>까지 질문합니다.</div>
+    </div>
+    <div class="badge" style="background:var(--navy);color:white;border:0">ROUTE → POWER → PERSPECTIVE</div>
+  </div>
+
+  <div class="behind-callout"><b>핵심 렌즈</b> · “세계가 연결되었다”는 말은 사실이지만 충분하지 않습니다. 더 깊은 질문은 <b>어떤 세계가, 누구의 필요를 중심으로, 어떤 인프라를 통해 연결되었는가?</b>입니다. Fogg에게는 편리한 시간표가 누군가에게는 세금·노동·군사 통제·식민 행정의 경로였을 수도 있습니다.</div>
+
+  <div class="behind-grid">
+    <article class="behind-card trade"><div class="behind-tag">01 · Port Empire</div><div class="behind-title">Bombay · Calcutta · Hong Kong은 ‘관광지’가 아니었다</div>
+      <div class="behind-desc">Bombay와 Calcutta는 영국령 인도의 핵심 행정·상업 거점이었고, Hong Kong은 19세기 영국의 아시아 해상 교역망에서 중요한 항구였습니다. Fogg의 경로가 이 도시들을 연속해서 통과한다는 것은, 그의 ‘세계 일주’가 이미 존재하던 제국적 항구망 위에서 가능해졌음을 보여 줍니다.</div>
+      <div class="behind-evidence"><b>작품 연결:</b> 지도를 보면 Fogg는 무작위 도시가 아니라 증기선·철도·우편·행정이 집중된 노드를 따라 움직입니다. ‘세계가 좁아졌다’는 체감은 모든 지역이 동등하게 연결되었다기보다 <b>특정 항구와 거점이 강하게 연결된 결과</b>였습니다.</div>
+      <div class="behind-question">생각하기 · Fogg가 방문한 도시를 “여행지”가 아니라 “제국 네트워크의 노드”로 다시 분류하면 작품의 지도가 어떻게 달라 보일까?</div><textarea id="behindThink1" placeholder="Bombay, Calcutta, Hong Kong 중 1~2곳을 골라 역할을 다시 정의해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(1,this)">답안 보기</button><button onclick="saveBehindThink(1)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer1"><b>예시 답안</b><br>세 도시를 단순 경유지로 보면 Fogg의 개인적 모험만 보인다. 그러나 항구·행정·상업 노드로 보면 그의 이동은 제국이 이미 구축한 고밀도 연결망을 소비하는 행동으로 읽힌다. 즉 ‘개인의 속도’ 뒤에 ‘제국의 인프라’가 숨어 있다.</div>
+    </article>
+
+    <article class="behind-card military"><div class="behind-tag">02 · Trade + Military</div><div class="behind-title">수에즈는 지름길이면서 전략 통로였다</div>
+      <div class="behind-desc">수에즈 운하 개통은 유럽–인도·동아시아 항로를 크게 단축했습니다. 이 통로의 가치는 상업에만 있지 않았습니다. 영국의 전략적 관심은 인도와 동방으로 가는 무역·군사 이동의 단축과 맞물렸고, 영국 정부는 소설 출간 뒤인 1875년 이집트 총독이 보유하던 수에즈 운하 회사 주식을 대규모로 매입했습니다.</div>
+      <div class="behind-evidence"><b>중요한 시간 구분:</b> Fogg가 여행하는 1872년에는 영국 정부의 1875년 주식 매입과 1882년 이집트 점령은 아직 일어나지 않았습니다. 따라서 작품을 후대의 완성된 영국 지배 상황으로 소급해 읽기보다, <b>전략적 중요성이 빠르게 커지던 과도기</b>로 보는 것이 정확합니다.</div>
+      <div class="behind-question">생각하기 · 같은 운하가 여행자에게는 ‘시간 절약’, 국가에게는 ‘전략 통로’가 되는 이유는 무엇일까?</div><textarea id="behindThink2" placeholder="개인 이동과 국가 전략의 관점을 비교해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(2,this)">답안 보기</button><button onclick="saveBehindThink(2)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer2"><b>예시 답안</b><br>Fogg에게 운하는 며칠을 줄여 주는 교통 인프라이지만, 국가에는 병력·우편·상품·명령을 더 빨리 이동시키는 전략 자산이다. 같은 기술이 개인의 편의와 제국의 통제 능력을 동시에 높일 수 있다.</div>
+    </article>
+
+    <article class="behind-card admin"><div class="behind-tag">03 · Administration</div><div class="behind-title">철도는 승객만 실은 것이 아니라 ‘행정 능력’을 운반했다</div>
+      <div class="behind-desc">영국령 인도의 행정은 Bombay·Bengal·Madras 같은 거점을 중심으로 복잡한 정치·재정·사법·군사 체계를 운영했습니다. 철도와 항구는 상업 이동뿐 아니라 관리, 우편, 병력, 물자, 명령을 더 빠르게 이동시키는 기반이 될 수 있었습니다.</div>
+      <div class="behind-evidence"><b>작품 연결:</b> Fogg가 시간표를 신뢰할 수 있다는 것은 ‘기차가 빠르다’는 뜻만이 아닙니다. 역·항구·회사·행정기관이 시간을 맞추고, 승객과 우편과 화물을 정해진 절차로 이동시키는 <b>조직적 시스템</b>이 있다는 뜻입니다.</div>
+      <div class="behind-question">생각하기 · 철도를 ‘교통 기술’이 아니라 ‘통치 기술’로도 볼 수 있을까? 그 근거는 무엇인가?</div><textarea id="behindThink3" placeholder="이동·우편·병력·행정 중 최소 두 요소를 연결해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(3,this)">답안 보기</button><button onclick="saveBehindThink(3)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer3"><b>예시 답안</b><br>가능하다. 철도는 사람과 상품의 이동을 빠르게 했지만 동시에 중앙의 명령, 우편, 병력과 행정 인력의 이동 시간도 줄였다. 그래서 인프라는 경제 성장의 도구이면서 행정과 통치의 범위를 넓히는 장치가 될 수 있다.</div>
+    </article>
+
+    <article class="behind-card trade"><div class="behind-tag">04 · Steamship & Mail</div><div class="behind-title">정기 증기선은 ‘속도’보다 ‘예측 가능성’을 만들었다</div>
+      <div class="behind-desc">19세기 후반 인도양에는 정기 증기선과 우편 계약이 확대되었습니다. British India Steam Navigation Company 같은 회사는 Bombay·Karachi·Persian Gulf 등 여러 항로를 운영했고, 수에즈 개통 이후 새로운 노선들이 추가되었습니다.</div>
+      <div class="behind-evidence"><b>작품 연결:</b> Fogg의 진짜 자산은 가장 빠른 배가 아니라 <b>‘다음 배가 언제 오는지 알 수 있는 세계’</b>입니다. 정기 운항은 이동을 모험에서 계산으로 바꾸고, 동시에 배를 한 번 놓치면 전체 연결망이 무너지는 새로운 취약성을 만듭니다.</div>
+      <div class="behind-question">생각하기 · 왜 ‘최고 속도’보다 ‘정기성·환승 가능성’이 80일 내기에서 더 중요할 수 있을까?</div><textarea id="behindThink4" placeholder="Hong Kong 또는 New York의 환승 실패와 연결해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(4,this)">답안 보기</button><button onclick="saveBehindThink(4)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer4"><b>예시 답안</b><br>80일 계획은 개별 교통수단의 최고 속도가 아니라 여러 수단을 연속해서 잡는 문제다. 정기성은 시간을 계산 가능하게 하지만 환승 실패가 발생하면 그 장점이 오히려 큰 지연으로 바뀐다.</div>
+    </article>
+
+    <article class="behind-card labour"><div class="behind-tag">05 · Invisible Labour</div><div class="behind-title">시간표 뒤에는 보이지 않는 노동이 있었다</div>
+      <div class="behind-desc">철도·항구·운하·증기선은 선로, 터널, 기관차, 석탄 공급, 선박 정비, 하역, 역무, 항만 운영 등 수많은 노동 없이는 작동하지 않습니다. 소설은 여행자의 시간과 사건을 전면에 두기 때문에 이런 노동은 상대적으로 배경으로 밀려납니다.</div>
+      <div class="behind-evidence"><b>읽기 전략:</b> 여기서는 특정 집단의 노동 조건을 작품이 자세히 기록했다고 주장하는 것이 아니라, <b>서사에 보이지 않는 인프라 유지 노동을 역으로 질문</b>하는 활동입니다. “Fogg의 80일을 가능하게 한 사람들은 누구였나?”를 묻습니다.</div>
+      <div class="behind-question">생각하기 · 지도에 Fogg만 표시하지 않고 ‘인프라를 유지한 사람들’을 표시한다면 어떤 직업과 역할을 추가해야 할까?</div><textarea id="behindThink5" placeholder="기관사, 선원, 항만노동자, 역무원, 정비인력 등 역할을 떠올려 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(5,this)">답안 보기</button><button onclick="saveBehindThink(5)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer5"><b>예시 답안</b><br>기관사·선원뿐 아니라 선로 유지 인력, 석탄 공급 인력, 항만 하역 노동자, 역무원, 정비공, 우편·행정 인력이 추가될 수 있다. 그러면 ‘한 남자의 세계 일주’가 사실은 거대한 협업 시스템 위에 놓여 있음을 볼 수 있다.</div>
+    </article>
+
+    <article class="behind-card voice"><div class="behind-tag">06 · Unequal Mobility</div><div class="behind-title">‘세계가 연결되었다’ = 모두가 똑같이 이동할 수 있었다?</div>
+      <div class="behind-desc">근대 교통망의 확대는 분명 이동 가능성을 키웠지만, 그 혜택과 접근성은 계층·국적·경제력·식민지의 정치적 위치에 따라 동일하지 않았습니다. Fogg는 돈, 영국 국적, 교통 정보, 국제적 결제 능력을 가진 매우 특수한 여행자입니다.</div>
+      <div class="behind-evidence"><b>비판적 작품 연결:</b> 따라서 Fogg의 속도를 곧바로 ‘19세기 보통 사람의 이동성’으로 일반화해서는 안 됩니다. 작품의 주인공이 어떤 <b>mobility privilege</b>를 가지고 있는지 따져 보는 것이 중요합니다.</div>
+      <div class="behind-question">생각하기 · 같은 1872년에 다른 계층·지역의 사람이 Fogg와 동일한 경로를 시도했다면 무엇이 달랐을까?</div><textarea id="behindThink6" placeholder="돈·정보·티켓·숙박·안전·국적·언어 중 몇 가지를 비교해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(6,this)">답안 보기</button><button onclick="saveBehindThink(6)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer6"><b>예시 답안</b><br>같은 철도와 항로가 존재해도 모든 사람이 같은 방식으로 이용할 수 있었던 것은 아니다. Fogg의 재정 능력, 정보 접근, 사회적 지위는 지연을 돈으로 해결하거나 대체 수단을 구매할 수 있게 한다. ‘연결된 세계’와 ‘평등하게 접근 가능한 세계’는 다른 개념이다.</div>
+    </article>
+
+    <article class="behind-card voice"><div class="behind-tag">07 · Multiple Perspectives</div><div class="behind-title">Fogg의 지도와 현지인의 지도는 같을까?</div>
+      <div class="behind-desc">여행소설의 지도는 주인공의 이동 목적에 따라 장소를 ‘경유지·지연·환승·위기’로 단순화할 수 있습니다. 그러나 그 장소에 사는 사람들에게 Bombay, Calcutta, Hong Kong, Suez는 일상·노동·정치·지역사회의 공간입니다.</div>
+      <div class="behind-evidence"><b>수업 확장:</b> 같은 지점을 두 층으로 표시해 보세요. 위층은 <b>Fogg에게 이 장소가 무엇인가</b>, 아래층은 <b>그곳의 주민·노동자·행정권력에게 무엇인가</b>입니다. 하나의 지도가 여러 이해관계로 갈라집니다.</div>
+      <div class="behind-question">생각하기 · Hong Kong 또는 Bombay를 골라 “Fogg의 1문장”과 “현지인의 1문장”을 각각 써 보자.</div><textarea id="behindThink7" placeholder="같은 장소를 서로 다른 관점에서 두 문장으로 표현해 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(7,this)">답안 보기</button><button onclick="saveBehindThink(7)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer7"><b>예시 답안</b><br>Fogg에게 Hong Kong은 Yokohama행 배를 잡아야 하는 환승 지점이다. 그러나 현지의 관점에서는 상업·노동·식민 행정과 생활이 겹치는 도시다. 관점이 달라지면 같은 장소의 ‘중요성’ 자체가 달라진다.</div>
+    </article>
+
+    <article class="behind-card admin"><div class="behind-tag">08 · Big Question</div><div class="behind-title">근대화인가, 제국의 가속화인가 — 둘 다인가?</div>
+      <div class="behind-desc">철도·운하·증기선은 이동 시간을 줄이고 경제·통신을 확장한 근대 기술인 동시에, 기존 권력의 상업·군사·행정 능력도 강화할 수 있었습니다. 두 해석은 반드시 서로 배타적일 필요가 없습니다.</div>
+      <div class="behind-evidence"><b>최종 작품 연결:</b> 『80일간의 세계 일주』를 읽을 때 “기술은 세계를 연결했다”에서 멈추지 않고, <b>연결성(connection)과 권력(power)이 어떤 관계를 맺는가</b>를 묻는 순간 작품은 기술사·제국사·문학을 함께 읽는 텍스트가 됩니다.</div>
+      <div class="behind-question">생각하기 · “Fogg의 성공은 개인의 능력인가, 근대 인프라의 성공인가, 제국 네트워크의 혜택인가?” 세 요소의 비중을 나눠 주장해 보자.</div><textarea id="behindThink8" placeholder="예: 개인 30% / 인프라 40% / 제국 네트워크 30% — 이유까지 적어 보세요."></textarea>
+      <div class="behind-actions"><button class="answer" onclick="toggleBehindAnswer(8,this)">답안 보기</button><button onclick="saveBehindThink(8)">생각 저장</button></div>
+      <div class="behind-answer" id="behindAnswer8"><b>예시 답안</b><br>한 요소만으로 설명하기 어렵다. Fogg의 계산과 결단은 중요하지만, 그 능력은 이미 구축된 철도·증기선·운하·항구 없이는 작동할 수 없다. 동시에 그 국제 교통망 상당 부분은 제국적 상업·행정 구조와 겹친다. 따라서 개인의 agency와 구조적 infrastructure를 함께 읽어야 한다.</div>
+    </article>
+  </div>
+
+  <div class="behind-synthesis">
+    <div class="label">Critical Synthesis · 보이지 않는 지도 만들기</div><h3 style="margin:5px 0 9px">Visible Route vs Invisible Network</h3>
+    <div class="match-intro"><b>아이콘 매칭 활동</b> · 왼쪽에서 Fogg가 실제로 보거나 이용하는 요소를 고른 뒤, 오른쪽에서 그 뒤에 숨어 있는 네트워크를 눌러 연결해 보세요. 연결이 생기면 아래 카드에 저장되고, 왜 연결되는지 짧게 메모할 수 있습니다.</div>
+    <div class="match-board">
+      <div class="match-col">
+        <div class="match-heading">① 보이는 경로 · Visible Route</div>
+        <div class="icon-bank" id="visibleBank"></div>
+      </div>
+      <div class="match-center">
+        <div class="match-status" id="matchStatus"><b>STEP 1</b> 왼쪽 아이콘 하나를 먼저 선택하세요.</div>
+        <div class="match-list" id="matchList"></div>
+        <div class="match-actions"><button type="button" onclick="autoFillMatchNotes()">텍스트 칸에 자동 정리</button><button type="button" onclick="clearIconMatches()">아이콘 매칭 초기화</button></div>
+      </div>
+      <div class="match-col">
+        <div class="match-heading">② 보이지 않는 네트워크 · Invisible Network</div>
+        <div class="icon-bank" id="invisibleBank"></div>
+      </div>
+    </div>
+    <div class="match-reflection-grid">
+      <div><b style="font-size:12px">① 보이는 경로 정리</b><textarea id="behindVisible" placeholder="아이콘 활동 뒤, Fogg가 실제로 보는 것들을 정리해 보세요.
+예: 기차, 증기선, 항구, 역, 시간표, 도시..."></textarea></div>
+      <div><b style="font-size:12px">② 보이지 않는 네트워크 정리</b><textarea id="behindInvisible" placeholder="아이콘 활동 뒤, 그 뒤에 있는 무역·군사·행정·자본·노동 등을 연결해서 정리해 보세요.
+예: 항구 ↔ 무역 / 철도 ↔ 행정 / 증기선 ↔ 제국 네트워크"></textarea></div>
+    </div>
+    <div style="margin-top:10px"><b style="font-size:12px">③ Final Claim · 자기언어화</b><textarea id="behindFinal" placeholder="문장 시작 예시:
+The world of Around the World in Eighty Days was connected, but not neutrally connected because...
+Fogg's journey depended not only on technology but also on...
+The most invisible part of his journey was...
+One perspective missing from Fogg's route is..."></textarea></div>
+    <div class="actions"><button class="primary" onclick="saveBehindSynthesis()">비하인드 분석 저장</button><button class="ghost" onclick="clearBehindLab()">전체 지우기</button></div>
+  </div>
+
+  <div class="behind-source"><b>Teacher Evidence Links · 외부 역사자료</b><br>
+    British Library India Office Records — Bombay·Bengal·Madras의 상업·행정 구조 및 군사행정 기록 · 
+    <a href="https://searcharchives.bl.uk/catalog/032-000173250" target="_blank" rel="noopener">Presidencies / East India Company records</a> · 
+    <a href="https://searcharchives.bl.uk/catalog/032-000256868" target="_blank" rel="noopener">Military Department records</a><br>
+    National Army Museum — <a href="https://www.nam.ac.uk/explore/egypt-and-sudan" target="_blank" rel="noopener">Suez Canal, India route and British strategic interest</a><br>
+    UK National Archives — <a href="https://discovery.nationalarchives.gov.uk/details/r/6ca2ce66-9386-437f-8636-184450c77b6c" target="_blank" rel="noopener">British India Steam Navigation Company</a><br>
+    UK Legislation — <a href="https://www.legislation.gov.uk/ukpga/Vict/39-40/67/pdfs/ukpga_18760067_en.pdf" target="_blank" rel="noopener">Suez Canal (Shares) Act 1876</a><br>
+    ※ 이 섹션은 작품 자체가 명시적으로 설명하는 사실과 외부 역사 맥락을 구분해 읽도록 설계했습니다. 특히 1875년 수에즈 지분 매입과 1882년 이집트 점령은 작품의 1872년보다 뒤의 사건입니다.
+  </div>
+</section>
+</div>
+
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const DATA = [{"order": 1, "name": "London", "search": "London, United Kingdom", "original": "London", "region": "United Kingdom", "type": "출발 도시", "lat": 51.5074, "lon": -0.1278}, {"order": 2, "name": "Sydenham", "search": "Sydenham, London, United Kingdom", "original": "Sydenham", "region": "United Kingdom", "type": "통과", "lat": 51.4253, "lon": -0.054}, {"order": 3, "name": "Dover", "search": "Dover, Kent, United Kingdom", "original": "Dover", "region": "United Kingdom", "type": "항구", "lat": 51.129, "lon": 1.308}, {"order": 4, "name": "Calais", "search": "Calais, France", "original": "Calais", "region": "France", "type": "항구", "lat": 50.9513, "lon": 1.8587}, {"order": 5, "name": "Paris", "search": "Paris, France", "original": "Paris", "region": "France", "type": "도시", "lat": 48.8566, "lon": 2.3522}, {"order": 6, "name": "Mont Cenis", "search": "Mont Cenis, France", "original": "Mont Cenis", "region": "France / Italy", "type": "산악 경로", "lat": 45.235, "lon": 6.93}, {"order": 7, "name": "Turin", "search": "Turin, Italy", "original": "Turin", "region": "Italy", "type": "도시", "lat": 45.0703, "lon": 7.6869}, {"order": 8, "name": "Brindisi", "search": "Brindisi, Italy", "original": "Brindisi", "region": "Italy", "type": "항구", "lat": 40.6327, "lon": 17.9418}, {"order": 9, "name": "Suez", "search": "Suez, Egypt", "original": "Suez", "region": "Egypt", "type": "항구", "lat": 29.9668, "lon": 32.5498}, {"order": 10, "name": "Mocha", "search": "Mocha, Yemen", "original": "Mocha", "region": "Yemen", "type": "해안 경유", "lat": 13.3156, "lon": 43.249}, {"order": 11, "name": "Bab-el-Mandeb Strait", "search": "Bab-el-Mandeb Strait", "original": "Strait of Bab-el-Mandeb", "region": "Yemen / Djibouti / Eritrea", "type": "해협", "lat": 12.5833, "lon": 43.3333}, {"order": 12, "name": "Aden", "search": "Aden, Yemen", "original": "Steamer Point / Aden", "region": "Yemen", "type": "항구", "lat": 12.7855, "lon": 45.0187}, {"order": 13, "name": "Mumbai", "search": "Mumbai, Maharashtra, India", "original": "Bombay", "region": "India", "type": "도시/항구", "lat": 19.076, "lon": 72.8777}, {"order": 14, "name": "Salsette Island", "search": "Salsette Island, Maharashtra, India", "original": "Island of Salcette", "region": "India", "type": "섬/통과", "lat": 19.18, "lon": 72.9}, {"order": 15, "name": "Kalyan", "search": "Kalyan, Maharashtra, India", "original": "Callyan", "region": "India", "type": "철도 경유", "lat": 19.2403, "lon": 73.1305}, {"order": 16, "name": "Panvel", "search": "Panvel, Maharashtra, India", "original": "Pauwell", "region": "India", "type": "통과", "lat": 18.9894, "lon": 73.1175}, {"order": 17, "name": "Nashik", "search": "Nashik, Maharashtra, India", "original": "Nassik", "region": "India", "type": "통과", "lat": 19.9975, "lon": 73.7898}, {"order": 18, "name": "Milligaum", "search": "Milligaum, India", "original": "Milligaum", "region": "India", "type": "통과", "lat": 20.55, "lon": 74.53}, {"order": 19, "name": "Burhanpur", "search": "Burhanpur, Madhya Pradesh, India", "original": "Burhampoor", "region": "India", "type": "철도 정차", "lat": 21.3145, "lon": 76.218}, {"order": 20, "name": "Asirgarh", "search": "Asirgarh, Madhya Pradesh, India", "original": "Assurghur", "region": "India", "type": "경유", "lat": 21.468, "lon": 76.285}, {"order": 21, "name": "Satpura Range", "search": "Satpura Range, India", "original": "Sutpour Mountains", "region": "India", "type": "산맥", "lat": 21.8, "lon": 78.0}, {"order": 22, "name": "Rothal", "search": "Rothal, India", "original": "Rothal", "region": "India", "type": "경유", "lat": 22.05, "lon": 78.4}, {"order": 23, "name": "Kholby", "search": "Kholby, India", "original": "Kholby", "region": "India", "type": "소설 속 경유지", "lat": 23.0, "lon": 79.0}, {"order": 24, "name": "Vindhya Range", "search": "Vindhya Range, India", "original": "Vindhia Mountains", "region": "India", "type": "산맥", "lat": 23.5, "lon": 80.0}, {"order": 25, "name": "Pillaji", "search": "Pillaji, India", "original": "Pillaji", "region": "India", "type": "소설 속 경유지", "lat": 24.5, "lon": 81.0}, {"order": 26, "name": "Prayagraj", "search": "Prayagraj, Uttar Pradesh, India", "original": "Allahabad", "region": "India", "type": "도시", "lat": 25.4358, "lon": 81.8463}, {"order": 27, "name": "Varanasi", "search": "Varanasi, Uttar Pradesh, India", "original": "Benares", "region": "India", "type": "도시/통과", "lat": 25.3176, "lon": 82.9739}, {"order": 28, "name": "Kolkata", "search": "Kolkata, West Bengal, India", "original": "Calcutta", "region": "India", "type": "도시/항구", "lat": 22.5726, "lon": 88.3639}, {"order": 29, "name": "Singapore", "search": "Singapore", "original": "Singapore", "region": "Singapore", "type": "항구", "lat": 1.3521, "lon": 103.8198}, {"order": 30, "name": "Hong Kong", "search": "Hong Kong", "original": "Hong Kong", "region": "China (Hong Kong SAR)", "type": "도시/항구", "lat": 22.3193, "lon": 114.1694}, {"order": 31, "name": "Taiwan Strait", "search": "Taiwan Strait", "original": "Straits of Fo-Kien", "region": "China / Taiwan", "type": "해협", "lat": 24.0, "lon": 119.5}, {"order": 32, "name": "Shanghai", "search": "Shanghai, China", "original": "Shanghai", "region": "China", "type": "도시/해상 연결", "lat": 31.2304, "lon": 121.4737}, {"order": 33, "name": "Yokohama", "search": "Yokohama, Kanagawa, Japan", "original": "Yokohama", "region": "Japan", "type": "도시/항구", "lat": 35.4437, "lon": 139.638}, {"order": 34, "name": "San Francisco", "search": "San Francisco, California, United States", "original": "San Francisco", "region": "United States", "type": "도시/항구", "lat": 37.7749, "lon": -122.4194}, {"order": 35, "name": "Oakland", "search": "Oakland, California, United States", "original": "Oakland", "region": "United States", "type": "철도 출발", "lat": 37.8044, "lon": -122.2711}, {"order": 36, "name": "Sacramento", "search": "Sacramento, California, United States", "original": "Sacramento", "region": "United States", "type": "통과", "lat": 38.5816, "lon": -121.4944}, {"order": 37, "name": "Auburn", "search": "Auburn, California, United States", "original": "Auburn", "region": "United States", "type": "통과", "lat": 38.8966, "lon": -121.0769}, {"order": 38, "name": "Colfax", "search": "Colfax, California, United States", "original": "Colfax", "region": "United States", "type": "통과", "lat": 39.1007, "lon": -120.9533}, {"order": 39, "name": "Cisco", "search": "Cisco, California, United States", "original": "'Cisco", "region": "United States", "type": "철도 정차", "lat": 39.301, "lon": -120.548}, {"order": 40, "name": "Reno", "search": "Reno, Nevada, United States", "original": "Reno", "region": "United States", "type": "철도 정차", "lat": 39.5296, "lon": -119.8138}, {"order": 41, "name": "Humboldt River", "search": "Humboldt River, Nevada, United States", "original": "Humboldt River", "region": "United States", "type": "하천 경로", "lat": 40.8, "lon": -117.1}, {"order": 42, "name": "Great Salt Lake", "search": "Great Salt Lake, Utah, United States", "original": "Great Salt Lake", "region": "United States", "type": "호수", "lat": 41.17, "lon": -112.6}, {"order": 43, "name": "Ogden", "search": "Ogden, Utah, United States", "original": "Ogden", "region": "United States", "type": "철도 정차", "lat": 41.223, "lon": -111.9738}, {"order": 44, "name": "Salt Lake City", "search": "Salt Lake City, Utah, United States", "original": "Salt Lake City", "region": "United States", "type": "도시", "lat": 40.7608, "lon": -111.891}, {"order": 45, "name": "Fort Bridger", "search": "Fort Bridger, Wyoming, United States", "original": "Fort Bridger", "region": "United States", "type": "철도 경유", "lat": 41.3177, "lon": -110.3913}, {"order": 46, "name": "Green River", "search": "Green River, Wyoming, United States", "original": "Green River", "region": "United States", "type": "철도 경유", "lat": 41.5286, "lon": -109.4662}, {"order": 47, "name": "Julesburg", "search": "Julesburg, Colorado, United States", "original": "Julesburg", "region": "United States", "type": "철도 경유", "lat": 40.9883, "lon": -102.2644}, {"order": 48, "name": "North Platte", "search": "North Platte, Nebraska, United States", "original": "North Platte", "region": "United States", "type": "철도 경유", "lat": 41.1403, "lon": -100.7601}, {"order": 49, "name": "Fort Kearny", "search": "Fort Kearny, Nebraska, United States", "original": "Fort Kearney / Kearney station", "region": "United States", "type": "사건/정차", "lat": 40.656, "lon": -99.006}, {"order": 50, "name": "Omaha", "search": "Omaha, Nebraska, United States", "original": "Omaha", "region": "United States", "type": "철도 환승", "lat": 41.2565, "lon": -95.9345}, {"order": 51, "name": "Council Bluffs", "search": "Council Bluffs, Iowa, United States", "original": "Council Bluffs", "region": "United States", "type": "통과", "lat": 41.2619, "lon": -95.8608}, {"order": 52, "name": "Des Moines", "search": "Des Moines, Iowa, United States", "original": "Des Moines", "region": "United States", "type": "통과", "lat": 41.5868, "lon": -93.625}, {"order": 53, "name": "Iowa City", "search": "Iowa City, Iowa, United States", "original": "Iowa City", "region": "United States", "type": "통과", "lat": 41.6611, "lon": -91.5302}, {"order": 54, "name": "Davenport", "search": "Davenport, Iowa, United States", "original": "Davenport", "region": "United States", "type": "통과", "lat": 41.5236, "lon": -90.5776}, {"order": 55, "name": "Rock Island", "search": "Rock Island, Illinois, United States", "original": "Rock Island", "region": "United States", "type": "통과", "lat": 41.5095, "lon": -90.5787}, {"order": 56, "name": "Chicago", "search": "Chicago, Illinois, United States", "original": "Chicago", "region": "United States", "type": "철도 환승", "lat": 41.8781, "lon": -87.6298}, {"order": 57, "name": "Jersey City", "search": "Jersey City, New Jersey, United States", "original": "Jersey City", "region": "United States", "type": "철도 종착/페리", "lat": 40.7178, "lon": -74.0431}, {"order": 58, "name": "New York City", "search": "New York City, New York, United States", "original": "New York", "region": "United States", "type": "도시/항구", "lat": 40.7128, "lon": -74.006}, {"order": 59, "name": "Long Island", "search": "Long Island, New York, United States", "original": "Long Island", "region": "United States", "type": "해안 경유", "lat": 40.7891, "lon": -73.135}, {"order": 60, "name": "Fire Island", "search": "Fire Island, New York, United States", "original": "Fire Island", "region": "United States", "type": "해안 경유", "lat": 40.6501, "lon": -73.139}, {"order": 61, "name": "Grand Banks of Newfoundland", "search": "Grand Banks of Newfoundland, North Atlantic Ocean", "original": "Banks of Newfoundland", "region": "North Atlantic", "type": "해역", "lat": 44.5, "lon": -50.0}, {"order": 62, "name": "Cobh", "search": "Cobh, County Cork, Ireland", "original": "Queenstown", "region": "Ireland", "type": "항구", "lat": 51.8493, "lon": -8.2943}, {"order": 63, "name": "Dublin", "search": "Dublin, Ireland", "original": "Dublin", "region": "Ireland", "type": "도시/환승", "lat": 53.3498, "lon": -6.2603}, {"order": 64, "name": "Liverpool", "search": "Liverpool, United Kingdom", "original": "Liverpool", "region": "United Kingdom", "type": "항구/철도 환승", "lat": 53.4084, "lon": -2.9916}, {"order": 65, "name": "London", "search": "London, United Kingdom", "original": "London", "region": "United Kingdom", "type": "최종 도착", "lat": 51.5074, "lon": -0.1278}];
+const VISIBLE_MATCH_ITEMS = [
+  {id:'train', icon:'🚆', label:'기차', desc:'철도 이동과 시간 단축'},
+  {id:'steamship', icon:'🚢', label:'증기선', desc:'대양 횡단과 정기 항로'},
+  {id:'station', icon:'🚉', label:'역', desc:'환승과 출발·도착 관리'},
+  {id:'port', icon:'⚓', label:'항구', desc:'해상 네트워크의 결절점'},
+  {id:'timetable', icon:'🕰️', label:'시간표', desc:'일정 계산과 지연 관리'},
+  {id:'city', icon:'🏙️', label:'도시', desc:'행정·상업·생활의 공간'},
+  {id:'canal', icon:'🛶', label:'운하', desc:'지름길이 된 해상 통로'},
+  {id:'mail', icon:'📨', label:'우편·전신', desc:'정보가 이동하는 경로'}
+];
+const INVISIBLE_MATCH_ITEMS = [
+  {id:'trade', icon:'💱', label:'무역', desc:'상품과 자본의 흐름'},
+  {id:'military', icon:'🪖', label:'군사', desc:'병력·전략 이동'},
+  {id:'admin', icon:'🏛️', label:'행정', desc:'통치와 명령 전달'},
+  {id:'capital', icon:'💰', label:'자본', desc:'투자·운영·보험 시스템'},
+  {id:'labour', icon:'👷', label:'노동', desc:'선원·기관사·항만 노동'},
+  {id:'mailnet', icon:'✉️', label:'우편', desc:'제국적 정보 네트워크'},
+  {id:'power', icon:'👑', label:'권력', desc:'누가 연결을 통제하는가'},
+  {id:'empire', icon:'🗺️', label:'제국 네트워크', desc:'식민지와 거점 연결'}
+];
+let selectedVisibleMatch = null;
+let behindMatches = [];
+
 const inquiryByType = {
   "출발 도시":"이 장소에서 '80일'이라는 시간 제약은 어떻게 서사의 동력이 되는가?",
   "최종 도착":"출발지와 같은 London이 마지막에 다른 의미를 갖게 되는 이유는 무엇인가?",
@@ -824,11 +1127,11 @@ typeFilter.addEventListener('change',renderTimeline);
 
 
 function switchMainView(view){
-  const j=document.getElementById('journeyView'),f=document.getElementById('feasView');
-  const tj=document.getElementById('tabJourney'),tf=document.getElementById('tabFeas');
-  const isJ=view==='journey';
-  j.classList.toggle('active',isJ);f.classList.toggle('active',!isJ);
-  tj.classList.toggle('active',isJ);tf.classList.toggle('active',!isJ);
+  const j=document.getElementById('journeyView'),f=document.getElementById('feasView'),h=document.getElementById('historyView'),b=document.getElementById('behindView');
+  const tj=document.getElementById('tabJourney'),tf=document.getElementById('tabFeas'),th=document.getElementById('tabHistory'),tb=document.getElementById('tabBehind');
+  const isJ=view==='journey',isF=view==='feas',isH=view==='history',isB=view==='behind';
+  j.classList.toggle('active',isJ);f.classList.toggle('active',isF);h.classList.toggle('active',isH);b.classList.toggle('active',isB);
+  tj.classList.toggle('active',isJ);tf.classList.toggle('active',isF);th.classList.toggle('active',isH);tb.classList.toggle('active',isB);
   if(isJ){setTimeout(()=>{try{map.invalidateSize()}catch(e){}},100)}
 }
 function toggleModel(i,btn){
@@ -856,10 +1159,136 @@ function clearFeasLab(){
   localStorage.removeItem('fogg_feas_final');document.getElementById('finalFeas').value='';
 }
 
+
+function toggleHistAnswer(i,btn){
+  const el=document.getElementById('histAnswer'+i);const open=el.classList.toggle('open');btn.textContent=open?'답안 닫기':'답안 보기';
+}
+function saveHistThink(i){
+  const el=document.getElementById('histThink'+i);localStorage.setItem('fogg_history_think_'+i,el.value);
+  const card=el.closest('.history-card'),b=card.querySelectorAll('.history-actions button')[1],old=b.textContent;b.textContent='저장됨 ✓';setTimeout(()=>b.textContent=old,900);
+}
+function loadHistoryLab(){
+  for(let i=1;i<=8;i++){const el=document.getElementById('histThink'+i);if(el)el.value=localStorage.getItem('fogg_history_think_'+i)||'';}
+  document.getElementById('histEvidence').value=localStorage.getItem('fogg_history_evidence')||'';
+  document.getElementById('histFinal').value=localStorage.getItem('fogg_history_final')||'';
+}
+function saveHistorySynthesis(){
+  localStorage.setItem('fogg_history_evidence',document.getElementById('histEvidence').value);localStorage.setItem('fogg_history_final',document.getElementById('histFinal').value);
+  const b=document.querySelector('#historyView button.primary'),old=b.textContent;b.textContent='저장됨 ✓';setTimeout(()=>b.textContent=old,900);
+}
+function clearHistoryLab(){
+  if(!confirm('Historical Context Lab의 학생 작성 내용을 모두 지울까요?'))return;
+  for(let i=1;i<=8;i++){localStorage.removeItem('fogg_history_think_'+i);const el=document.getElementById('histThink'+i);if(el)el.value='';const a=document.getElementById('histAnswer'+i);if(a)a.classList.remove('open');}
+  localStorage.removeItem('fogg_history_evidence');localStorage.removeItem('fogg_history_final');document.getElementById('histEvidence').value='';document.getElementById('histFinal').value='';
+}
+
+
+function toggleBehindAnswer(i,btn){
+  const el=document.getElementById('behindAnswer'+i);const open=el.classList.toggle('open');btn.textContent=open?'답안 닫기':'답안 보기';
+}
+function saveBehindThink(i){
+  const el=document.getElementById('behindThink'+i);localStorage.setItem('fogg_behind_think_'+i,el.value);
+  const card=el.closest('.behind-card'),b=card.querySelectorAll('.behind-actions button')[1],old=b.textContent;b.textContent='저장됨 ✓';setTimeout(()=>b.textContent=old,900);
+}
+function getVisibleMatchItem(id){return VISIBLE_MATCH_ITEMS.find(x=>x.id===id)}
+function getInvisibleMatchItem(id){return INVISIBLE_MATCH_ITEMS.find(x=>x.id===id)}
+function setMatchStatus(html){const el=document.getElementById('matchStatus');if(el)el.innerHTML=html}
+function renderMatchBanks(){
+  const left=document.getElementById('visibleBank'),right=document.getElementById('invisibleBank');
+  if(!left || !right)return;
+  left.innerHTML='';right.innerHTML='';
+  VISIBLE_MATCH_ITEMS.forEach(item=>{
+    const card=document.createElement('button');card.type='button';card.className='icon-card'+(selectedVisibleMatch===item.id?' selected':'');
+    card.innerHTML=`<span class="emoji">${item.icon}</span><span class="icon-copy"><b>${item.label}</b><span>${item.desc}</span></span>`;
+    card.onclick=()=>selectVisibleMatch(item.id);left.appendChild(card);
+  });
+  INVISIBLE_MATCH_ITEMS.forEach(item=>{
+    const card=document.createElement('button');card.type='button';card.className='icon-card';
+    card.innerHTML=`<span class="emoji">${item.icon}</span><span class="icon-copy"><b>${item.label}</b><span>${item.desc}</span></span>`;
+    card.onclick=()=>connectInvisibleMatch(item.id);right.appendChild(card);
+  });
+}
+function renderMatchList(){
+  const wrap=document.getElementById('matchList');if(!wrap)return;wrap.innerHTML='';
+  if(!behindMatches.length){
+    const empty=document.createElement('div');empty.className='match-empty';
+    empty.innerHTML='아직 연결된 아이콘이 없습니다.<br>예: <b>🚆 기차 → 🏛️ 행정</b>, <b>⚓ 항구 → 💱 무역</b>';
+    wrap.appendChild(empty);return;
+  }
+  behindMatches.forEach((m,idx)=>{
+    const v=getVisibleMatchItem(m.visible),inv=getInvisibleMatchItem(m.invisible);
+    const row=document.createElement('div');row.className='match-link';
+    const top=document.createElement('div');top.className='match-link-top';
+    top.innerHTML=`<span class="match-pill visible">${v.icon} ${v.label}</span><span class="match-arrow">↔</span><span class="match-pill invisible">${inv.icon} ${inv.label}</span>`;
+    row.appendChild(top);
+    const input=document.createElement('input');input.type='text';input.placeholder='왜 연결되나요? 예: 철도는 행정 통제와 이동 명령을 빠르게 한다.';input.value=m.note||'';
+    input.oninput=(e)=>updateMatchNote(idx,e.target.value);row.appendChild(input);
+    const mini=document.createElement('div');mini.className='match-mini-actions';
+    const btn=document.createElement('button');btn.type='button';btn.textContent='삭제';btn.onclick=()=>removeMatch(idx);mini.appendChild(btn);row.appendChild(mini);
+    wrap.appendChild(row);
+  });
+}
+function selectVisibleMatch(id){
+  selectedVisibleMatch=(selectedVisibleMatch===id?null:id);renderMatchBanks();
+  if(selectedVisibleMatch){const item=getVisibleMatchItem(selectedVisibleMatch);setMatchStatus(`<b>STEP 2</b> 이제 오른쪽에서 <b>${item.icon} ${item.label}</b>와 연결될 네트워크를 선택하세요.`)}
+  else{setMatchStatus('<b>STEP 1</b> 왼쪽 아이콘 하나를 먼저 선택하세요.')}
+}
+function connectInvisibleMatch(id){
+  if(!selectedVisibleMatch){setMatchStatus('<b>STEP 1</b> 왼쪽 아이콘을 먼저 선택한 뒤 오른쪽 아이콘을 눌러 연결하세요.');return;}
+  const exists=behindMatches.find(m=>m.visible===selectedVisibleMatch && m.invisible===id);
+  const v=getVisibleMatchItem(selectedVisibleMatch),inv=getInvisibleMatchItem(id);
+  if(!exists){behindMatches.push({visible:selectedVisibleMatch,invisible:id,note:''});persistBehindMatches();renderMatchList();}
+  selectedVisibleMatch=null;renderMatchBanks();
+  setMatchStatus(`<b>연결 완료</b> ${v.icon} ${v.label} ↔ ${inv.icon} ${inv.label} 가 추가되었습니다. 아래 카드에 이유를 적어 보세요.`);
+}
+function updateMatchNote(idx,val){if(behindMatches[idx]){behindMatches[idx].note=val;persistBehindMatches();}}
+function removeMatch(idx){behindMatches.splice(idx,1);persistBehindMatches();renderMatchList();setMatchStatus('<b>수정됨</b> 연결이 삭제되었습니다. 새로 매칭해 보세요.');}
+function persistBehindMatches(){localStorage.setItem('fogg_behind_matches',JSON.stringify(behindMatches));}
+function clearIconMatches(){
+  if(!confirm('아이콘 매칭만 초기화할까요?'))return;
+  behindMatches=[];selectedVisibleMatch=null;persistBehindMatches();renderMatchBanks();renderMatchList();setMatchStatus('<b>초기화됨</b> 아이콘 매칭이 비워졌습니다. 왼쪽 아이콘부터 다시 선택하세요.');
+}
+function autoFillMatchNotes(){
+  const visibleUnique=[...new Set(behindMatches.map(m=>m.visible))].map(id=>getVisibleMatchItem(id));
+  const visibleText=visibleUnique.length ? visibleUnique.map(item=>`- ${item.icon} ${item.label}: ${item.desc}`).join('\n') : '';
+  const invisibleText=behindMatches.length ? behindMatches.map(m=>{
+    const v=getVisibleMatchItem(m.visible),inv=getInvisibleMatchItem(m.invisible);
+    return `- ${v.icon} ${v.label} ↔ ${inv.icon} ${inv.label}${m.note ? ' : ' + m.note : ''}`;
+  }).join('\n') : '';
+  document.getElementById('behindVisible').value=visibleText;
+  document.getElementById('behindInvisible').value=invisibleText;
+  saveBehindSynthesis(true);
+  setMatchStatus('<b>자동 정리 완료</b> 아이콘 매칭 내용이 아래 텍스트 칸에 반영되었습니다. 표현을 더 다듬어 보세요.');
+}
+function loadBehindLab(){
+  for(let i=1;i<=8;i++){const el=document.getElementById('behindThink'+i);if(el)el.value=localStorage.getItem('fogg_behind_think_'+i)||'';}
+  document.getElementById('behindVisible').value=localStorage.getItem('fogg_behind_visible')||'';
+  document.getElementById('behindInvisible').value=localStorage.getItem('fogg_behind_invisible')||'';
+  document.getElementById('behindFinal').value=localStorage.getItem('fogg_behind_final')||'';
+  try{behindMatches=JSON.parse(localStorage.getItem('fogg_behind_matches')||'[]');if(!Array.isArray(behindMatches))behindMatches=[];}catch(e){behindMatches=[]}
+  renderMatchBanks();renderMatchList();
+}
+function saveBehindSynthesis(silent=false){
+  localStorage.setItem('fogg_behind_visible',document.getElementById('behindVisible').value);
+  localStorage.setItem('fogg_behind_invisible',document.getElementById('behindInvisible').value);
+  localStorage.setItem('fogg_behind_final',document.getElementById('behindFinal').value);
+  persistBehindMatches();
+  if(!silent){const b=document.querySelector('#behindView button.primary'),old=b.textContent;b.textContent='저장됨 ✓';setTimeout(()=>b.textContent=old,900);}
+}
+function clearBehindLab(){
+  if(!confirm('Behind the Journey Lab의 학생 작성 내용을 모두 지울까요?'))return;
+  for(let i=1;i<=8;i++){localStorage.removeItem('fogg_behind_think_'+i);const el=document.getElementById('behindThink'+i);if(el)el.value='';const a=document.getElementById('behindAnswer'+i);if(a)a.classList.remove('open');}
+  ['visible','invisible','final','matches'].forEach(k=>localStorage.removeItem('fogg_behind_'+k));
+  document.getElementById('behindVisible').value='';document.getElementById('behindInvisible').value='';document.getElementById('behindFinal').value='';
+  behindMatches=[];selectedVisibleMatch=null;renderMatchBanks();renderMatchList();setMatchStatus('<b>초기화됨</b> 왼쪽 아이콘 하나를 먼저 선택하세요.');
+}
+
 restoreJourneyMissions();
 renderTimeline();
 selectStop(1);
 loadFeasLab();
+loadHistoryLab();
+loadBehindLab();
 </script>
 </body>
 </html>
