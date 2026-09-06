@@ -1,0 +1,7 @@
+group,rows,positive,negative,file
+A,2000,1000,1000,imdb_group_A.csv
+B,2000,1000,1000,imdb_group_B.csv
+C,2000,1000,1000,imdb_group_C.csv
+D,2000,1000,1000,imdb_group_D.csv
+E,2000,1000,1000,imdb_group_E.csv
+F,2000,1000,1000,imdb_group_F.csv
