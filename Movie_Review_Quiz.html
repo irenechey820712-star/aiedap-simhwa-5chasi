@@ -61,7 +61,7 @@ a{color:var(--accent2)}
     <span class="brand">🎮 Movie Review Quiz</span>
     <span class="nav-links">
       <a href="index.html">실습 허브</a>
-      <a href="Movie_Review_Corpus_Lab.html">Corpus Lab</a>
+      <a href="Movie_Review_Corpus_Lab.html" id="navLabLink">Corpus Lab</a>
     </span>
     <span class="nav-groups" id="navGroups"><span class="small">조 선택</span></span>
     <label class="upload" for="fileInput">CSV 업로드<input id="fileInput" type="file" accept=".csv,.txt" hidden></label>
@@ -118,6 +118,7 @@ a{color:var(--accent2)}
   function setActiveGroup(g){
     selectedGroup = g;
     document.querySelectorAll(".gbtn").forEach(b=>b.classList.toggle("active", b.dataset.g === g));
+    $("navLabLink").href = "Movie_Review_Corpus_Lab.html?group=" + g;
   }
 
   function urlGroup(){

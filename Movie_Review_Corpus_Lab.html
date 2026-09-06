@@ -60,12 +60,30 @@ th{position:sticky;top:0;background:#1d222b;z-index:2}
 @media(max-width:720px){.split{grid-template-columns:1fr}}
 .footer{color:var(--muted);font-size:12px;padding:24px;text-align:center}
 hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+
+.topnav{position:sticky;top:0;z-index:60;background:rgba(17,21,27,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:12px 22px}
+.nav-inner .brand{font-weight:800;letter-spacing:-.5px;font-size:16px;white-space:nowrap}
+.nav-menu{display:flex;flex-wrap:wrap;gap:6px}
+.nav-menu a{font-size:13px;font-weight:700;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid transparent}
+.nav-menu a:hover{color:var(--text);border-color:var(--line)}
+.nav-menu a.active{background:var(--accent);color:#111}
 </style>
 </head>
 <body>
+<nav class="topnav">
+  <div class="nav-inner">
+    <span class="brand">🎬 Movie Review Lab</span>
+    <span class="nav-menu">
+      <a href="index.html">실습 허브</a>
+      <a href="Movie_Review_Corpus_Lab.html" class="active">Corpus Lab</a>
+      <a href="Movie_Review_Quiz.html" id="navQuizLink">🎮 Movie Review Quiz</a>
+    </span>
+  </div>
+</nav>
 <header>
   <h1>🎬 Movie Review Corpus Lab</h1>
-  <p>영화 리뷰를 데이터로 읽는 클릭형 실습실 · 빈도 → 비교 → KWIC → 근거 검증 → 자기언어화</p>
+  <p>영화 리뷰를 데이터로 읽는 클릭형 실습실 · 빈도 → 비교 → KWIC → 근거 검증 → 영화 추천 → 자기언어화</p>
 </header>
 
 <div class="wrap">
@@ -252,9 +270,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       </div>
     </div>
     <p class="small" style="margin-top:10px">
-      🎮 리뷰만 보고 영화를 맞히는 <b>Movie Review Quiz</b>는 별도 페이지로 분리했습니다 →
-      <a href="Movie_Review_Quiz.html" style="color:var(--accent2)"><b>Movie_Review_Quiz.html 열기</b></a>
-      (같은 <code>?group=</code> 파라미터 사용)
+      🎮 리뷰만 보고 영화를 맞히는 퀴즈는 상단 메뉴의 <b>Movie Review Quiz</b>에서 (같은 조 데이터 사용).
     </p>
   </section>
 
@@ -318,6 +334,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       rows = parsed;
       corpusCache = null;
       movieFilter = "all";
+      $("navQuizLink").href = "Movie_Review_Quiz.html?group=" + g;
       $("groupState").textContent = "READY";
       $("groupState").style.color = "var(--pos)";
       $("loadStatus").innerHTML =
