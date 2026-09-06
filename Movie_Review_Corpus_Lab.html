@@ -509,7 +509,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     const header = records[0].map(x=>x.trim().toLowerCase());
     const reviewIdx = header.findIndex(x=>["review","text","document","content","comment"].includes(x));
     const labelIdx  = header.findIndex(x=>["label","sentiment","rating","score"].includes(x));
-    const movieIdx  = header.findIndex(x=>["movie","title","film","group"].includes(x));
+    const movieIdx  = header.findIndex(x=>["movie","title","film"].includes(x));
     if(reviewIdx < 0 || labelIdx < 0) throw new Error("review/text 열과 label/sentiment 열을 찾지 못했습니다.");
     const out=[];
     for(let i=1;i<records.length;i++){

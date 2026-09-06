@@ -4,11 +4,10 @@
 
 ```text
 repo/
-├─ index.html
-├─ build_group_shards.py
+├─ Movie_Review_Corpus_Lab.html
+├─ build_group_shards.py        # 표준 라이브러리만 사용 (pandas 불필요)
 └─ data/
-   ├─ imdb50k.csv
-   ├─ imdb_group_A.csv
+   ├─ imdb_group_A.csv          # 열: review,label,movie,group
    ├─ imdb_group_B.csv
    ├─ imdb_group_C.csv
    ├─ imdb_group_D.csv
@@ -17,29 +16,35 @@ repo/
    └─ group_manifest.csv
 ```
 
-## 사용 순서
+## 데이터 재생성
 
-1. 기존 `data/imdb50k.csv` 준비
-2. `python build_group_shards.py`
-3. 생성된 A~F CSV를 GitHub에 push
-4. `Movie_Review_Corpus_Lab.html`을 `index.html`로 올리기
-5. GitHub Pages 활성화
+```bash
+python build_group_shards.py .        # ./data/ 아래에 생성
+```
 
-## 조별 링크 예시
+스크립트가 자동으로:
+1. Stanford Large Movie Review Dataset v1 다운로드 (~84 MB)
+2. 각 리뷰의 IMDb 영화 ID를 추출
+3. IMDb 공식 데이터셋(`title.basics.tsv.gz`, ~226 MB)으로 **영화 제목 매핑**
+4. `data/imdb_group_A~F.csv` + `group_manifest.csv` 생성
 
-- A조: `https://USERNAME.github.io/REPO/?group=A`
-- B조: `https://USERNAME.github.io/REPO/?group=B`
-- C조: `https://USERNAME.github.io/REPO/?group=C`
-- D조: `https://USERNAME.github.io/REPO/?group=D`
-- E조: `https://USERNAME.github.io/REPO/?group=E`
-- F조: `https://USERNAME.github.io/REPO/?group=F`
+다운로드 파일은 스크립트 폴더에 캐시되어 재실행 시 다시 받지 않습니다.
+이미 `data/` CSV가 커밋되어 있으므로 **보통은 다시 돌릴 필요가 없습니다.**
 
-각 링크는 해당 조 CSV만 자동으로 읽습니다.
+## 조별 링크
+
+| 조 | 링크 |
+|---|---|
+| A | `https://USERNAME.github.io/REPO/Movie_Review_Corpus_Lab.html?group=A` |
+| B~F | 위에서 `?group=B` … `?group=F` |
+
+각 링크는 해당 조 CSV만 자동으로 내려받습니다.
+「🧑‍🏫 강사용 6개 조 비교」 버튼은 A~F 6개 조를 한 번에 로드합니다.
 
 ## 구성
 
-- 조당 2,000개
-- Positive 1,000
-- Negative 1,000
-- A~F 서로 겹치지 않는 표본
-- 난수 시드 고정 → 재생성해도 동일한 분할
+- 조당 2,000개 = Positive 1,000 + Negative 1,000
+- A~F 서로 겹치지 않는 표본, 난수 시드 고정 → 재생성해도 동일 분할
+- 각 리뷰에 **영화 제목(연도)** 포함 — 데이터 표·KWIC 뷰어에 표시됨
+- 조당 약 1,500편의 서로 다른 영화 (영화당 최대 30개 리뷰, Stanford 데이터셋 규칙)
+- IMDb에서 병합·삭제된 옛 ID(약 5%)는 `IMDb tt0000000` 형태로 표기
