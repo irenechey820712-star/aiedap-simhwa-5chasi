@@ -83,7 +83,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 </nav>
 <header>
   <h1>🎬 Movie Review Corpus Lab</h1>
-  <p>영화 리뷰를 데이터로 읽는 클릭형 실습실 · 빈도 → 비교 → KWIC → 근거 검증 → 영화 추천 → 자기언어화</p>
+  <p>영화 리뷰를 데이터로 읽는 클릭형 실습실 · 빈도 → 비교 → KWIC → 근거 검증 → 영화별 프로필 → 자기언어화</p>
 </header>
 
 <div class="wrap">
@@ -252,26 +252,25 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     </section>
   </div>
 
-  <section id="recoSection" class="card" style="margin-top:16px">
-    <h2>6. RECOMMEND · 영화 추천 마이닝</h2>
+  <section id="lensSection" class="card" style="margin-top:16px">
+    <h2>6. MOVIE LENS · 영화별 리뷰 프로필</h2>
     <p class="small">
-      리뷰에 자주 나오는 <b>추천·호평 신호어</b>(<code>recommend</code>, <code>must see</code>, <code>masterpiece</code> …)와
-      <b>감독·연출 언급어</b>(<code>director</code>, <code>direction</code> …)를 골라, 이 조 데이터가 실제로 미는 영화를 순위로 만듭니다.
+      이 조 데이터에 담긴 <b>대중적인 영화</b>들이 리뷰에서 어떻게 이야기되는지 시각화합니다 —
+      왼쪽 <b>호감도 막대</b>(긍정 vs 부정)에서 영화를 클릭하면, 오른쪽에 그 영화 리뷰의 <b>특징어 워드클라우드</b>가 뜹니다.
     </p>
     <div class="split">
       <div>
-        <h3 style="margin:6px 0">추천·호평 신호어 빈도</h3>
-        <div id="recoCueChart" class="chart"></div>
-        <div id="recoDirMeta" class="small" style="margin-top:8px"></div>
+        <h3 style="margin:6px 0">영화 호감도 (긍정 ▮ vs 부정 ▮)</h3>
+        <div id="lensRank" class="chart" style="max-height:460px;overflow:auto"></div>
       </div>
       <div>
-        <h3 style="margin:6px 0">이 데이터가 추천하는 영화 TOP 15</h3>
-        <div id="recoList" style="max-height:460px;overflow:auto"></div>
+        <h3 style="margin:6px 0" id="lensTitle">영화를 선택하세요</h3>
+        <div id="lensMeta" class="small" style="margin-bottom:8px"></div>
+        <div id="lensCloud" class="cloud"></div>
+        <div id="lensQuote" class="small" style="margin-top:10px;color:var(--text)"></div>
+        <p class="small" style="margin-top:8px">단어를 클릭하면 KWIC 원문 검증으로 연결됩니다. 🎮 리뷰로 영화 맞히기 퀴즈는 상단 메뉴에서.</p>
       </div>
     </div>
-    <p class="small" style="margin-top:10px">
-      🎮 리뷰만 보고 영화를 맞히는 퀴즈는 상단 메뉴의 <b>Movie Review Quiz</b>에서 (같은 조 데이터 사용).
-    </p>
   </section>
 
   <section id="teacherCompareSection" class="card" style="margin-top:16px;display:none">
@@ -747,76 +746,96 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     $("posKpi").textContent=rows.filter(r=>r.sentiment==="positive").length.toLocaleString();
     $("negKpi").textContent=rows.filter(r=>r.sentiment==="negative").length.toLocaleString();
     renderMovieChips(); renderTable(); analyze();
-    mineRecommendations();
+    renderMovieLens();
   }
 
-  // ---- RECOMMEND MINING ----
-  const RECO_CUES = [
-    "highly recommend","would recommend","i recommend","recommend it","recommend this",
-    "recommended","must see","must-see","must watch","must-watch","don't miss","do not miss",
-    "worth watching","worth a watch","worth seeing","a masterpiece","masterpiece","a gem",
-    "hidden gem","one of the best","one of my favorite","one of my favourite","my favorite film",
-    "my favourite film","instant classic","absolutely brilliant","truly brilliant","brilliant film",
-    "unforgettable","see this film","see this movie","a must"
-  ];
-  const DIR_CUES = ["directed by","direction","director","directorial","filmmaker","cinematography"];
+  // ---- MOVIE LENS ----
+  let lensMovie = null;
 
-  function firstSentenceAround(review, cue){
-    const lc = review.toLowerCase();
-    const at = lc.indexOf(cue);
-    if(at < 0) return "";
-    let s = review.lastIndexOf(".", at); s = s < 0 ? 0 : s + 1;
-    let e = review.indexOf(".", at + cue.length); e = e < 0 ? review.length : e + 1;
-    return review.slice(s, e).trim().replace(/\s+/g," ");
+  function renderMovieLens(){
+    const box = $("lensRank");
+    const fam = [...new Set(rows.filter(r=>r.famous).map(r=>r.movie))];
+    if(fam.length < 2){
+      box.innerHTML = '<div class="small">이 조에는 대중적 영화 데이터가 부족합니다. 조 데이터를 불러오세요.</div>';
+      $("lensCloud").innerHTML = ""; $("lensTitle").textContent = "영화를 선택하세요";
+      $("lensMeta").textContent = ""; $("lensQuote").textContent = ""; lensMovie = null;
+      return;
+    }
+    const stats = fam.map(m=>{
+      const rs = rows.filter(r=>r.movie===m);
+      const pos = rs.filter(r=>r.sentiment==="positive").length;
+      return {movie:m, pos, neg:rs.length-pos, total:rs.length, ratio: pos/rs.length};
+    }).sort((a,b)=> b.ratio-a.ratio || b.total-a.total);
+
+    box.innerHTML = "";
+    stats.forEach(s=>{
+      const row = document.createElement("div");
+      row.style.cssText = "display:grid;grid-template-columns:120px 1fr 42px;gap:8px;align-items:center;cursor:pointer;margin-bottom:5px";
+      row.dataset.movie = s.movie;
+      const name = document.createElement("div");
+      name.className = "word"; name.textContent = s.movie.replace(/\s*\(\d{4}\)\s*$/,""); name.title = s.movie;
+      const wrap = document.createElement("div");
+      wrap.style.cssText = "display:flex;height:16px;border-radius:999px;overflow:hidden;background:#11151b";
+      const p = document.createElement("div"); p.style.cssText = `width:${s.ratio*100}%;background:var(--pos)`;
+      const n = document.createElement("div"); n.style.cssText = `width:${(1-s.ratio)*100}%;background:var(--neg)`;
+      wrap.append(p,n);
+      const pct = document.createElement("div"); pct.className = "count"; pct.textContent = Math.round(s.ratio*100)+"%";
+      row.append(name, wrap, pct);
+      row.addEventListener("click", ()=>selectLensMovie(s.movie));
+      box.appendChild(row);
+    });
+
+    selectLensMovie(fam.includes(lensMovie) ? lensMovie : stats[0].movie);
   }
 
-  function mineRecommendations(){
-    if(!rows.length){ $("recoCueChart").innerHTML=""; $("recoList").innerHTML=""; $("recoDirMeta").textContent=""; return; }
-    const cueHits = new Map(RECO_CUES.map(c=>[c,0]));
-    const perMovie = new Map();
-    let dirReviews = 0;
-
-    rows.forEach(r=>{
-      const t = r.review.toLowerCase();
-      const m = perMovie.get(r.movie) || {reco:0,total:0,pos:0,neg:0,cues:new Set(),sample:""};
-      m.total++; if(r.sentiment==="positive") m.pos++; else m.neg++;
-      if(DIR_CUES.some(c=>t.includes(c))) dirReviews++;
-      const matched = RECO_CUES.filter(c=>t.includes(c));
-      matched.forEach(c=>cueHits.set(c, cueHits.get(c)+1));
-      if(matched.length && r.sentiment==="positive"){
-        m.reco++;
-        matched.forEach(c=>m.cues.add(c));
-        if(!m.sample) m.sample = firstSentenceAround(r.review, matched[0]);
-      }
-      perMovie.set(r.movie, m);
+  function selectLensMovie(movie){
+    lensMovie = movie;
+    document.querySelectorAll("#lensRank > div").forEach(el=>{
+      el.style.outline = el.dataset.movie===movie ? "2px solid var(--accent)" : "none";
+      el.style.outlineOffset = "2px";
     });
-
-    const cueArr = [...cueHits.entries()].filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,18);
-    renderChart($("recoCueChart"), cueArr, "diffb");
-    $("recoDirMeta").innerHTML = `🎬 감독·연출 언급 리뷰: <b>${dirReviews.toLocaleString()}개</b> ` +
-      `<span class="small">(${DIR_CUES.join(", ")})</span>`;
-
-    const ranked = [...perMovie.entries()]
-      .filter(([,v])=>v.reco>=2)
-      .sort((a,b)=> b[1].reco - a[1].reco || (b[1].pos/b[1].total)-(a[1].pos/a[1].total))
-      .slice(0,15);
-
-    $("recoList").innerHTML = ranked.length ? ranked.map(([mv,v],i)=>`
-      <div class="kwicItem reco-row" data-movie="${esc(mv)}" style="cursor:pointer">
-        <b>${i+1}. ${esc(mv)}</b>
-        <span class="small">· 추천 신호 리뷰 ${v.reco}개 / 이 조 리뷰 ${v.total}개 · <span class="pos">긍정 ${v.pos}</span> <span class="neg">부정 ${v.neg}</span></span><br>
-        <span class="small">신호어: ${[...v.cues].slice(0,7).map(esc).join(" · ")}</span><br>
-        <span class="small" style="color:var(--text)">“${esc((v.sample||"").slice(0,240))}”</span>
-      </div>`).join("")
-      : '<div class="small">추천 신호어가 2회 이상 나온 영화가 아직 없습니다. 조 데이터를 불러오세요.</div>';
-
-    document.querySelectorAll(".reco-row").forEach(el=>{
-      el.addEventListener("click",()=>{
-        movieFilter = el.dataset.movie;
-        renderMovieChips(); renderTable();
-        $("reviewBody").scrollIntoView({behavior:"smooth",block:"center"});
-      });
+    const mine = rows.filter(r=>r.movie===movie);
+    const other = rows.filter(r=>r.movie!==movie);
+    const stop = getStop();
+    const count = arr=>{
+      const m = new Map(); let tot = 0;
+      arr.forEach(r=>tokenize(r.review).forEach(w=>{
+        if(w.length>=4 && !stop.has(w)){ m.set(w,(m.get(w)||0)+1); tot++; }
+      }));
+      return {m, tot};
+    };
+    const A = count(mine), B = count(other);
+    const scored = [];
+    A.m.forEach((c,w)=>{
+      if(c < 2) return;
+      const pr = c/(A.tot||1), nr = (B.m.get(w)||0)/(B.tot||1);
+      scored.push([w, Math.log((pr+1e-6)/(nr+1e-6)), c]);
     });
+    scored.sort((a,b)=> b[1]-a[1]);
+    const top = scored.slice(0, 40);
+
+    const cloud = $("lensCloud"); cloud.innerHTML = "";
+    const maxc = Math.max(1, ...top.map(x=>x[2]));
+    top.forEach(([w,,c])=>{
+      const re = new RegExp("\\b"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b","i");
+      const posN = mine.filter(r=>r.sentiment==="positive" && re.test(r.review)).length;
+      const negN = mine.filter(r=>r.sentiment==="negative" && re.test(r.review)).length;
+      const s = document.createElement("span");
+      s.textContent = w;
+      s.style.fontSize = (13 + c/maxc*26) + "px";
+      s.style.color = posN>=negN ? "var(--pos)" : "var(--neg)";
+      s.title = `${w} · ${c}회 (긍정 ${posN} / 부정 ${negN})`;
+      s.addEventListener("click", ()=>{ $("keyword").value = w; runKwic(); });
+      cloud.appendChild(s);
+    });
+    if(!top.length) cloud.innerHTML = '<span class="small">이 영화의 리뷰가 적어 특징어를 뽑기 어렵습니다.</span>';
+
+    const pos = mine.filter(r=>r.sentiment==="positive").length;
+    const yr = (movie.match(/\((\d{4})\)/)||[])[1] || "?";
+    $("lensTitle").textContent = movie.replace(/\s*\(\d{4}\)\s*$/,"");
+    $("lensMeta").innerHTML = `개봉 ${yr} · 이 조 리뷰 ${mine.length}개 · <span class="pos">긍정 ${pos}</span> / <span class="neg">부정 ${mine.length-pos}</span>`;
+    const rep = mine.filter(r=>r.sentiment==="positive").sort((a,b)=>a.review.length-b.review.length)[0] || mine[0];
+    $("lensQuote").innerHTML = rep ? `“${esc(rep.review.split(/(?<=[.!?])\s/)[0].slice(0,220))}”` : "";
   }
 
   $("resetBtn").addEventListener("click",()=>{rows=[];corpusCache=null;hfResume.train.clear();hfResume.test.clear();$("totalKpi").textContent=$("posKpi").textContent=$("negKpi").textContent=$("vocabKpi").textContent="0";["posChart","negChart","diffChart","posCloud","negCloud","kwicList","reviewBody"].forEach(id=>$(id).innerHTML="");$("loadStatus").textContent="현재: 데이터 없음";$("progressWrap").style.display="none";});
