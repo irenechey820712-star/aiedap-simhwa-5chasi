@@ -73,37 +73,40 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     <h2>1. DATA · 리뷰 데이터 불러오기</h2>
     <div class="split" style="margin-bottom:10px">
       <div>
-        <label>영화별 샘플 선택</label>
-        <select id="movieSelect">
-          <option value="all">전체 영화 샘플</option>
-          <option value="The Shawshank Redemption">The Shawshank Redemption</option>
-          <option value="Titanic">Titanic</option>
-          <option value="The Dark Knight">The Dark Knight</option>
-          <option value="La La Land">La La Land</option>
-          <option value="Parasite">Parasite</option>
-          <option value="Avatar">Avatar</option>
+        <label>조별 IMDb Corpus</label>
+        <select id="groupSelect">
+          <option value="A">A조</option>
+          <option value="B">B조</option>
+          <option value="C">C조</option>
+          <option value="D">D조</option>
+          <option value="E">E조</option>
+          <option value="F">F조</option>
         </select>
       </div>
       <div>
-        <label>샘플 구성</label>
-        <div class="callout" style="padding:9px 11px">각 영화당 <b>10개 리뷰</b> · 긍정 5 + 부정 5</div>
+        <label>조별 구성</label>
+        <div class="callout" style="padding:9px 11px">
+          각 조 <b>2,000개</b> · Positive 1,000 + Negative 1,000
+        </div>
       </div>
     </div>
+
     <div class="controls">
-      <button id="sampleBtn">선택 영화 샘플 불러오기</button>
-      <button id="imdb50kBtn" class="blue">🎬 IMDb 50K 자동 불러오기</button>
-      <button id="githubOnlyBtn" class="secondary">① GitHub 자체호스팅만 테스트</button>
-      <button id="hfOnlyBtn" class="secondary">② Hugging Face fallback만 테스트</button>
+      <button id="groupLoadBtn" class="blue">👥 우리 조 IMDb 2,000 불러오기</button>
+      <button id="teacherCompareBtn" class="secondary">🧑‍🏫 강사용 6개 조 비교</button>
+      <label class="btn secondary" for="fileInput">CSV/TXT 직접 업로드</label>
       <label class="btn secondary" for="fileInput">③ CSV/TXT 직접 업로드</label>
       <input id="fileInput" type="file" accept=".csv,.tsv,.txt" hidden>
       <button id="resetBtn" class="secondary">초기화</button>
-      <button id="clearRemoteBtn" class="secondary">IMDb 이어받기 캐시 지우기</button>
     </div>
-    <p class="small">3중 안전장치: <b>① 같은 GitHub Pages의 <code>data/imdb50k.csv</code></b> → 실패 시 <b>② Hugging Face Dataset Viewer API</b> → 마지막으로 <b>③ 사용자가 CSV/TXT 직접 업로드</b>. 권장 열은 <b>review/text/document</b> + <b>label/sentiment/rating</b>입니다.</p>
+    <p class="small">
+    기본 수업 모드는 <b>조별 shard</b>입니다. URL에 <code>?group=A</code> ~ <code>?group=F</code>가 있으면 해당 조를 자동 선택합니다.
+    각 조는 <code>data/imdb_group_A.csv</code> 같은 자기 파일만 내려받습니다. 직접 업로드는 비상용으로 유지됩니다.
+    </p>
     <div id="loadStatus" class="callout" style="margin-top:10px" aria-live="polite">현재: 수업용 샘플 데이터</div>
     <div id="sourceHealth" class="split" style="margin-top:10px">
-      <div class="kpi"><b id="ghState">미확인</b><span>① GitHub /data/imdb50k.csv</span></div>
-      <div class="kpi"><b id="hfState">미확인</b><span>② Hugging Face API</span></div>
+      <div class="kpi"><b id="groupState">미확인</b><span>조별 shard 상태</span></div>
+      <div class="kpi"><b id="groupFileState">-</b><span>현재 조 파일</span></div>
     </div>
     <div id="progressWrap" style="display:none;margin-top:10px">
       <div class="barbg" style="height:12px"><div id="loadProgress" class="bar diffb" style="width:0%"></div></div>
@@ -227,19 +230,144 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       </div>
     </section>
   </div>
+
+  <section id="teacherCompareSection" class="card" style="margin-top:16px;display:none">
+    <h2>6. TEACHER COMPARE · 6개 조 결과 비교</h2>
+    <p class="small">A~F조의 shard를 순차적으로 읽어 각 조의 Positive/Negative 특징어를 비교합니다. 강사 화면에서만 사용하세요.</p>
+    <div id="teacherStatus" class="callout">비교 준비</div>
+    <div class="tablewrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>조</th><th>리뷰 수</th><th>Positive 특징어</th><th>Negative 특징어</th></tr></thead>
+        <tbody id="teacherBody"></tbody>
+      </table>
+    </div>
+  </section>
+
 </div>
 
-<div class="footer">Movie Review Corpus Lab · Source priority: GitHub self-hosted → Hugging Face fallback → local upload · Stanford IMDb (Maas et al., 2011)</div>
+<div class="footer">Movie Review Corpus Lab · Group-sharded IMDb corpus · A–F groups · 2,000 reviews per group</div>
 
 <script>
 (() => {
   const STOP = new Set(("a,an,the,and,or,but,if,then,than,to,of,in,on,for,with,at,by,from,up,about,into,over,after,before,is,am,are,was,were,be,been,being,have,has,had,do,does,did,can,could,will,would,should,may,might,must,i,you,he,she,it,we,they,me,him,her,us,them,my,your,his,its,our,their,this,that,these,those,as,not,no,so,too,very,just,there,here,what,which,who,whom,when,where,why,how,all,any,both,each,few,more,most,other,some,such,only,own,same,again,further,once").split(","));
   let rows = [];
   let corpusCache = null;
-  const LOCAL_IMDB_CSV = "data/imdb50k.csv";
-  const HF_ROWS_API = "https://datasets-server.huggingface.co/rows";
-  const HF_DATASET = "stanfordnlp/imdb";
-  const HF_CONFIG = "plain_text";
+  const hfResume = { train: new Set(), test: new Set() };
+  const GROUPS = ["A","B","C","D","E","F"];
+  const GROUP_SIZE = 2000;
+  const groupFile = g => `data/imdb_group_${g}.csv`;
+
+
+  function getUrlGroup(){
+    const g = new URLSearchParams(location.search).get("group");
+    if(!g) return null;
+    const up = g.trim().toUpperCase();
+    return GROUPS.includes(up) ? up : null;
+  }
+
+  function selectedGroup(){
+    return $("groupSelect").value;
+  }
+
+  async function loadGroupShard(group = selectedGroup()){
+    const g = String(group).toUpperCase();
+    if(!GROUPS.includes(g)) throw new Error("유효한 조는 A~F입니다.");
+
+    $("groupSelect").value = g;
+    $("groupState").textContent = "불러오는 중";
+    $("groupFileState").textContent = groupFile(g);
+    $("loadStatus").innerHTML = `<b>${g}조</b> shard를 불러오는 중...`;
+    setProgress(8, `${g}조 데이터 요청 중...`);
+
+    try{
+      const res = await fetch(groupFile(g), {cache:"no-store"});
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      const parsed = parseCSVRobust(text);
+      if(parsed.length < 100){
+        throw new Error(`리뷰 수가 너무 적습니다: ${parsed.length}`);
+      }
+      rows = parsed;
+      corpusCache = null;
+      $("groupState").textContent = "READY";
+      $("groupState").style.color = "var(--pos)";
+      $("loadStatus").innerHTML =
+        `<b>${g}조 shard 로드 완료</b> · ${rows.length.toLocaleString()} reviews`;
+      setProgress(96, "분석 중...");
+      refresh();
+      setProgress(100, `${g}조 완료 · ${rows.length.toLocaleString()}개`);
+      return true;
+    }catch(err){
+      $("groupState").textContent = "FAIL";
+      $("groupState").style.color = "var(--neg)";
+      $("loadStatus").innerHTML =
+        `<b>${g}조 데이터 불러오기 실패</b> · ${err.message}<br>` +
+        `<span class="small">GitHub에 ${groupFile(g)} 파일이 있는지 확인하거나 CSV/TXT 직접 업로드를 사용하세요.</span>`;
+      setProgress(0, "조별 파일 확인 필요");
+      return false;
+    }
+  }
+
+  function topDistinctiveWordsForRows(inputRows, topN=8){
+    const stop = getStop();
+    const minLen = Math.max(1, Number($("minLen").value)||3);
+    const pm=new Map(), nm=new Map();
+    let pt=0, nt=0;
+    for(const r of inputRows){
+      const target=r.sentiment==="positive"?pm:nm;
+      for(const w of tokenize(r.review)){
+        if(w.length>=minLen && !stop.has(w)){
+          target.set(w,(target.get(w)||0)+1);
+          if(r.sentiment==="positive") pt++; else nt++;
+        }
+      }
+    }
+    const vocab=new Set([...pm.keys(),...nm.keys()]);
+    const diffs=[];
+    for(const w of vocab){
+      const pr=(pm.get(w)||0)/(pt||1);
+      const nr=(nm.get(w)||0)/(nt||1);
+      diffs.push([w,pr-nr]);
+    }
+    diffs.sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+    return {
+      positive: diffs.filter(x=>x[1]>0).slice(0,topN).map(x=>x[0]),
+      negative: diffs.filter(x=>x[1]<0).slice(0,topN).map(x=>x[0]),
+    };
+  }
+
+  async function loadAllGroupsForTeacher(){
+    const sec=$("teacherCompareSection");
+    const body=$("teacherBody");
+    sec.style.display="block";
+    body.innerHTML="";
+    $("teacherStatus").textContent="A~F조 데이터를 비교하는 중...";
+    let ok=0;
+
+    for(const g of GROUPS){
+      try{
+        const res=await fetch(groupFile(g),{cache:"no-store"});
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text=await res.text();
+        const parsed=parseCSVRobust(text);
+        const d=topDistinctiveWordsForRows(parsed,8);
+        const tr=document.createElement("tr");
+        tr.innerHTML=`<td><b>${g}조</b></td>
+          <td>${parsed.length.toLocaleString()}</td>
+          <td>${d.positive.join(", ")}</td>
+          <td>${d.negative.join(", ")}</td>`;
+        body.appendChild(tr);
+        ok++;
+        $("teacherStatus").textContent=`비교 중 · ${ok}/6 조 완료`;
+      }catch(err){
+        const tr=document.createElement("tr");
+        tr.innerHTML=`<td><b>${g}조</b></td><td colspan="3">불러오기 실패 · ${err.message}</td>`;
+        body.appendChild(tr);
+      }
+    }
+    $("teacherStatus").textContent=`완료 · ${ok}/6개 조 비교`;
+    sec.scrollIntoView({behavior:"smooth",block:"start"});
+  }
 
   const sample = [
     ["The Shawshank Redemption","A deeply moving story about hope, friendship, and endurance. The performances are excellent.",1],
@@ -345,271 +473,54 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
   }
 
 
-  const hfResume = {
-    train: new Map(),
-    test: new Map()
-  };
-
-  function sleep(ms){
-    return new Promise(r => setTimeout(r, ms));
-  }
-
-  async function fetchRowsSlice(split, offset, length=100, attempt=1){
-    const url = `${HF_ROWS_API}?dataset=${encodeURIComponent(HF_DATASET)}&config=${encodeURIComponent(HF_CONFIG)}&split=${encodeURIComponent(split)}&offset=${offset}&length=${length}`;
-    try{
-      const controller = new AbortController();
-      const timeout = setTimeout(()=>controller.abort(), 20000);
-
-      const res = await fetch(url, {
-        cache:"no-store",
-        signal:controller.signal
-      });
-
-      clearTimeout(timeout);
-
-      if(!res.ok){
-        if([429,500,502,503,504].includes(res.status)){
-          throw new Error(`HTTP ${res.status}`);
-        }
-        throw new Error(`HTTP ${res.status}`);
-      }
-
-      const json = await res.json();
-      if(!Array.isArray(json.rows)) throw new Error("rows 응답 형식 오류");
-
-      const parsed = json.rows.map(x => x.row);
-      hfResume[split].set(offset, parsed);
-      return parsed;
-
-    }catch(err){
-      const msg = err?.name === "AbortError" ? "request timeout" : (err?.message || String(err));
-
-      if(attempt < 7){
-        const backoff = Math.min(12000, 800 * (2 ** (attempt-1))) + Math.floor(Math.random()*400);
-        setProgress(
-          split === "train" ? 20 : 60,
-          `${split} offset ${offset.toLocaleString()} 재시도 ${attempt}/6 · ${Math.round(backoff/1000)}초 후`
-        );
-        await sleep(backoff);
-        return fetchRowsSlice(split, offset, length, attempt+1);
-      }
-
-      throw new Error(`${split} offset ${offset}: ${msg}`);
-    }
-  }
-
-  async function fetchSplit25k(split, progressStart, progressEnd){
-    const offsets = [];
-    for(let offset=0; offset<25000; offset+=100) offsets.push(offset);
-
-    const out = new Array(25000);
-    let completed = 0;
-
-    // Already downloaded slices are reused.
-    for(const [offset, slice] of hfResume[split].entries()){
-      for(let j=0;j<slice.length;j++) out[offset+j] = slice[j];
-      completed++;
-    }
-
-    const pending = offsets.filter(offset => !hfResume[split].has(offset));
-    let cursor = 0;
-
-    // Lower concurrency than the previous version to reduce rate-limit / fetch failures.
-    const concurrency = 4;
-
-    async function worker(){
-      while(true){
-        const idx = cursor++;
-        if(idx >= pending.length) return;
-
-        const offset = pending[idx];
-        const slice = await fetchRowsSlice(split, offset, 100);
-
-        for(let j=0;j<slice.length;j++){
-          out[offset+j] = slice[j];
-        }
-
-        completed++;
-
-        const ratio = completed / offsets.length;
-        const pct = progressStart + (progressEnd-progressStart)*ratio;
-        setProgress(
-          pct,
-          `${split} ${Math.min(25000, completed*100).toLocaleString()} / 25,000 · 저장된 조각 ${hfResume[split].size}/${offsets.length}`
-        );
-
-        // Brief pacing gap to avoid hammering the dataset server.
-        await sleep(120);
-      }
-    }
-
-    await Promise.all(Array.from({length:concurrency}, ()=>worker()));
-    return out.filter(Boolean);
-  }
-
-  async function testHuggingFaceConnection(){
-    const url = `${HF_ROWS_API}?dataset=${encodeURIComponent(HF_DATASET)}&config=${encodeURIComponent(HF_CONFIG)}&split=train&offset=0&length=1`;
-    const res = await fetch(url, {cache:"no-store"});
-    if(!res.ok) throw new Error(`Dataset API HTTP ${res.status}`);
-    const j = await res.json();
-    if(!j.rows || !j.rows.length) throw new Error("Dataset API 응답 없음");
-    return true;
-  }
-
-  async function loadStanford50k(){
-    const btn = $("imdb50kBtn");
-    btn.disabled = true;
-    btn.textContent = "불러오는 중...";
-    $("loadStatus").textContent = "Hugging Face Dataset Viewer API 연결을 확인하고 있습니다.";
-    setProgress(2, "연결 테스트 중...");
-
-    try{
-      await testHuggingFaceConnection();
-      setProgress(5, "연결 성공 · Train 25,000 준비 중...");
-
-      const train = await fetchSplit25k("train", 5, 48);
-
-      setProgress(50, "Train 완료 · Test 25,000 준비 중...");
-      const test = await fetchSplit25k("test", 50, 93);
-
-      setProgress(94, "50,000개 리뷰를 앱 데이터로 변환 중...");
-      const combined = train.concat(test);
-
-      rows = combined.map((r,i)=>({
-        id:i+1,
-        movie:"Stanford IMDb",
-        review:String(r.text ?? ""),
-        sentiment:Number(r.label) === 1 ? "positive" : "negative"
-      })).filter(r=>r.review && (r.sentiment==="positive" || r.sentiment==="negative"));
-
-      corpusCache = null;
-      setProgress(96, "빈도 분석 중...");
-      refresh();
-
-      const pos = rows.filter(r=>r.sentiment==="positive").length;
-      const neg = rows.filter(r=>r.sentiment==="negative").length;
-      setProgress(100, `완료 · ${rows.length.toLocaleString()}개 (Positive ${pos.toLocaleString()} / Negative ${neg.toLocaleString()})`);
-      $("hfState").textContent = "READY";
-      $("hfState").style.color = "var(--pos)";
-      $("loadStatus").innerHTML = `<b>② Hugging Face fallback 성공</b> · ${rows.length.toLocaleString()} reviews · Positive ${pos.toLocaleString()} / Negative ${neg.toLocaleString()}`;
-    }catch(err){
-      console.error(err);
-      const trainDone = hfResume.train.size * 100;
-      const testDone = hfResume.test.size * 100;
-      $("hfState").textContent = "FAIL";
-      $("hfState").style.color = "var(--neg)";
-      $("loadStatus").innerHTML =
-        `<b>② Hugging Face fallback 일시 중단</b> · ${String(err.message || err)}<br>` +
-        `<span class="small">현재 브라우저 메모리에 Train ${trainDone.toLocaleString()} / 25,000, ` +
-        `Test ${testDone.toLocaleString()} / 25,000이 보존되어 있습니다. 같은 버튼을 다시 누르면 ` +
-        `받은 구간은 건너뛰고 실패 지점부터 이어받습니다.</span>`;
-      setProgress(
-        Math.min(99, ((trainDone + testDone) / 50000) * 100),
-        "중단됨 · 같은 버튼을 다시 눌러 이어받기"
-      );
-    }finally{
-      btn.disabled = false;
-      btn.textContent = "🌐 Stanford IMDb 50,000 불러오기";
-    }
-  }
 
 
-  async function loadGitHubHosted50k(){
-    $("ghState").textContent = "확인 중";
-    $("ghState").className = "";
-    setProgress(5, "① GitHub 자체호스팅 data/imdb50k.csv 확인 중...");
-    try{
-      const res = await fetch(LOCAL_IMDB_CSV, {cache:"no-store"});
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      if(!text || text.length < 1000) throw new Error("CSV 파일이 비어 있거나 너무 작습니다.");
+  // (이전 버전의 Hugging Face 직접 로드 함수는 조별 shard 버전에서 제거됨 —
+  //  이 버전의 데이터 경로는 ① data/imdb_group_X.csv → ③ CSV/TXT 직접 업로드)
 
-      const parsed = parseCSVRobust(text);
-      if(parsed.length < 49000){
-        throw new Error(`리뷰 수 ${parsed.length.toLocaleString()}개 · 50K 파일이 아닌 것 같습니다.`);
-      }
-
-      rows = parsed;
-      corpusCache = null;
-      $("ghState").textContent = "READY";
-      $("ghState").style.color = "var(--pos)";
-      $("loadStatus").innerHTML = `<b>① GitHub 자체호스팅 성공</b> · ${rows.length.toLocaleString()} reviews`;
-      setProgress(96, "자체호스팅 CSV 로드 완료 · 분석 중...");
-      refresh();
-      setProgress(100, `완료 · ${rows.length.toLocaleString()}개`);
-      return true;
-    }catch(err){
-      console.warn("GitHub hosted CSV failed:", err);
-      $("ghState").textContent = "FAIL";
-      $("ghState").style.color = "var(--neg)";
-      $("loadStatus").innerHTML = `<b>① GitHub 자체호스팅 실패</b> · ${err.message}`;
-      return false;
-    }
-  }
-
-  function parseCSVRobust(text){
-    // Handles commas, CRLF and quoted multiline fields.
-    const rowsRaw = [];
-    let row=[], field="", q=false;
-    for(let i=0;i<text.length;i++){
-      const c=text[i];
-      if(c === '"'){
-        if(q && text[i+1] === '"'){ field += '"'; i++; }
-        else q = !q;
-      }else if(c === ',' && !q){
-        row.push(field); field="";
-      }else if((c === '\n' || c === '\r') && !q){
-        if(c === '\r' && text[i+1] === '\n') i++;
-        row.push(field); field="";
-        if(row.some(x=>String(x).trim()!=="")) rowsRaw.push(row);
-        row=[];
-      }else{
-        field += c;
-      }
-    }
-    if(field || row.length){ row.push(field); rowsRaw.push(row); }
-    if(!rowsRaw.length) return [];
-
-    const header = rowsRaw[0].map(x=>String(x).trim().toLowerCase());
-    const reviewIdx = header.findIndex(x=>["review","text","document","content","comment"].includes(x));
-    const labelIdx = header.findIndex(x=>["label","sentiment","rating","score"].includes(x));
-    const movieIdx = header.findIndex(x=>["movie","title","film"].includes(x));
-    if(reviewIdx < 0 || labelIdx < 0) throw new Error("CSV에 review/text와 label/sentiment 열이 필요합니다.");
-
-    const out=[];
-    for(let i=1;i<rowsRaw.length;i++){
-      const vals=rowsRaw[i];
-      const review=String(vals[reviewIdx] ?? "").trim();
-      const sentiment=normalizeSentiment(vals[labelIdx]);
-      const movie=movieIdx>=0 ? String(vals[movieIdx] ?? "Stanford IMDb").trim() : "Stanford IMDb";
-      if(review && sentiment) out.push({id:out.length+1,movie,review,sentiment});
-    }
-    return out;
-  }
-
-  async function autoLoadImdb50k(){
-    const btn = $("imdb50kBtn");
-    btn.disabled = true;
-    btn.textContent = "자동 연결 중...";
-    $("loadStatus").textContent = "① GitHub 자체호스팅 CSV를 먼저 확인합니다.";
-    try{
-      const localOK = await loadGitHubHosted50k();
-      if(localOK) return;
-
-      $("loadStatus").innerHTML = "<b>① 실패 → ② Hugging Face fallback으로 전환</b>";
-      $("hfState").textContent = "확인 중";
-      await loadStanford50k();
-    }finally{
-      btn.disabled = false;
-      btn.textContent = "🎬 IMDb 50K 자동 불러오기";
-    }
-  }
 
   function detectDelimiter(text){
     const first = text.split(/\r?\n/)[0] || "";
     const tabs = (first.match(/\t/g)||[]).length;
     const commas = (first.match(/,/g)||[]).length;
     return tabs > commas ? "\t" : ",";
+  }
+
+  // RFC-4180 CSV parser: handles quoted fields with embedded commas / newlines / "" escapes.
+  function parseCSVRobust(text){
+    text = String(text).replace(/\r\n/g,"\n").replace(/\r/g,"\n");
+    const records=[]; let field="", record=[], inQ=false;
+    for(let i=0;i<text.length;i++){
+      const c=text[i];
+      if(inQ){
+        if(c === '"'){
+          if(text[i+1] === '"'){ field+='"'; i++; }
+          else inQ=false;
+        } else field+=c;
+      }else{
+        if(c === '"') inQ=true;
+        else if(c === ','){ record.push(field); field=""; }
+        else if(c === '\n'){ record.push(field); records.push(record); field=""; record=[]; }
+        else field+=c;
+      }
+    }
+    if(field.length || record.length){ record.push(field); records.push(record); }
+    if(!records.length) return [];
+    const header = records[0].map(x=>x.trim().toLowerCase());
+    const reviewIdx = header.findIndex(x=>["review","text","document","content","comment"].includes(x));
+    const labelIdx  = header.findIndex(x=>["label","sentiment","rating","score"].includes(x));
+    const movieIdx  = header.findIndex(x=>["movie","title","film","group"].includes(x));
+    if(reviewIdx < 0 || labelIdx < 0) throw new Error("review/text 열과 label/sentiment 열을 찾지 못했습니다.");
+    const out=[];
+    for(let i=1;i<records.length;i++){
+      const vals=records[i];
+      if(vals.length===1 && vals[0]==="") continue;
+      const review=(vals[reviewIdx]||"").trim();
+      const sentiment=normalizeSentiment(vals[labelIdx]);
+      const movie=movieIdx>=0 ? String(vals[movieIdx]||"IMDb").trim() : "IMDb";
+      if(review && sentiment) out.push({id:out.length+1,movie,review,sentiment});
+    }
+    return out;
   }
 
   function parseDelimited(text){
@@ -764,18 +675,13 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     renderTable(); analyze();
   }
 
-  $("sampleBtn").addEventListener("click",loadSample);
-  $("resetBtn").addEventListener("click",()=>{rows=[];corpusCache=null;$("totalKpi").textContent=$("posKpi").textContent=$("negKpi").textContent=$("vocabKpi").textContent="0";["posChart","negChart","diffChart","posCloud","negCloud","kwicList","reviewBody"].forEach(id=>$(id).innerHTML="");$("loadStatus").textContent="현재: 데이터 없음";$("progressWrap").style.display="none";});
-  $("clearRemoteBtn").addEventListener("click",()=>{
-    hfResume.train.clear();
-    hfResume.test.clear();
-    $("loadStatus").textContent="IMDb 이어받기 캐시를 지웠습니다.";
-    $("progressWrap").style.display="none";
-  });
+  $("resetBtn").addEventListener("click",()=>{rows=[];corpusCache=null;hfResume.train.clear();hfResume.test.clear();$("totalKpi").textContent=$("posKpi").textContent=$("negKpi").textContent=$("vocabKpi").textContent="0";["posChart","negChart","diffChart","posCloud","negCloud","kwicList","reviewBody"].forEach(id=>$(id).innerHTML="");$("loadStatus").textContent="현재: 데이터 없음";$("progressWrap").style.display="none";});
   $("analyzeBtn").addEventListener("click",()=>{ corpusCache=null; analyze(); });
-  $("imdb50kBtn").addEventListener("click",autoLoadImdb50k);
-  $("githubOnlyBtn").addEventListener("click",loadGitHubHosted50k);
-  $("hfOnlyBtn").addEventListener("click",loadStanford50k);
+  $("groupLoadBtn").addEventListener("click",()=>loadGroupShard());
+  $("teacherCompareBtn").addEventListener("click",loadAllGroupsForTeacher);
+  $("groupSelect").addEventListener("change",()=>{
+    $("groupFileState").textContent = groupFile(selectedGroup());
+  });
   $("kwicBtn").addEventListener("click",runKwic);
   $("filterSent").addEventListener("change",renderTable);
   $("tableSearch").addEventListener("input",renderTable);
@@ -783,7 +689,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     const f=e.target.files[0]; if(!f) return;
     try{
       const text=await f.text();
-      rows=parseDelimited(text);
+      rows = f.name.toLowerCase().endsWith(".csv") ? parseCSVRobust(text) : parseDelimited(text);
       if(!rows.length) throw new Error("읽을 수 있는 Positive/Negative 리뷰가 없습니다.");
       corpusCache = null;
       $("loadStatus").innerHTML = "<b>③ 직접 업로드 성공</b> · " + rows.length.toLocaleString() + "개 리뷰";
@@ -823,7 +729,15 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     setTimeout(()=>URL.revokeObjectURL(a.href),1000);
   });
 
-  loadSample();
+  const initialGroup = getUrlGroup() || "A";
+  $("groupSelect").value = initialGroup;
+  $("groupFileState").textContent = groupFile(initialGroup);
+  if(getUrlGroup()){
+    loadGroupShard(initialGroup);
+  }else{
+    loadSample();
+    $("loadStatus").innerHTML = `<b>샘플 데이터</b> · 조별 실습은 A~F 중 조를 선택한 뒤 “우리 조 IMDb 2,000 불러오기”를 누르세요.`;
+  }
 })();
 </script>
 </body>
